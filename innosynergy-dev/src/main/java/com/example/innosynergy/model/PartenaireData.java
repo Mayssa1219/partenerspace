@@ -1,66 +1,100 @@
-//PartenaireData
 package com.example.innosynergy.model;
 
+import java.util.Date;
+
 public class PartenaireData {
-    private String id;
-    private String nomPartenaire;
-    private String telephone;
-    private String email;
-    private String adresse;
-    private String etat;
+    private int idPartenaire;
     private String nomEntreprise;
-    private String dateInscription;
-    private String dateExpiration;
     private String typeActivite;
     private String siteWeb;
+    private String adresse;
+    private String telephone;
+    private String autresDocuments;
+    private int etat;
+    private Date dateExpiration;
 
-    public PartenaireData(String id, String nomPartenaire, String telephone, String email, String adresse, String etat, String nomEntreprise, String dateInscription, String dateExpiration, String typeActivite) {
-        this.id = id;
-        this.nomPartenaire = nomPartenaire;
-        this.telephone = telephone;
-        this.email = email;
-        this.adresse = adresse;
-        this.etat = etat;
+    public PartenaireData(int idPartenaire, String nomEntreprise, String typeActivite, String siteWeb, String adresse, String telephone, String autresDocuments, int etat, Date dateExpiration) {
+        this.idPartenaire = idPartenaire;
         this.nomEntreprise = nomEntreprise;
-        this.dateInscription = dateInscription;
+        this.typeActivite = typeActivite;
+        this.siteWeb = siteWeb;
+        this.adresse = adresse;
+        this.telephone = telephone;
+        this.autresDocuments = autresDocuments;
+        this.etat = etat;
         this.dateExpiration = dateExpiration;
+    }
+
+    // Getters and setters for each field
+    public int getIdPartenaire() {
+        return idPartenaire;
+    }
+
+    public void setIdPartenaire(int idPartenaire) {
+        this.idPartenaire = idPartenaire;
+    }
+
+    public String getNomEntreprise() {
+        return nomEntreprise;
+    }
+
+    public void setNomEntreprise(String nomEntreprise) {
+        this.nomEntreprise = nomEntreprise;
+    }
+
+    public String getTypeActivite() {
+        return typeActivite;
+    }
+
+    public void setTypeActivite(String typeActivite) {
         this.typeActivite = typeActivite;
     }
 
-    public PartenaireData(String id, String nomPartenaire, String telephone, String email, String adresse, String etat, String nomEntreprise, String dateInscription, String dateExpiration, String typeActivite, String siteWeb) {
-        this.id = id;
-        this.nomPartenaire = nomPartenaire;
-        this.telephone = telephone;
-        this.email = email;
-        this.adresse = adresse;
-        this.etat = etat;
-        this.nomEntreprise = nomEntreprise;
-        this.dateInscription = dateInscription;
-        this.dateExpiration = dateExpiration;
-        this.typeActivite = typeActivite;
+    public String getSiteWeb() {
+        return siteWeb;
+    }
+
+    public void setSiteWeb(String siteWeb) {
         this.siteWeb = siteWeb;
     }
 
-    // Getters and Setters
-    public String getId() { return id; }
-    public String getNomPartenaire() { return nomPartenaire; }
-    public String getTelephone() { return telephone; }
-    public String getEmail() { return email; }
-    public String getAdresse() { return adresse; }
-    public String getEtat() { return etat; }
-    public String getNomEntreprise() { return nomEntreprise; }
-    public String getDateInscription() { return dateInscription; }
-    public String getDateExpiration() { return dateExpiration; }
-    public String getTypeActivite() { return typeActivite; }
+    public String getAdresse() {
+        return adresse;
+    }
 
-    public void setId(String id) { this.id = id; }
-    public void setNomPartenaire(String nomPartenaire) { this.nomPartenaire = nomPartenaire; }
-    public void setTelephone(String telephone) { this.telephone = telephone; }
-    public void setEmail(String email) { this.email = email; }
-    public void setAdresse(String adresse) { this.adresse = adresse; }
-    public void setEtat(String etat) { this.etat = etat; }
-    public void setNomEntreprise(String nomEntreprise) { this.nomEntreprise = nomEntreprise; }
-    public void setDateInscription(String dateInscription) { this.dateInscription = dateInscription; }
-    public void setDateExpiration(String dateExpiration) { this.dateExpiration = dateExpiration; }
-    public void setTypeActivite(String typeActivite) { this.typeActivite = typeActivite; }
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getAutresDocuments() {
+        return autresDocuments;
+    }
+
+    public void setAutresDocuments(String autresDocuments) {
+        this.autresDocuments = autresDocuments;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
+    }
+
+    public Date getDateExpiration() {
+        return dateExpiration;
+    }
+
+    public void setDateExpiration(Date dateExpiration) {
+        this.dateExpiration = dateExpiration;
+    }
 }

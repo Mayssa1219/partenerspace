@@ -1,8 +1,5 @@
 package com.example.innosynergy;
 
-import com.example.innosynergy.controller.LoginController;
-import com.example.innosynergy.model.LoginModel;
-import com.example.innosynergy.view.LoginView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
