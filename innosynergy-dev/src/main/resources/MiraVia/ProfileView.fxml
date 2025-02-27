@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="TOP_CENTER" prefHeight="574.0" prefWidth="796.0" spacing="5"
+      style="-fx-padding: 20 0 0 0;" xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.innosynergy.controller.AdminProfileController">
+
+    <!-- Profile Picture with Edit Icon -->
+    <StackPane alignment="BOTTOM_RIGHT" maxWidth="120" prefWidth="120">
+        <ImageView fx:id="profileImage" fitHeight="100" fitWidth="100">
+            <image>
+                <Image url="@/images/user.png" />
+            </image>
+            <clip>
+                <!-- Circular Crop -->
+                <Circle fx:id="clip" centerX="50" centerY="50" radius="50" />
+            </clip>
+        </ImageView>
+
+        <!-- Edit Icon -->
+        <ImageView fitHeight="20" fitWidth="20" onMouseClicked="#uploadImage">
+            <image>
+                <Image url="@/images/edit.png" />
+            </image>
+        </ImageView>
+    </StackPane>
+
+    <!-- User Name -->
+    <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #013a71;" text="Ali Ben Salah" />
+
+    <!-- Location and Birthdate Row -->
+    <HBox alignment="CENTER" spacing="10">
+        <!-- Location -->
+        <HBox alignment="CENTER" spacing="5">
+            <ImageView fitHeight="15" fitWidth="15">
+                <image>
+                    <Image url="@/images/localisation.png" />
+                </image>
+            </ImageView>
+            <Label text="Tunisie" />
+        </HBox>
+
+        <!-- Birthdate -->
+        <HBox alignment="CENTER" spacing="5">
+            <ImageView fitHeight="15" fitWidth="15">
+                <image>
+                    <Image url="@/images/birthday.png" />
+                </image>
+            </ImageView>
+            <Label text="15 Février" />
+        </HBox>
+    </HBox>
+
+    <GridPane alignment="CENTER" hgap="10" vgap="10">
+        <!-- Informations Personnelles -->
+        <Text fill="#013a71" text="Informations Personnelles" GridPane.columnSpan="2">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Text>
+
+        <Label text="Nom :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <TextField fx:id="nameField" prefHeight="25.0" prefWidth="593.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+
+        <Label text="Date De Naissance :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <DatePicker fx:id="birthField" prefHeight="25.0" prefWidth="900.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+
+        <Label text="Téléphone :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        <TextField fx:id="phoneField" prefWidth="900.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+
+        <Label text="Emplacement :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+        <TextField fx:id="locationField" prefWidth="900.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
+
+        <Button onAction="#savePersonalInfo" style="-fx-background-color: #013a71; -fx-text-fill: white;" text="Enregistrer" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" />
+
+        <!-- Security -->
+        <Text fill="#013a71" text="Security" GridPane.columnSpan="2" GridPane.rowIndex="6">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Text>
+
+        <Label text="Adresse E-Mail :" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+        <TextField fx:id="emailField" prefWidth="900.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" />
+
+        <Label text="Mot de Passe :" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+        <PasswordField fx:id="passwordField" prefWidth="900.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8" />
+
+        <Label text="Confirmez le Mot de Passe :" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+        <PasswordField fx:id="confirmPasswordField" prefWidth="900.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9" />
+
+        <Button onAction="#saveSecurityInfo" style="-fx-background-color: #013a71; -fx-text-fill: white;" text="Enregistrer" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10" />
+
+        <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="196.0" minWidth="93.0" prefWidth="196.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="697.0" minWidth="590.0" prefWidth="590.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints vgrow="ALWAYS" />
+        </rowConstraints>
+    </GridPane>
+</VBox>

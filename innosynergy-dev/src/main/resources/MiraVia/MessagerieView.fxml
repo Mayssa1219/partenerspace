@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.innosynergy.controller.MessengerController">
+
+    <!-- Barre latérale avec liste de contacts -->
+    <left>
+        <VBox maxHeight="630.0" minHeight="630.0" prefHeight="630.0" prefWidth="311.0" spacing="10" style="-fx-padding: 10; -fx-alignment: center;">
+            <!-- Barre de recherche -->
+            <VBox prefHeight="33.0" prefWidth="252.0" spacing="10" style="-fx-padding: 10; -fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0,2);">
+                <TextField promptText="Search" style="-fx-background-radius: 5; -fx-padding: 5;" />
+            </VBox>
+
+            <!-- Liste des contacts -->
+            <VBox prefHeight="541.0" prefWidth="252.0" spacing="10" style="-fx-padding: 15; -fx-background-color: white; -fx-background-radius: 15px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);">
+                <ListView fx:id="contactList" prefHeight="515.0" prefWidth="222.0" style="-fx-background-color: transparent;" />
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Conteneur principal de chat -->
+    <center>
+        <VBox maxHeight="650.0" minHeight="603.0" prefHeight="603.0" spacing="10" style="-fx-padding: 3 20 20 20; -fx-alignment: center; ">
+            <!-- En-tête de la conversation -->
+            <VBox maxHeight="612.0" minHeight="578.0" prefHeight="597.0" prefWidth="293.0" spacing="10" style="-fx-padding: 15; -fx-background-color: white; -fx-background-radius: 15px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);">
+
+                <!-- Informations de l'utilisateur dans le chat -->
+                <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #FFF; -fx-padding: 10; -fx-border-width: 0 0 1 0; -fx-border-color: #E0E0E0;">
+                    <ImageView fitHeight="40" fitWidth="40">
+                        <image>
+                            <Image url="@../images/user.png" />
+                        </image>
+                    </ImageView>
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Anil" />
+                    <Label style="-fx-text-fill: gray; -fx-font-size: 12px;" text="Online - Last seen, 2:02pm" />
+                </HBox>
+
+                <!-- Zone de messages -->
+                <ScrollPane fx:id="chatScrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background: white; -fx-border-color: transparent; -fx-border-width: 0;" VBox.vgrow="ALWAYS">
+                    <VBox fx:id="chatBox" spacing="5" style="-fx-padding: 10; -fx-background-color: white; -fx-border-color: transparent;">
+                        <!-- Messages reçus et envoyés -->
+                        <HBox alignment="BASELINE_LEFT" style="-fx-border-color: transparent;">
+                            <Label style="-fx-background-color: #F3F3F3; -fx-padding: 10; -fx-background-radius: 15px;" text="Hey There!" />
+                        </HBox>
+                        <HBox alignment="BASELINE_LEFT" style="-fx-border-color: transparent;">
+                            <Label style="-fx-background-color: #F3F3F3; -fx-padding: 10; -fx-background-radius: 15px;" text="How are you?" />
+                        </HBox>
+                        <HBox alignment="BASELINE_RIGHT" style="-fx-border-color: transparent;">
+                            <Label style="-fx-background-color: #013A71; -fx-text-fill: white; -fx-padding: 10; -fx-background-radius: 15px;" text="Hello!" />
+                        </HBox>
+                        <HBox alignment="BASELINE_RIGHT" style="-fx-border-color: transparent;">
+                            <Label style="-fx-background-color: #013A71; -fx-text-fill: white; -fx-padding: 10; -fx-background-radius: 15px;" text="I am fine and how are you?" />
+                        </HBox>
+                        <HBox alignment="BASELINE_LEFT" style="-fx-border-color: transparent;">
+                            <Label style="-fx-background-color: #F3F3F3; -fx-padding: 10; -fx-background-radius: 15px;" text="I am doing well, Can we meet tomorrow?" />
+                        </HBox>
+                        <HBox alignment="BASELINE_RIGHT" style="-fx-border-color: transparent;">
+                            <Label style="-fx-background-color: #013A71; -fx-text-fill: white; -fx-padding: 10; -fx-background-radius: 15px;" text="Yes Sure!" />
+                        </HBox>
+                    </VBox>
+                </ScrollPane>
+
+                <!-- Zone de saisie de message -->
+                <!-- Zone de saisie de message -->
+                <HBox spacing="5.0" style="-fx-padding: 10; -fx-background-color: #FFF; -fx-border-width: 1 0 0 0; -fx-border-color: #E0E0E0;">
+                    <!-- Bouton pour pièce jointe -->
+                    <Button fx:id="attachmentButton" prefHeight="36.0" prefWidth="42.0" style="-fx-background-color: transparent;">
+                        <graphic>
+                            <ImageView fitHeight="20" fitWidth="20">
+                                <image>
+                                    <Image url="@/images/attachment_icon.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+
+                    <!-- Champ de saisie de message -->
+                    <TextField fx:id="messageField" promptText="Type your message here..." style="-fx-background-radius: 9; -fx-padding: 10;" HBox.hgrow="ALWAYS" />
+
+                    <!-- Bouton d'envoi -->
+                    <Button fx:id="sendButton" prefHeight="36.0" prefWidth="42.0" style="-fx-background-color: #013A71; -fx-background-radius: 5; -fx-padding: 5;">
+                        <graphic>
+                            <ImageView fitHeight="20" fitWidth="20">
+                                <image>
+                                    <Image url="@/images/send_icon.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
+
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

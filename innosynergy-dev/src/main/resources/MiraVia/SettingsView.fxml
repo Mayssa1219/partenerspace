@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="mainContainer" alignment="TOP_LEFT" spacing="15" style="-fx-padding: 20;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.innosynergy.controller.SettingsController">
+
+    <!-- Account Section (Carte) -->
+    <Pane style="-fx-background-color: white; -fx-border-radius: 15; -fx-border-color: #cccccc; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 2);">
+        <VBox spacing="10" style="-fx-padding: 15; -fx-background-radius: 9;">
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Account" textFill="#1c45ad" />
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="20" fitWidth="20">
+                    <Image url="@/images/profile.png" />
+                </ImageView>
+                <Label fx:id="editProfileLabel" onMouseClicked="#handleEditProfileClick" text="Edit Profile" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="20" fitWidth="20">
+                    <Image url="@/images/protect.png" />
+                </ImageView>
+                <Label onMouseClicked="#handleSecurityClick" text="Security" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="20" fitWidth="20">
+                    <Image url="@/images/notification.png" />
+                </ImageView>
+                <Label onMouseClicked="#handleNotificationsClick" text="Notifications" />
+            </HBox>
+        </VBox>
+    </Pane>
+
+    <!-- Support & About Section (Carte) -->
+    <Pane style="-fx-background-color: white; -fx-border-radius: 8; -fx-border-color: #cccccc; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 2);">
+        <VBox spacing="10" style="-fx-padding: 15;">
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Support and About" textFill="#013a71" />
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="20" fitWidth="20">
+                    <Image url="@/images/Subscription.png" />
+                </ImageView>
+                <Label text="My Subscription" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="20" fitWidth="20">
+                    <Image url="@/images/help.png" />
+                </ImageView>
+                <Label text="Help and Support" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="20" fitWidth="20">
+                    <Image url="@/images/termes.png" />
+                </ImageView>
+                <Label text="Terms and Policies" />
+            </HBox>
+        </VBox>
+    </Pane>
+
+    <!-- Cache & Cellular Section (Carte) -->
+    <Pane style="-fx-background-color: white; -fx-border-radius: 8; -fx-border-color: #cccccc; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 2);">
+        <VBox spacing="10" style="-fx-padding: 15;">
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Cache and Cellular" textFill="#013a71" />
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="20" fitWidth="20">
+                    <Image url="@/images/trash.png" />
+                </ImageView>
+                <Label text="Free up space" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="20" fitWidth="20">
+                    <Image url="@/images/data.png" />
+                </ImageView>
+                <Label text="Data Saver" />
+            </HBox>
+        </VBox>
+    </Pane>
+
+    <!-- Actions Section (Carte) -->
+    <Pane style="-fx-background-color: white; -fx-border-radius: 8; -fx-border-color: #cccccc; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 2);">
+        <VBox spacing="10" style="-fx-padding: 15;">
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Actions" textFill="#013a71" />
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="20" fitWidth="20">
+                    <Image url="@/images/flag.png" />
+                </ImageView>
+                <Label text="Report a problem" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="20" fitWidth="20">
+                    <Image url="@/images/add_account.png" />
+                </ImageView>
+                <Label text="Add account" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="20" fitWidth="20">
+                    <Image url="@/images/Logout.png" />
+                </ImageView>
+                <Label text="Log out" />
+            </HBox>
+        </VBox>
+    </Pane>
+</VBox>
