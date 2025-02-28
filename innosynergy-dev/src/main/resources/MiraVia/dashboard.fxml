@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.innosynergy.controller.DashboardController" spacing="20" alignment="TOP_CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <Label text="Tableau de bord" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <HBox spacing="15">
+        <VBox spacing="10" alignment="TOP_CENTER">
+            <Label text="Statistiques" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <GridPane hgap="10" vgap="10">
+                <Label text="Statistique 1:"/>
+                <Label fx:id="stat1Label" text="Valeur 1"/>
+                <Label text="Statistique 2:"/>
+                <Label fx:id="stat2Label" text="Valeur 2"/>
+                <Label text="Statistique 3:"/>
+                <Label fx:id="stat3Label" text="Valeur 3"/>
+            </GridPane>
+        </VBox>
+        <VBox spacing="10" alignment="TOP_CENTER">
+            <Label text="Activité récente" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <ListView fx:id="recentActivityList" prefHeight="200" prefWidth="300">
+                <!-- Items will be added dynamically -->
+            </ListView>
+        </VBox>
+        <VBox spacing="10" alignment="TOP_CENTER">
+            <Label text="Notifications" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <ListView fx:id="notificationsList" prefHeight="200" prefWidth="300">
+                <!-- Items will be added dynamically -->
+            </ListView>
+        </VBox>
+    </HBox>
+</VBox>

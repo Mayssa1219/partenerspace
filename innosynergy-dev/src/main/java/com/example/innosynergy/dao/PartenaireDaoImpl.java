@@ -2,15 +2,16 @@ package com.example.innosynergy.dao;
 
 import com.example.innosynergy.config.ConnexionBD;
 import com.example.innosynergy.model.PartenaireData;
+import com.example.innosynergy.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class partenaireDaoImpl implements PartenaireDao {
+public class PartenaireDaoImpl implements PartenaireDao {
     private ConnexionBD connexionBD;
 
-    public partenaireDaoImpl() {
+    public PartenaireDaoImpl() {
         this.connexionBD = new ConnexionBD();
     }
 
@@ -113,6 +114,52 @@ public class partenaireDaoImpl implements PartenaireDao {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void updateProfile(User user, PartenaireData partenaireData) {
+        String updateUserQuery = "UPDATE utilisateurs SET nom = ?, prenom = ?, email = ?, mot_de_passe = ?, telephone = ?, avatar = ?, statut_verification = ?, status = ? WHERE id_utilisateur = ?";
+        String updatePartenaireQuery = "UPDATE partenaires SET nom_entreprise = ?, type_activite = ?, site_web = ?, adresse = ?, telephone = ?, autres_documents = ?, etat = ?, date_expiration = ? WHERE id_partenaire = ?";
+
+        try (Connection connection = connexionBD.getConnection()) {
+            connection.setAutoCommit(false);
+
+            try (PreparedStatement userStatement = connection.prepareStatement(updateUserQuery);
+                 PreparedStatement partenaireStatement = connection.prepareStatement(updatePartenaireQuery)) {
+
+                // Update utilisateurs table
+                userStatement.setString(1, user.getNom());
+                userStatement.setString(2, user.getPrenom());
+                userStatement.setString(3, user.getEmail());
+                userStatement.setString(4, user.getMotDePasse());
+                userStatement.setString(5, user.getTelephone());
+                userStatement.setString(6, user.getAvatar());
+                userStatement.setString(7, user.getStatutVerification());
+                userStatement.setString(8, user.getStatus());
+                userStatement.setInt(9, user.getIdUtilisateur());
+                userStatement.executeUpdate();
+
+                // Update partenaires table
+                partenaireStatement.setString(1, partenaireData.getNomEntreprise());
+                partenaireStatement.setString(2, partenaireData.getTypeActivite());
+                partenaireStatement.setString(3, partenaireData.getSiteWeb());
+                partenaireStatement.setString(4, partenaireData.getAdresse());
+                partenaireStatement.setString(5, partenaireData.getTelephone());
+                partenaireStatement.setString(6, partenaireData.getAutresDocuments());
+                partenaireStatement.setInt(7, partenaireData.getEtat());
+                partenaireStatement.setDate(8, new java.sql.Date(partenaireData.getDateExpiration().getTime()));
+                partenaireStatement.setInt(9, partenaireData.getIdPartenaire());
+                partenaireStatement.executeUpdate();
+
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw e;
+            } finally {
+                connection.setAutoCommit(true);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
