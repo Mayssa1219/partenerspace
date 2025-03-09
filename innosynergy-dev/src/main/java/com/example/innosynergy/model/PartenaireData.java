@@ -1,4 +1,4 @@
-//PartenaireData
+
 package com.example.innosynergy.model;
 
 public class PartenaireData {
@@ -63,4 +63,6 @@ public class PartenaireData {
     public void setDateInscription(String dateInscription) { this.dateInscription = dateInscription; }
     public void setDateExpiration(String dateExpiration) { this.dateExpiration = dateExpiration; }
     public void setTypeActivite(String typeActivite) { this.typeActivite = typeActivite; }
+
+
 }

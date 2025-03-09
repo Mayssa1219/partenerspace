@@ -1,0 +1,150 @@
+
+/* Style général */
+.root {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+}
+/* Style global pour tous les Label */
+.label {
+    -fx-font-size: 16px; /* Taille de police par défaut */
+}
+
+/* Barre supérieure */
+.top-bar {
+    -fx-background-color: #ffffff;
+    -fx-pref-height: 60px;
+}
+
+.logo-box {
+    -fx-padding: 0 0 0 30px;
+}
+
+.title-label {
+    -fx-text-fill: #013A71;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 0 80px;
+}
+
+.search-box {
+    -fx-background-color: white;
+    -fx-padding: 5px;
+    -fx-background-radius: 10px;
+}
+
+.search-button {
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+}
+
+.search-button:hover {
+    -fx-background-color: #aecee6;
+}
+
+
+.search-field {
+    -fx-pref-width: 400px;
+    -fx-background-radius: 16px;
+    -fx-border-radius: 16px;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-padding: 5px;
+}
+
+.profile-image {
+    -fx-fit-height: 30px;
+    -fx-fit-width: 30px;
+}
+
+.profile-name {
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+/* Barre latérale */
+.sidebar-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 0; /* Assurez-vous qu'il n'y a pas de padding ici */
+    -fx-border-width: 0; /* Supprimez les bordures si nécessaire */
+}
+
+.sidebar {
+    -fx-background-color: #ffffff;
+    -fx-pref-width: 280px;
+    -fx-pref-height: 630px;
+    -fx-padding: 10px;
+
+}
+
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 15; /* Padding interne du bouton */
+    -fx-margin: 0; /* Assurez-vous qu'il n'y a pas de marge */
+}
+
+.sidebar-button-content {
+    -fx-padding: 5 0 5 15; /* Padding interne du HBox */
+    -fx-margin: 0; /* Assurez-vous qu'il n'y a pas de marge */
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #aecee6;
+}
+
+
+.sidebar-button-text {
+    -fx-text-fill: #013A71;
+}
+
+.icon-bar-chart, .icon-users {
+    -fx-font-family: "FontAwesome";
+    -fx-font-size: 20px;
+    -fx-text-fill: #1E90FF;
+}
+
+/* Contenu principal */
+.main-scroll-pane {
+    -fx-background-color: #f9f9f9;
+}
+.icon-message {
+    -fx-font-family: 'FontAwesome'; /* Utiliser la police FontAwesome */
+    -fx-font-size: 20px;
+    -fx-text-fill: #013A71; /* Couleur des icônes en bleu */
+}
+
+/* Style des icônes */
+.icon-bar-chart,
+.icon-users,
+.icon-help,
+.icon-donate,
+.icon-calendar,
+.icon-handshake,
+.fa-cog,
+.icon-message {
+    -fx-font-family: 'FontAwesome'; /* Utiliser la police FontAwesome */
+    -fx-font-size: 20px; /* Taille de l'icône */
+    -fx-text-fill: #013A71; /* Couleur de l'icône */
+    -fx-margin-bottom: 40px; /* Par exemple, 10px de marge en bas */
+}
+
+.footer-box {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background-color: #f7f7f7;
+    margin-top: auto;
+    text-align: center;
+}
+
+.copyright-text {
+    font-size: 8px;
+    color: #888;
+}
+
+.footer-box img {
+    vertical-align: middle;
+    margin-right: 15px;
+}
