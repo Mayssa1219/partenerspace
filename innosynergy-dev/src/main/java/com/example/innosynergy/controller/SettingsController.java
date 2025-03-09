@@ -35,16 +35,15 @@ public class SettingsController {
         loadSecurityView();
     }
 
-    // Méthode pour charger la vue du profil
     private void loadProfileView() {
         try {
-            // Charger le fichier FXML pour la vue du profil
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MiraVia/ProfileView.fxml"));
+            // Ensure the path to the FXML file is correct
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MiraVia/ProfilView.fxml"));
             Parent profileView = loader.load();
 
-            // Remplacer le contenu dans mainContainer avec la vue du profil
-            mainContainer.getChildren().clear();  // Vider le conteneur actuel
-            mainContainer.getChildren().add(profileView);  // Ajouter la nouvelle vue
+            // Replace the content in mainContainer with the profile view
+            mainContainer.getChildren().clear();  // Clear the current container
+            mainContainer.getChildren().add(profileView);  // Add the new view
         } catch (IOException e) {
             e.printStackTrace();
         }

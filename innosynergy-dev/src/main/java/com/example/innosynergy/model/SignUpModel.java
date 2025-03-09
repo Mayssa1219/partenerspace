@@ -12,7 +12,7 @@ public class SignUpModel {
     private final StringProperty confirmPassword = new SimpleStringProperty();
     private final StringProperty address = new SimpleStringProperty();
 
-
+    // Property methods
     public StringProperty firstNameProperty() {
         return firstName;
     }
@@ -41,4 +41,32 @@ public class SignUpModel {
         return address;
     }
 
+    // Getters
+    public String getFirstName() {
+        return firstName.get();
+    }
+
+    public String getLastName() {
+        return lastName.get();
+    }
+
+    public String getEmail() {
+        return email.get();
+    }
+
+    public String getPhone() {
+        return phone.get();
+    }
+
+    public String getPassword() {
+        return password.get();
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword.get();
+    }
+
+    public String getAddress() {
+        return address.get();
+    }
 }
