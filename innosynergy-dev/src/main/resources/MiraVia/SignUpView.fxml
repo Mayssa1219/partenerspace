@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.innosynergy.controller.SignUpController">
+    <left>
+        <VBox spacing="15.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="50.0" left="30.0" right="20.0" top="30.0" />
+            </padding>
+            <children>
+                <VBox alignment="TOP_CENTER" spacing="8.0">
+                    <children>
+                        <HBox alignment="CENTER_RIGHT">
+                            <ImageView fx:id="vectorImage" fitWidth="200.0" preserveRatio="true">
+                                <image>
+                                    <Image url="@../images/Vector.png" />
+                                </image>
+                            </ImageView>
+                        </HBox>
+                        <ImageView fx:id="logo" fitWidth="220.0" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/logomiravia.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="0.0" top="1.0" />
+                    </VBox.margin>
+                </VBox>
+                <GridPane alignment="CENTER_LEFT" hgap="20.0" vgap="15.0">
+                    <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                    </padding>
+                    <children>
+                        <Label text="Prénom :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="firstNameField" prefWidth="200" promptText="Entrez votre prénom." GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="Nom de famille :" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        <TextField fx:id="lastNameField" prefWidth="200" promptText="Entrez votre nom." GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                        <Label text="Adresse e-mail :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="emailField" prefWidth="200" promptText="info@xyz.com" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Numéro de portable :" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="phoneField" prefWidth="200" promptText="+216 53 183 000" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                        <Label text="Mot de passe :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <PasswordField fx:id="passwordField" prefWidth="200" promptText="********" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Confirmer le mot de passe :" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <PasswordField fx:id="confirmPasswordField" prefWidth="200" promptText="********" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+
+                        <Label text="Adresse :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <TextField fx:id="addressField" prefWidth="200" promptText="Entrez votre adresse." GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    </children>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="NEVER" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                    </rowConstraints>
+                </GridPane>
+                <!-- CAPTCHA -->
+                <VBox alignment="CENTER" spacing="10">
+                    <Label fx:id="captchaLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="CAPTCHA" />
+                    <Button onAction="#handleRefreshCaptcha" text="Rafraîchir CAPTCHA" />
+                    <ImageView fx:id="captchaImageView" fitHeight="60.0" fitWidth="160.0" preserveRatio="true" />
+                    <TextField fx:id="captchaField" promptText="Entrez le texte ici" />
+                </VBox>
+
+                <CheckBox fx:id="termsCheckBox" text="J'ai lu, compris et accepté les conditions générales et la politique de confidentialité de Miravia." />
+                <CheckBox fx:id="updatesCheckBox" text="Je souhaite recevoir des mises à jour par e-mail de Miravia." />
+
+                <HBox alignment="CENTER" prefHeight="57.0" prefWidth="691.0">
+                    <HBox.margin>
+                        <Insets bottom="0.0" left="0.0" right="0.0" top="20.0" />
+                    </HBox.margin>
+
+                    <children>
+                        <Button fx:id="registerButton" onAction="#handleRegisterButtonAction" prefWidth="200" style="-fx-background-color: #013A71; -fx-text-fill: white;" text="S'inscrire" />
+                        <Label fx:id="LoginLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#handleLoginLinkClick" prefHeight="20.0" prefWidth="267.0" style="-fx-text-fill: #013A71; -fx-cursor: hand; -fx-font-size: 14px;" text="Vous avez un compte ? Connectez-vous" textAlignment="CENTER" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT" prefHeight="89.0" prefWidth="651.0" />
+            </children>
+        </VBox>
+    </left>
+    <right>
+        <StackPane prefWidth="550.0" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fx:id="airplaneImage" fitWidth="700.0" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/airplane.jpg" />
+                    </image>
+                </ImageView>
+                <BorderPane pickOnBounds="false" />
+            </children>
+        </StackPane>
+    </right>
+</BorderPane>

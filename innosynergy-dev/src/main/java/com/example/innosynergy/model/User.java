@@ -12,20 +12,24 @@ public class User {
     private String avatar;
     private String statutVerification;
     private String status;
+    // Default constructor
+    public User() {}
 
-    public User(int idUtilisateur, String nom, String prenom, String email, String motDePasse, String telephone, String dateInscription, String typeUtilisateur, String avatar, String statutVerification, String status) {
+    // Constructor, getters, and setters
+    public User(int idUtilisateur, String nom, String prenom, String email, String motDePasse, String telephone, String avatar, String statutVerification, String status, String typeUtilisateur) {
         this.idUtilisateur = idUtilisateur;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.motDePasse = motDePasse;
         this.telephone = telephone;
-        this.dateInscription = dateInscription;
-        this.typeUtilisateur = typeUtilisateur;
         this.avatar = avatar;
         this.statutVerification = statutVerification;
         this.status = status;
+        this.typeUtilisateur = typeUtilisateur;
     }
+
+
 
     // Getters and setters
     public int getIdUtilisateur() {

@@ -12,4 +12,6 @@ public interface PartenaireDao {
     void updatePartenaire(PartenaireData user);
     void deletePartenaire(int id);
     void updateProfile(User user, PartenaireData partenaireData);
+    PartenaireData getPartenaireGenerale(int id);
+
 }

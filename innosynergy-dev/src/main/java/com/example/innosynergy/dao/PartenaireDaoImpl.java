@@ -14,7 +14,35 @@ public class PartenaireDaoImpl implements PartenaireDao {
     public PartenaireDaoImpl() {
         this.connexionBD = new ConnexionBD();
     }
-
+    @Override
+    public PartenaireData getPartenaire(int id) {
+        String query = "SELECT u.id_utilisateur, u.nom, u.prenom, u.email, u.telephone, u.date_inscription, u.type_utilisateur, u.avatar, u.statut_verification, u.status, " +
+                "p.nom_entreprise, p.type_activite, p.site_web, p.adresse, p.telephone AS partenaire_telephone, p.autres_documents, p.etat, p.date_expiration " +
+                "FROM utilisateurs u " +
+                "JOIN partenaires p ON u.id_utilisateur = p.id_partenaire " +
+                "WHERE p.id_partenaire = ?";
+        try (Connection connection = connexionBD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new PartenaireData(
+                        resultSet.getInt("id_utilisateur"),
+                        resultSet.getString("nom_entreprise"),
+                        resultSet.getString("type_activite"),
+                        resultSet.getString("site_web"),
+                        resultSet.getString("adresse"),
+                        resultSet.getString("partenaire_telephone"),
+                        resultSet.getString("autres_documents"),
+                        resultSet.getInt("etat"),
+                        resultSet.getDate("date_expiration")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     @Override
     public void addPartenaire(PartenaireData partenaire) {
         String query = "INSERT INTO partenaires (id_partenaire, nom_entreprise, type_activite, site_web, adresse, telephone, autres_documents, etat, date_expiration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -36,7 +64,7 @@ public class PartenaireDaoImpl implements PartenaireDao {
     }
 
     @Override
-    public PartenaireData getPartenaire(int id) {
+    public PartenaireData getPartenaireGenerale(int id) {
         String query = "SELECT * FROM partenaires WHERE id_partenaire = ?";
         try (Connection connection = connexionBD.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {

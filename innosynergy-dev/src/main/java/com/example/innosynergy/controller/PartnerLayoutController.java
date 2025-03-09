@@ -116,11 +116,11 @@ public class PartnerLayoutController {
                     break;
                 case "settingsButton":
                     title = "Paramètres";
-                    content = new Label("Contenu des Paramètres");
+                    content = FXMLLoader.load(getClass().getResource("/MiraVia/SettingsView.fxml"));
                     break;
                 case "messagesButton":
                     title = "Messagerie";
-                    content = new Label("Contenu de Messagerie");
+                    content = FXMLLoader.load(getClass().getResource("/MiraVia/MessagerieView.fxml"));
                     break;
             }
         } catch (IOException e) {

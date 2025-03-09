@@ -2,23 +2,15 @@ package com.example.innosynergy;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
-
-public class Main extends Application {
-
-
-
+public class Auth extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/MiraVia/PartnerLayout.fxml"));
-        primaryStage.setTitle("Miravia Partner Layout");
+        Parent root = FXMLLoader.load(getClass().getResource("/MiraVia/LoginView.fxml"));
+        primaryStage.setTitle("Miravia Authentification Page");
         primaryStage.setScene(new Scene(root, 1100, 700));
         primaryStage.show();
 
