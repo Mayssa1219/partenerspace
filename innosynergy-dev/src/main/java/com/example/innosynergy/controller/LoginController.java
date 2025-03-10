@@ -130,20 +130,17 @@ public class LoginController {
 
     @FXML
     public void handleForgotPassword() {
-        String email = emailField.getText();
-        if (isValidEmail(email)) {
-            sendPasswordResetEmail(email);
-            showError("Un email de réinitialisation du mot de passe a été envoyé.");
-        } else {
-            showError("Veuillez entrer une adresse email valide.");
+        try {
+            Parent signUpView = FXMLLoader.load(getClass().getResource("/MiraVia/forgotpassword.fxml"));
+            Scene signUpScene = new Scene(signUpView);
+            Stage primaryStage = (Stage) signUpLabel.getScene().getWindow();
+            primaryStage.setScene(signUpScene);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public void sendPasswordResetEmail(String email) {
-        // Logic to send password reset email
-        // This is a placeholder implementation
-        System.out.println("Password reset email sent to: " + email);
-    }
+
 
     @FXML
     public void handleSignUpLinkClick() {
