@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.net.URL?>
+
+<BorderPane fx:id="mainLayout" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.innosynergy.spaces.partner.controller.PartnerController">
+
+    <!-- Référence au fichier CSS -->
+    <stylesheets>
+        <URL value="@styles/style.css"/>
+    </stylesheets>
+
+    <!-- Top Section -->
+    <top>
+        <HBox alignment="CENTER_RIGHT" spacing="20.0" styleClass="top-bar">
+            <padding>
+                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+            </padding>
+            <HBox fx:id="logoBox" alignment="CENTER_LEFT" spacing="10.0" styleClass="logo-box">
+                <children>
+                    <ImageView fx:id="logoImageView" fitHeight="40.0" fitWidth="160.0">
+                        <image>
+                            <Image url="@/images/logomiravia.png"/>
+                        </image>
+                    </ImageView>
+                    <Label fx:id="titleLabel" text="Tableau de bord" styleClass="title-label"/>
+                </children>
+            </HBox>
+            <Region fx:id="spacerNavbar" HBox.hgrow="ALWAYS"/>
+            <HBox alignment="CENTER" spacing="5" styleClass="search-box">
+
+                <TextField fx:id="searchField" promptText="Rechercher..." HBox.hgrow="ALWAYS"
+                           prefHeight="30" prefWidth="250"/>
+                <Button fx:id="searchButton" prefWidth="40" prefHeight="30" styleClass="search-button">
+                    <graphic>
+                        <ImageView fitWidth="20" fitHeight="20">
+                            <image>
+                                <Image url="@/images/recherche.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </HBox>
+            <!-- Nouvelle image de notification -->
+            <ImageView fx:id="notificationIcon" fitHeight="25.0" fitWidth="25.0"
+                       styleClass="notification-icon">
+                <image>
+                    <Image url="@/images/notifications.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView  styleClass="profile-image">
+                <image>
+                    <Image url="@/images/profile image.png"/>
+                </image>
+            </ImageView>
+            <Label text="Maddy Adams" styleClass="profile-name"/>
+        </HBox>
+    </top>
+
+    <!-- Left Section (Sidebar) -->
+    <left>
+        <ScrollPane fx:id="sidebarScrollPane" styleClass="sidebar-scroll-pane">
+            <content>
+                <VBox fx:id="sidebar" spacing="15.0" styleClass="sidebar" >
+                <!-- Bouton Tableau de bord -->
+                    <Button fx:id="dashboardButton" styleClass="sidebar-button" maxWidth="Infinity">
+                        <VBox.margin>
+                            <Insets top="20.0"/> <!-- Augmente l'espace au-dessus du bouton -->
+                        </VBox.margin>
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="sidebar-button-content">
+                                <children>
+                                    <StackPane>
+                                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                                            <image>
+                                                <Image url="@/images/statistiques (1).png"/>
+                                            </image>
+                                        </ImageView>
+                                    </StackPane>
+                                    <Label text="Tableau de bord" styleClass="sidebar-button-text"/>
+                                </children>
+                            </HBox>
+                        </graphic>
+                    </Button>
+
+                    <!-- Bouton Demande d'aide -->
+                    <Button fx:id="helpRequestButton" styleClass="sidebar-button" maxWidth="Infinity">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="sidebar-button-content">
+                                <children>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0">
+                                        <image>
+                                            <Image url="@/images/commentaire-question (1).png"/>
+                                        </image>
+                                    </ImageView>
+                                    <Label text="Demande d'aide" styleClass="sidebar-button-text"/>
+                                </children>
+                            </HBox>
+                        </graphic>
+                    </Button>
+
+                    <!-- Bouton Dons -->
+                    <Button fx:id="donationButton" styleClass="sidebar-button" maxWidth="Infinity">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="sidebar-button-content">
+                                <children>
+                                    <ImageView fitHeight="23.0" fitWidth="23.0">
+                                        <image>
+                                            <Image url="@/images/sac-dollar.png"/>
+                                        </image>
+                                    </ImageView>
+                                    <Label text="Dons" styleClass="sidebar-button-text"/>
+                                </children>
+                            </HBox>
+                        </graphic>
+                    </Button>
+
+                    <!-- Bouton Événement -->
+                    <Button fx:id="eventButton" styleClass="sidebar-button" maxWidth="Infinity">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="sidebar-button-content">
+                                <children>
+                                    <StackPane>
+                                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                                            <image>
+                                                <Image url="@/images/calendrier-lignes (1).png"/>
+                                            </image>
+                                        </ImageView>
+                                    </StackPane>
+                                    <Label text="Événement" styleClass="sidebar-button-text"/>
+                                </children>
+                            </HBox>
+                        </graphic>
+                    </Button>
+
+                    <!-- Bouton Bénévolat -->
+                    <Button fx:id="volunteerButton" styleClass="sidebar-button" maxWidth="Infinity">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="sidebar-button-content">
+                                <children>
+                                    <StackPane>
+                                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                                            <image>
+                                                <Image url="@/images/main-tenant-coeur (1).png"/>
+                                            </image>
+                                        </ImageView>
+                                    </StackPane>
+                                    <Label text="Bénévolat" styleClass="sidebar-button-text"/>
+                                </children>
+                            </HBox>
+                        </graphic>
+                    </Button>
+
+                    <!-- Bouton Paramètres -->
+                    <Button fx:id="settingsButton" styleClass="sidebar-button" maxWidth="Infinity">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="sidebar-button-content">
+                                <children>
+                                    <ImageView fitHeight="22.0" fitWidth="22.0">
+                                        <image>
+                                            <Image url="@/images/reglages.png"/>
+                                        </image>
+                                    </ImageView>
+                                    <Label text="Paramètres" styleClass="sidebar-button-text"/>
+                                </children>
+                            </HBox>
+                        </graphic>
+                    </Button>
+
+                    <!-- Bouton Messagerie -->
+                    <Button fx:id="messagingButton" styleClass="sidebar-button" maxWidth="Infinity">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="sidebar-button-content">
+                                <children>
+                                    <StackPane>
+                                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                                            <image>
+                                                <Image url="@/images/commentaire.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </StackPane>
+                                    <Label text="Messagerie" styleClass="sidebar-button-text"/>
+                                </children>
+                            </HBox>
+                        </graphic>
+                    </Button>
+
+                    <!-- Espace libre pour pousser le bouton Log Out en bas -->
+                    <Region HBox.hgrow="ALWAYS" />
+
+                    <!-- Bouton Log Out -->
+                    <Button fx:id="logoutButton" styleClass="sidebar-button logout-button" maxWidth="Infinity">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="sidebar-button-content">
+                                <children>
+                                    <StackPane>
+                                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                                            <image>
+                                                <Image url="@/images/deconnexion-alt.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </StackPane>
+                                    <Label text="Déconnexion" styleClass="sidebar-button-text"/>
+                                </children>
+                            </HBox>
+                        </graphic>
+                    </Button>
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </left>
+
+    <center>
+        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" styleClass="main-scroll-pane"/>
+    </center>
+</BorderPane>
