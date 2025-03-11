@@ -10,9 +10,6 @@
 <?import java.net.URL?>
 
 <?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
@@ -23,8 +20,7 @@
     </stylesheets>
     <!-- Center Section -->
     <center>
-
-        <VBox spacing="10" >
+        <VBox spacing="10">
             <!-- Search Bar -->
             <HBox alignment="CENTER" spacing="5" styleClass="search-box">
                 <TextField fx:id="searchField" promptText="Rechercher..." HBox.hgrow="ALWAYS"
@@ -38,18 +34,10 @@
                         </ImageView>
                     </graphic>
                 </Button>
-
-        <VBox spacing="10" style="-fx-background-color: white;">
-            <!-- Search Bar -->
-            <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">
-                <TextField fx:id="searchField" promptText="Rechercher Demande..." prefWidth="250"/>
-
             </HBox>
 
             <TableView fx:id="tableView" prefWidth="1200" prefHeight="800">
                 <columns>
-                    <!-- Colonnes existantes -->
-
                     <TableColumn text="Demandeur" prefWidth="120" minWidth="120" fx:id="demandeurColumn">
                         <cellValueFactory>
                             <PropertyValueFactory property="demandeur"/>
@@ -75,11 +63,6 @@
                             <PropertyValueFactory property="dateDemande"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn text="Demandeur" prefWidth="120" minWidth="120" fx:id="demandeurColumn"/>
-                    <TableColumn text="Téléphone" prefWidth="120" minWidth="120" fx:id="telephoneColumn"/>
-                    <TableColumn text="Email" prefWidth="150" minWidth="150" fx:id="emailColumn"/>
-                    <TableColumn text="Adresse" prefWidth="120" minWidth="120" fx:id="adresseColumn"/>
-                    <TableColumn text="Date de Demande" prefWidth="120" minWidth="120" fx:id="dateDemandeColumn"/>
                     <TableColumn text="Preuve" prefWidth="120" minWidth="120" fx:id="preuveColumn">
                         <cellValueFactory>
                             <PropertyValueFactory property="preuve"/>

@@ -1,31 +1,24 @@
 package com.example.innosynergy;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8a4e100a679ff778893b7ac0d57fb1a952eb76d5
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 
 public class Partner extends Application {
     @Override
-    public void start(Stage primaryStage) throws Exception {
-<<<<<<< HEAD
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MiraVia/PartnerView.fxml"));
-        Parent root = loader.load();
-        primaryStage.setScene(new Scene(root));
-=======
-        BorderPane root = FXMLLoader.load(getClass().getResource("/MiraVia/PartnerView.fxml"));
-        Scene scene = new Scene(root);
-
-        primaryStage.setTitle("Tableau de bord avec BootstrapFX");
-        primaryStage.setScene(scene);
->>>>>>> 8a4e100a679ff778893b7ac0d57fb1a952eb76d5
-        primaryStage.show();
+    public void start(Stage primaryStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MiraVia/PartnerView.fxml"));
+            Parent root = loader.load();
+            primaryStage.setTitle("Tableau de bord Partenaire");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement du fichier FXML.");
+        }
     }
 
     public static void main(String[] args) {

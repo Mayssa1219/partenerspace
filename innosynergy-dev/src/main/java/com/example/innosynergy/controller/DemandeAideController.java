@@ -194,6 +194,6 @@ public class DemandeAideController implements Initializable {
         modal.initModality(Modality.APPLICATION_MODAL);
         modal.show();
 
-}
+    }
 
 }
