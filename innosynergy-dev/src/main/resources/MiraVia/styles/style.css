@@ -27,7 +27,7 @@
 }
 
 .search-box {
-    -fx-background-color: white;
+
     -fx-padding: 5px;
     -fx-background-radius: 10px;
 }
@@ -147,4 +147,34 @@
 .footer-box img {
     vertical-align: middle;
     margin-right: 15px;
+}
+.etat-acceptee {
+    -fx-background-color: #d6ffa5;
+    -fx-text-fill: #0b8a00;
+}
+
+.etat-refusee {
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+}
+
+.etat-en-attente {
+    -fx-background-color: #FF9800;
+    -fx-text-fill: white;
+}
+/* Réduire l'espace entre les colonnes */
+.table-view .column-header-background {
+    -fx-padding: 0 0 0 0; /* Réduire le padding */
+}
+
+.table-view .column-header {
+    -fx-padding: 0 0 0 0; /* Réduire le padding */
+}
+
+.table-view .table-cell {
+    -fx-padding: 2 5 2 5; /* Réduire le padding des cellules */
+}
+
+.table-view .table-row-cell {
+    -fx-cell-size: 25px; /* Réduire la hauteur des lignes */
 }

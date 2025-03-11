@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 8fd2340dc291e3ed02e838ae9caa8d4e7f801fdd
 package com.example.innosynergy.model;
 
 import java.util.Date;
@@ -66,20 +62,6 @@ public class PartenaireData {
         return adresse;
     }
 
-<<<<<<< HEAD
-    public void setId(String id) { this.id = id; }
-    public void setNomPartenaire(String nomPartenaire) { this.nomPartenaire = nomPartenaire; }
-    public void setTelephone(String telephone) { this.telephone = telephone; }
-    public void setEmail(String email) { this.email = email; }
-    public void setAdresse(String adresse) { this.adresse = adresse; }
-    public void setEtat(String etat) { this.etat = etat; }
-    public void setNomEntreprise(String nomEntreprise) { this.nomEntreprise = nomEntreprise; }
-    public void setDateInscription(String dateInscription) { this.dateInscription = dateInscription; }
-    public void setDateExpiration(String dateExpiration) { this.dateExpiration = dateExpiration; }
-    public void setTypeActivite(String typeActivite) { this.typeActivite = typeActivite; }
-
-
-=======
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
@@ -115,5 +97,4 @@ public class PartenaireData {
     public void setDateExpiration(Date dateExpiration) {
         this.dateExpiration = dateExpiration;
     }
->>>>>>> 8fd2340dc291e3ed02e838ae9caa8d4e7f801fdd
 }
