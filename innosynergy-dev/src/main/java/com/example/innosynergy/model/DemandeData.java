@@ -117,16 +117,9 @@ public class DemandeData {
 
     public void setFileUrl(String fileUrl) {
         this.fileUrl.set(fileUrl);
-<<<<<<< HEAD
     }
 
     public StringProperty fileUrlProperty() {
         return fileUrl;
-=======
->>>>>>> 8a4e100a679ff778893b7ac0d57fb1a952eb76d5
     }
-
-    public StringProperty fileUrlProperty() {
-        return fileUrl;
-}
 }
