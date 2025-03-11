@@ -169,7 +169,7 @@ public class LoginController {
                 // Redirect to the main application page based on user type
                 try {
                     if ("partenaire".equals(user.getTypeUtilisateur())) {
-                        Parent partenaireView = FXMLLoader.load(getClass().getResource("/MiraVia/PartnerLayout.fxml"));
+                        Parent partenaireView = FXMLLoader.load(getClass().getResource("/MiraVia/PartnerView.fxml"));
                         Scene partenaireScene = new Scene(partenaireView);
                         Stage primaryStage = (Stage) loginButton.getScene().getWindow();
                         primaryStage.setScene(partenaireScene);

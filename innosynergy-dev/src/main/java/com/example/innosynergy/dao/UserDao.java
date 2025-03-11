@@ -8,4 +8,7 @@ public interface UserDao {
     void initiateGoogleLogin(String googleLoginUrl);
     User authenticateSansHachage(String email, String password);
     boolean registerUser(User user);
+    public boolean isEmailRegistered(String email);
+    boolean updatePassword(String email, String newPassword); // Add this method
+    String findNameByEmail(String email);
 }

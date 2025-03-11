@@ -10,7 +10,7 @@
 
 <BorderPane fx:id="mainLayout" xmlns="http://javafx.com/javafx/16"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.innosynergy.spaces.partner.controller.PartnerController">
+            fx:controller="com.example.innosynergy.controller.PartnerLayoutController">
 
     <!-- Référence au fichier CSS -->
     <stylesheets>
@@ -176,7 +176,7 @@
                     </Button>
 
                     <!-- Bouton Messagerie -->
-                    <Button fx:id="messagingButton" styleClass="sidebar-button" maxWidth="Infinity">
+                    <Button fx:id="messagesButton" styleClass="sidebar-button" maxWidth="Infinity">
                         <graphic>
                             <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="sidebar-button-content">
                                 <children>

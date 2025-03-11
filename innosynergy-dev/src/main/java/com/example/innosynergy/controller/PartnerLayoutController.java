@@ -68,7 +68,48 @@ public class PartnerLayoutController {
 
     @FXML
     private void initialize() {
-        // Set up initial state or bind properties if needed
+        // Gestionnaire d'événements pour le bouton "Paramètres"
+        settingsButton.setOnAction(event -> {
+            try {
+                Node settingsView = FXMLLoader.load(getClass().getResource("/MiraVia/SettingsView.fxml"));
+                scrollPane.setContent(settingsView);
+                titleLabel.setText("Paramètres");
+            } catch (IOException e) {
+                e.printStackTrace();
+                scrollPane.setContent(new Label("Erreur lors du chargement des paramètres."));
+            }
+        });
+
+        // Gestionnaire d'événements pour le bouton "Messagerie"
+        messagesButton.setOnAction(event -> {
+            try {
+                Node messengerView = FXMLLoader.load(getClass().getResource("/MiraVia/MessagerieView.fxml"));
+                scrollPane.setContent(messengerView);
+                titleLabel.setText("Messagerie");
+            } catch (IOException e) {
+                e.printStackTrace();
+                scrollPane.setContent(new Label("Erreur lors du chargement de la messagerie."));
+            }
+        });
+
+        // Gestionnaire d'événements pour le bouton "Demande d'aide"
+        if (helpRequestsButton == null) {
+            System.err.println("helpRequestsButton est null !");
+        } else {
+            System.out.println("helpRequestsButton est correctement injecté.");
+        }
+
+        // Gestionnaire d'événements pour le bouton "Demande d'aide"
+        helpRequestsButton.setOnAction(event -> {
+            try {
+                Node demandeAideView = FXMLLoader.load(getClass().getResource("/MiraVia/DemandeAideView.fxml"));
+                scrollPane.setContent(demandeAideView);
+                titleLabel.setText("Demandes d'aide");
+            } catch (IOException e) {
+                e.printStackTrace();
+                scrollPane.setContent(new Label("Erreur lors du chargement des demandes d'aide."));
+            }
+        });
     }
 
     @FXML
@@ -94,9 +135,9 @@ public class PartnerLayoutController {
                     title = "Tableau de bord";
                     content = FXMLLoader.load(getClass().getResource("/MiraVia/dashboard.fxml"));
                     break;
-                case "helpRequestsButton":
+                case "helpRequestButton":
                     title = "Demandes d'aide";
-                    content = new Label("Contenu des Demandes d'aide");
+                    content = FXMLLoader.load(getClass().getResource("/MiraVia/DemandeAideView.fxml"));
                     break;
                 case "consultButton":
                     title = "Consulter";
@@ -125,9 +166,10 @@ public class PartnerLayoutController {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            content = new Label("Erreur lors du chargement de la vue : " + e.getMessage());
         }
 
         titleLabel.setText(title);
         scrollPane.setContent(content);
-    }
+}
 }

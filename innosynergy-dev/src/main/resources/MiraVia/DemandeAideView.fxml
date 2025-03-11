@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.innosynergy.controller.DemandeAideController">
+    <stylesheets>
+        <URL value="@styles/style.css"/>
+    </stylesheets>
+    <!-- Center Section -->
+    <center>
+        <VBox spacing="10" style="-fx-background-color: white;">
+            <!-- Search Bar -->
+            <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">
+                <TextField fx:id="searchField" promptText="Rechercher Demande..." prefWidth="250"/>
+            </HBox>
+
+            <TableView fx:id="tableView" prefWidth="1200" prefHeight="800">
+                <columns>
+                    <!-- Colonnes existantes -->
+                    <TableColumn text="Demandeur" prefWidth="120" minWidth="120" fx:id="demandeurColumn"/>
+                    <TableColumn text="Téléphone" prefWidth="120" minWidth="120" fx:id="telephoneColumn"/>
+                    <TableColumn text="Email" prefWidth="150" minWidth="150" fx:id="emailColumn"/>
+                    <TableColumn text="Adresse" prefWidth="120" minWidth="120" fx:id="adresseColumn"/>
+                    <TableColumn text="Date de Demande" prefWidth="120" minWidth="120" fx:id="dateDemandeColumn"/>
+                    <TableColumn text="Preuve" prefWidth="120" minWidth="120" fx:id="preuveColumn">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="preuve"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Actions" prefWidth="120" minWidth="120" fx:id="actionColumn"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

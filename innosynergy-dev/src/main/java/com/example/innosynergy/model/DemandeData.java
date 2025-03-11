@@ -1,99 +1,125 @@
 package com.example.innosynergy.model;
 
-import java.util.Date;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class DemandeData {
-    private String id;
-    private String demandeur;
-    private String telephone;
-    private String email;
-    private String adresse;
-    private Date dateDemande;
-    private String etat;
-    private String description;
-    private String fileUrl;
+    private StringProperty demandeur;
+    private StringProperty telephone;
+    private StringProperty email;
+    private StringProperty adresse;
+    private StringProperty dateDemande;
+    private StringProperty preuve; // Nouveau champ pour la preuve
+    private StringProperty description; // Champ description
+    private StringProperty fileUrl; // Champ pour l'URL du fichier
 
-    public DemandeData(String id, String demandeur, String telephone, String email, String adresse, Date dateDemande, String etat, String description, String fileUrl) {
-        this.id = id;
-        this.demandeur = demandeur;
-        this.telephone = telephone;
-        this.email = email;
-        this.adresse = adresse;
-        this.dateDemande = dateDemande;
-        this.etat = etat;
-        this.description = description;
-        this.fileUrl = fileUrl;
+    // Constructeur
+    public DemandeData(String demandeur, String telephone, String email, String adresse, String dateDemande, String preuve, String description, String fileUrl) {
+        this.demandeur = new SimpleStringProperty(demandeur);
+        this.telephone = new SimpleStringProperty(telephone);
+        this.email = new SimpleStringProperty(email);
+        this.adresse = new SimpleStringProperty(adresse);
+        this.dateDemande = new SimpleStringProperty(dateDemande);
+        this.preuve = new SimpleStringProperty(preuve);
+        this.description = new SimpleStringProperty(description);
+        this.fileUrl = new SimpleStringProperty(fileUrl);
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    // Getters et Setters pour les propriétés
 
     public String getDemandeur() {
-        return demandeur;
+        return demandeur.get();
     }
 
     public void setDemandeur(String demandeur) {
-        this.demandeur = demandeur;
+        this.demandeur.set(demandeur);
+    }
+
+    public StringProperty demandeurProperty() {
+        return demandeur;
     }
 
     public String getTelephone() {
-        return telephone;
+        return telephone.get();
     }
 
     public void setTelephone(String telephone) {
-        this.telephone = telephone;
+        this.telephone.set(telephone);
+    }
+
+    public StringProperty telephoneProperty() {
+        return telephone;
     }
 
     public String getEmail() {
-        return email;
+        return email.get();
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email.set(email);
+    }
+
+    public StringProperty emailProperty() {
+        return email;
     }
 
     public String getAdresse() {
-        return adresse;
+        return adresse.get();
     }
 
     public void setAdresse(String adresse) {
-        this.adresse = adresse;
+        this.adresse.set(adresse);
     }
 
-    public Date getDateDemande() {
+    public StringProperty adresseProperty() {
+        return adresse;
+    }
+
+    public String getDateDemande() {
+        return dateDemande.get();
+    }
+
+    public void setDateDemande(String dateDemande) {
+        this.dateDemande.set(dateDemande);
+    }
+
+    public StringProperty dateDemandeProperty() {
         return dateDemande;
     }
 
-    public void setDateDemande(Date dateDemande) {
-        this.dateDemande = dateDemande;
+    public String getPreuve() {
+        return preuve.get();
     }
 
-    public String getEtat() {
-        return etat;
+    public void setPreuve(String preuve) {
+        this.preuve.set(preuve);
     }
 
-    public void setEtat(String etat) {
-        this.etat = etat;
+    public StringProperty preuveProperty() {
+        return preuve;
     }
 
     public String getDescription() {
-        return description;
+        return description.get();
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description.set(description);
+    }
+
+    public StringProperty descriptionProperty() {
+        return description;
     }
 
     public String getFileUrl() {
-        return fileUrl;
+        return fileUrl.get();
     }
 
     public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
+        this.fileUrl.set(fileUrl);
     }
+
+    public StringProperty fileUrlProperty() {
+        return fileUrl;
+}
 }
