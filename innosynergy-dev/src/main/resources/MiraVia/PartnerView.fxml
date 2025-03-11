@@ -92,7 +92,7 @@
                     </Button>
 
                     <!-- Bouton Demande d'aide -->
-                    <Button fx:id="helpRequestButton" styleClass="sidebar-button" maxWidth="Infinity">
+                    <Button fx:id="helpRequestsButton" styleClass="sidebar-button" maxWidth="Infinity">
                         <graphic>
                             <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="sidebar-button-content">
                                 <children>

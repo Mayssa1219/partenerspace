@@ -171,5 +171,5 @@ public class PartnerLayoutController {
 
         titleLabel.setText(title);
         scrollPane.setContent(content);
-}
+    }
 }
