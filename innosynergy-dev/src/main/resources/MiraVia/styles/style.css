@@ -148,6 +148,7 @@
     vertical-align: middle;
     margin-right: 15px;
 }
+<<<<<<< HEAD
 .etat-acceptee {
     -fx-background-color: #d6ffa5;
     -fx-text-fill: #0b8a00;
@@ -162,6 +163,9 @@
     -fx-background-color: #FF9800;
     -fx-text-fill: white;
 }
+=======
+
+>>>>>>> 8a4e100a679ff778893b7ac0d57fb1a952eb76d5
 /* Réduire l'espace entre les colonnes */
 .table-view .column-header-background {
     -fx-padding: 0 0 0 0; /* Réduire le padding */
@@ -174,7 +178,10 @@
 .table-view .table-cell {
     -fx-padding: 2 5 2 5; /* Réduire le padding des cellules */
 }
+<<<<<<< HEAD
 
 .table-view .table-row-cell {
     -fx-cell-size: 25px; /* Réduire la hauteur des lignes */
 }
+=======
+>>>>>>> 8a4e100a679ff778893b7ac0d57fb1a952eb76d5

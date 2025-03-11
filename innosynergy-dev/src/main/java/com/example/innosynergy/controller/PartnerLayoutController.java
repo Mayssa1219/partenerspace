@@ -135,7 +135,7 @@ public class PartnerLayoutController {
                     title = "Tableau de bord";
                     content = FXMLLoader.load(getClass().getResource("/MiraVia/dashboard.fxml"));
                     break;
-                case "helpRequestsButton":
+                case "helpRequestButton":
                     title = "Demandes d'aide";
                     content = FXMLLoader.load(getClass().getResource("/MiraVia/DemandeAideView.fxml"));
                     break;

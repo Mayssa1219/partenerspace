@@ -46,7 +46,7 @@
             </HBox>
             <ImageView fitHeight="48.0" fitWidth="48.0">
                 <image>
-                    <Image url="@/images/Notifications.png"/>
+                    <Image url=""/>
                 </image>
             </ImageView>
             <ImageView fitHeight="40.0" fitWidth="40.0">
