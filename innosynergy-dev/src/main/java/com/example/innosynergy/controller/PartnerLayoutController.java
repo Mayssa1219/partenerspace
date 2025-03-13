@@ -1,5 +1,6 @@
 package com.example.innosynergy.controller;
 
+import com.example.innosynergy.dao.NotificationDaoImpl;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -12,6 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PartnerLayoutController {
 
@@ -31,145 +34,72 @@ public class PartnerLayoutController {
     private VBox sidebar;
 
     @FXML
-    private Button dashboardButton;
-
-    @FXML
-    private Button helpRequestsButton; // Assurez-vous que ce fx:id correspond à celui dans le FXML
-
-    @FXML
-    private Button consultButton;
-
-    @FXML
-    private Button donButton;
-
-    @FXML
-    private Button eventsButton;
-
-    @FXML
-    private Button benevolButton;
-
-    @FXML
-    private Button settingsButton;
-
-    @FXML
-    private Button messagesButton;
+    private Button dashboardButton, helpRequestsButton, consultButton, donButton,
+            eventsButton, benevolButton, settingsButton, messagesButton;
 
     @FXML
     private ScrollPane scrollPane;
 
     @FXML
-    private ImageView profileImageView;
+    private ImageView profileImageView, notificationsImageView, searchImageView;
 
-    @FXML
-    private ImageView notificationsImageView;
-
-    @FXML
-    private ImageView searchImageView;
+    private final Map<Button, String[]> buttonViewMappings = new HashMap<>();
 
     @FXML
     private void initialize() {
-        // Gestionnaire d'événements pour le bouton "Paramètres"
-        settingsButton.setOnAction(event -> {
-            try {
-                Node settingsView = FXMLLoader.load(getClass().getResource("/MiraVia/SettingsView.fxml"));
-                scrollPane.setContent(settingsView);
-                titleLabel.setText("Paramètres");
-            } catch (IOException e) {
-                e.printStackTrace();
-                scrollPane.setContent(new Label("Erreur lors du chargement des paramètres."));
+        // Associer les boutons aux vues correspondantes
+        buttonViewMappings.put(dashboardButton, new String[]{"Tableau de bord", "/MiraVia/dashboard.fxml"});
+        buttonViewMappings.put(helpRequestsButton, new String[]{"Demandes d'aide", "/MiraVia/DemandeAideView.fxml"});
+        buttonViewMappings.put(consultButton, new String[]{"Consulter", null});
+        buttonViewMappings.put(donButton, new String[]{"Don", "/MiraVia/DonView.fxml"});
+        buttonViewMappings.put(eventsButton, new String[]{"Événements", null});
+        buttonViewMappings.put(benevolButton, new String[]{"Bénévolat", null});
+        buttonViewMappings.put(settingsButton, new String[]{"Paramètres", "/MiraVia/SettingsView.fxml"});
+        buttonViewMappings.put(messagesButton, new String[]{"Messagerie", "/MiraVia/MessagerieView.fxml"});
+
+        // Attacher les événements à chaque bouton
+        buttonViewMappings.forEach((button, viewInfo) -> {
+            if (button != null) {
+                button.setOnAction(event -> loadView(viewInfo[0], viewInfo[1]));
+            } else {
+                System.err.println("Bouton non injecté dans FXML !");
             }
         });
 
-        // Gestionnaire d'événements pour le bouton "Messagerie"
-        messagesButton.setOnAction(event -> {
-            try {
-                Node messengerView = FXMLLoader.load(getClass().getResource("/MiraVia/MessagerieView.fxml"));
-                scrollPane.setContent(messengerView);
-                titleLabel.setText("Messagerie");
-            } catch (IOException e) {
-                e.printStackTrace();
-                scrollPane.setContent(new Label("Erreur lors du chargement de la messagerie."));
-            }
-        });
-
-        // Gestionnaire d'événements pour le bouton "Demande d'aide"
-        if (helpRequestsButton == null) {
-            System.err.println("helpRequestsButton est null !");
-        } else {
-            System.out.println("helpRequestsButton est correctement injecté.");
-        }
-
-        // Gestionnaire d'événements pour le bouton "Demande d'aide"
-        helpRequestsButton.setOnAction(event -> {
-            try {
-                Node demandeAideView = FXMLLoader.load(getClass().getResource("/MiraVia/DemandeAideView.fxml"));
-                scrollPane.setContent(demandeAideView);
-                titleLabel.setText("Demandes d'aide");
-            } catch (IOException e) {
-                e.printStackTrace();
-                scrollPane.setContent(new Label("Erreur lors du chargement des demandes d'aide."));
-            }
-        });
+        // Charger le tableau de bord par défaut
+        loadView("Tableau de bord", "/MiraVia/dashboard.fxml");
     }
 
+    @FXML
+    private Button loadNotificationsButton;
+
+    @FXML
+    private void handleLoadNotifications() {
+        NotificationBarController notificationBarController = new NotificationBarController();
+        NotificationDaoImpl notificationDao = new NotificationDaoImpl(notificationBarController);
+        notificationDao.loadNotifications();
+    }
+
+    private void loadView(String title, String fxmlPath) {
+        titleLabel.setText(title);
+        if (fxmlPath == null) {
+            scrollPane.setContent(new Label("Contenu à venir pour " + title));
+            return;
+        }
+        try {
+            Node view = FXMLLoader.load(getClass().getResource(fxmlPath));
+            scrollPane.setContent(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+            scrollPane.setContent(new Label("Erreur lors du chargement de " + title));
+        }
+    }
+
+    /**
+     * Affiche ou masque la barre latérale.
+     */
     @FXML
     private void toggleSidebarVisibility() {
         sidebarScrollPane.setVisible(!sidebarScrollPane.isVisible());
-    }
-
-    @FXML
-    private void updateContentBasedOnButton() {
-        Button sourceButton = (Button) mainLayout.getScene().getFocusOwner();
-        if (sourceButton != null) {
-            setTitleAndContent(sourceButton);
-        }
-    }
-
-    private void setTitleAndContent(Button sourceButton) {
-        String title = "";
-        Node content = null;
-
-        try {
-            switch (sourceButton.getId()) {
-                case "dashboardButton":
-                    title = "Tableau de bord";
-                    content = FXMLLoader.load(getClass().getResource("/MiraVia/dashboard.fxml"));
-                    break;
-                case "helpRequestButton":
-                    title = "Demandes d'aide";
-                    content = FXMLLoader.load(getClass().getResource("/MiraVia/DemandeAideView.fxml"));
-                    break;
-                case "consultButton":
-                    title = "Consulter";
-                    content = new Label("Contenu de Consulter");
-                    break;
-                case "donButton":
-                    title = "Don";
-                    content = new Label("Contenu de Don");
-                    break;
-                case "eventsButton":
-                    title = "Événements";
-                    content = new Label("Contenu des Événements");
-                    break;
-                case "benevolButton":
-                    title = "Bénévolat";
-                    content = new Label("Contenu de Bénévolat");
-                    break;
-                case "settingsButton":
-                    title = "Paramètres";
-                    content = FXMLLoader.load(getClass().getResource("/MiraVia/SettingsView.fxml"));
-                    break;
-                case "messagesButton":
-                    title = "Messagerie";
-                    content = FXMLLoader.load(getClass().getResource("/MiraVia/MessagerieView.fxml"));
-                    break;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            content = new Label("Erreur lors du chargement de la vue : " + e.getMessage());
-        }
-
-        titleLabel.setText(title);
-        scrollPane.setContent(content);
     }
 }

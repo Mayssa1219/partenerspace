@@ -173,7 +173,23 @@ public class UserDaoImpl implements UserDao {
         }
         return false;
     }
+    @Override
+    public boolean updatePasswordProfil(String email, String newPassword) {
+        String sql = "UPDATE utilisateurs SET mot_de_passe = ? WHERE email = ?";
+        try (Connection connection = connexionBD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
+            String hashedPassword = PasswordUtil.hashPassword(newPassword);
+            preparedStatement.setString(1, hashedPassword);
+            preparedStatement.setString(2, email);
+
+            int affectedRows = preparedStatement.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     @Override
     public void sendPasswordResetEmail(String email) {
         // Logic to send a password reset email

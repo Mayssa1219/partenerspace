@@ -11,4 +11,5 @@ public interface UserDao {
     public boolean isEmailRegistered(String email);
     boolean updatePassword(String email, String newPassword); // Add this method
     String findNameByEmail(String email);
+    boolean updatePasswordProfil(String email, String newPassword);
 }

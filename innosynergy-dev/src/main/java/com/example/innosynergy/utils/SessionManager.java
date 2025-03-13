@@ -9,10 +9,12 @@ import java.util.UUID;
 public class SessionManager {
     private static final long SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
     private static final Map<String, Session> sessions = new HashMap<>();
+    private static String currentSessionId;
 
     public static String createSession(User user) {
         String sessionId = UUID.randomUUID().toString();
         sessions.put(sessionId, new Session(user, System.currentTimeMillis()));
+        currentSessionId = sessionId;
         return sessionId;
     }
 
@@ -28,6 +30,13 @@ public class SessionManager {
 
     public static void invalidateSession(String sessionId) {
         sessions.remove(sessionId);
+        if (sessionId.equals(currentSessionId)) {
+            currentSessionId = null;
+        }
+    }
+
+    public static String getCurrentSessionId() {
+        return currentSessionId;
     }
 
     private static class Session {

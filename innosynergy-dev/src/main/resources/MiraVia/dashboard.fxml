@@ -1,38 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.XYChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 
-<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.innosynergy.controller.DashboardController" spacing="20" alignment="TOP_CENTER">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-    <Label text="Tableau de bord" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
-    <HBox spacing="15">
-        <VBox spacing="10" alignment="TOP_CENTER">
-            <Label text="Statistiques" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-            <GridPane hgap="10" vgap="10">
-                <Label text="Statistique 1:"/>
-                <Label fx:id="stat1Label" text="Valeur 1"/>
-                <Label text="Statistique 2:"/>
-                <Label fx:id="stat2Label" text="Valeur 2"/>
-                <Label text="Statistique 3:"/>
-                <Label fx:id="stat3Label" text="Valeur 3"/>
-            </GridPane>
-        </VBox>
-        <VBox spacing="10" alignment="TOP_CENTER">
-            <Label text="Activité récente" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-            <ListView fx:id="recentActivityList" prefHeight="200" prefWidth="300">
-                <!-- Items will be added dynamically -->
-            </ListView>
-        </VBox>
-        <VBox spacing="10" alignment="TOP_CENTER">
-            <Label text="Notifications" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-            <ListView fx:id="notificationsList" prefHeight="200" prefWidth="300">
-                <!-- Items will be added dynamically -->
-            </ListView>
-        </VBox>
-    </HBox>
-</VBox>
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.innosynergy.controller.DashboardController">
+
+    <stylesheets>
+        <URL value="@styles/style.css"/>
+    </stylesheets>
+
+    <!-- Haut : Liste des contrats et Historique -->
+    <top>
+        <HBox spacing="20.0" BorderPane.margin="20 20 20 20">
+            <!-- Historique des actions -->
+            <VBox spacing="10.0" prefWidth="500.0" styleClass="card">
+                <Label text="Historique des ajouts / actions" styleClass="section-title"/>
+                <TableView fx:id="historyTable">
+                    <columns>
+                        <TableColumn text="Date" prefWidth="120.0">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="date"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Action" prefWidth="350.0">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="action"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Liste des contrats -->
+            <VBox spacing="10.0" prefWidth="500.0" styleClass="card">
+                <Label text="Liste des contrats" styleClass="section-title"/>
+                <TableView fx:id="contractsTable">
+                    <columns>
+                        <TableColumn text="Contrat ID" prefWidth="100.0">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="id"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Client" prefWidth="200.0">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="client"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Statut" prefWidth="150.0">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="status"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+            </VBox>
+        </HBox>
+    </top>
+
+    <!-- Centre : Statistiques à gauche et Horloge à droite -->
+    <center>
+        <HBox spacing="30.0" padding="30.0">
+            <!-- Graphiques statistiques -->
+            <VBox spacing="20.0" alignment="CENTER" styleClass="card">
+                <Label text="Statistiques" styleClass="section-title"/>
+
+                <VBox spacing="10.0">
+                    <Label text="Utilisation de la plateforme" styleClass="chart-title"/>
+                    <LineChart fx:id="usageLineChart">
+                        <xAxis>
+                            <NumberAxis label="Temps"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Utilisation"/>
+                        </yAxis>
+                        <data>
+                            <XYChart.Series name="Utilisation">
+                            </XYChart.Series>
+                        </data>
+                    </LineChart>
+                </VBox>
+
+                <VBox spacing="10.0">
+                    <Label text="Contrats de partenariat" styleClass="chart-title"/>
+                    <LineChart fx:id="contractsLineChart">
+                        <xAxis>
+                            <NumberAxis label="Temps"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Nombre de contrats"/>
+                        </yAxis>
+                        <data>
+                            <XYChart.Series name="Contrats">
+                            </XYChart.Series>
+                        </data>
+                    </LineChart>
+                </VBox>
+            </VBox>
+
+            <!-- Horloge circulaire -->
+            <VBox alignment="CENTER" spacing="20.0" styleClass="clock-container">
+                <Circle radius="100.0" fill="#013A71"/>
+                <Label fx:id="clockLabel" text="12:00" styleClass="clock-text"/>
+            </VBox>
+        </HBox>
+    </center>
+
+</BorderPane>

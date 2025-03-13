@@ -119,4 +119,8 @@ public class User {
     public void setStatus(String status) {
         this.status = status;
     }
+    @Override
+    public String toString() {
+        return "User{idUtilisateur=" + idUtilisateur + ", username='" + nom + "', email='" + email + "'}";
+    }
 }

@@ -3,13 +3,14 @@ package com.example.innosynergy.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class DonModel {
+public class Don {
     private int idDon;
     private int idClient;
     private Integer idPartenaire; // Nullable field
     private BigDecimal montant;
     private LocalDateTime dateDon;
     private String status;
+    private String clientName; // Added field for client name
 
     // Getters and Setters
     public int getIdDon() {
@@ -58,5 +59,18 @@ public class DonModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    // Method to check if the donation is from a partner
+    public boolean isFromPartner() {
+        return idPartenaire != null;
     }
 }

@@ -2,7 +2,7 @@ package com.example.innosynergy.model;
 
 import java.util.Date;
 
-public class PartenaireProfileModel {
+public class PartenaireProfileModel  {
     private int idPartenaire;
     private String nomEntreprise;
     private String typeActivite;
@@ -12,8 +12,17 @@ public class PartenaireProfileModel {
     private String autresDocuments;
     private int etat;
     private Date dateExpiration;
+    private String avatar;
 
-    public PartenaireProfileModel(int idPartenaire, String nomEntreprise, String typeActivite, String siteWeb, String adresse, String telephone, String autresDocuments, int etat, Date dateExpiration) {
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public PartenaireProfileModel(int idPartenaire, String nomEntreprise, String typeActivite, String siteWeb, String adresse, String telephone, String autresDocuments, int etat, Date dateExpiration, String avatar) {
         this.idPartenaire = idPartenaire;
         this.nomEntreprise = nomEntreprise;
         this.typeActivite = typeActivite;
@@ -23,6 +32,7 @@ public class PartenaireProfileModel {
         this.autresDocuments = autresDocuments;
         this.etat = etat;
         this.dateExpiration = dateExpiration;
+        this.avatar=avatar;
     }
 
     // Getters and setters for each field
