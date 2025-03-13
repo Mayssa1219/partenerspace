@@ -2,6 +2,7 @@ package com.example.innosynergy.dao;
 
 import com.example.innosynergy.config.ConnexionBD;
 import com.example.innosynergy.model.PartenaireData;
+import com.example.innosynergy.model.PartenaireProfileModel;
 import com.example.innosynergy.model.User;
 
 import java.sql.*;
@@ -14,6 +15,7 @@ public class PartenaireDaoImpl implements PartenaireDao {
     public PartenaireDaoImpl() {
         this.connexionBD = new ConnexionBD();
     }
+
     @Override
     public PartenaireData getPartenaire(int id) {
         String query = "SELECT u.id_utilisateur, u.nom, u.prenom, u.email, u.telephone, u.date_inscription, u.type_utilisateur, u.avatar, u.statut_verification, u.status, " +
@@ -43,6 +45,7 @@ public class PartenaireDaoImpl implements PartenaireDao {
         }
         return null;
     }
+
     @Override
     public void addPartenaire(PartenaireData partenaire) {
         String query = "INSERT INTO partenaires (id_partenaire, nom_entreprise, type_activite, site_web, adresse, telephone, autres_documents, etat, date_expiration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -116,19 +119,71 @@ public class PartenaireDaoImpl implements PartenaireDao {
     }
 
     @Override
-    public void updatePartenaire(PartenaireData partenaire) {
-        String query = "UPDATE partenaires SET nom_entreprise = ?, type_activite = ?, site_web = ?, adresse = ?, telephone = ?, autres_documents = ?, etat = ?, date_expiration = ? WHERE id_partenaire = ?";
+    public PartenaireProfileModel getPartenaireById(int id) {
+        String query = "SELECT p.*, u.avatar FROM partenaires p JOIN utilisateurs u ON p.id_partenaire = u.id_utilisateur WHERE p.id_partenaire = ?";
         try (Connection connection = connexionBD.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new PartenaireProfileModel(
+                        resultSet.getInt("id_partenaire"),
+                        resultSet.getString("nom_entreprise"),
+                        resultSet.getString("type_activite"),
+                        resultSet.getString("site_web"),
+                        resultSet.getString("adresse"),
+                        resultSet.getString("telephone"),
+                        resultSet.getString("autres_documents"),
+                        resultSet.getInt("etat"),
+                        resultSet.getDate("date_expiration"),
+                        resultSet.getString("avatar")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public PartenaireProfileModel getPartenaireByUserId(int userId) {
+        String query = "SELECT p.*, u.avatar FROM partenaires p JOIN utilisateurs u ON p.id_partenaire = u.id_utilisateur WHERE u.id_utilisateur = ?";
+        try (Connection connection = connexionBD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new PartenaireProfileModel(
+                        resultSet.getInt("id_partenaire"),
+                        resultSet.getString("nom_entreprise"),
+                        resultSet.getString("type_activite"),
+                        resultSet.getString("site_web"),
+                        resultSet.getString("adresse"),
+                        resultSet.getString("telephone"),
+                        resultSet.getString("autres_documents"),
+                        resultSet.getInt("etat"),
+                        resultSet.getDate("date_expiration"),
+                        resultSet.getString("avatar")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void updatePartenaire(PartenaireProfileModel partenaire) {
+        String updatePartenaireQuery = "UPDATE partenaires SET nom_entreprise = ?, telephone = ?, adresse = ?, site_web = ? WHERE id_partenaire = ?";
+
+        try (Connection connection = connexionBD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updatePartenaireQuery)) {
             preparedStatement.setString(1, partenaire.getNomEntreprise());
-            preparedStatement.setString(2, partenaire.getTypeActivite());
-            preparedStatement.setString(3, partenaire.getSiteWeb());
-            preparedStatement.setString(4, partenaire.getAdresse());
-            preparedStatement.setString(5, partenaire.getTelephone());
-            preparedStatement.setString(6, partenaire.getAutresDocuments());
-            preparedStatement.setInt(7, partenaire.getEtat());
-            preparedStatement.setDate(8, new java.sql.Date(partenaire.getDateExpiration().getTime()));
-            preparedStatement.setInt(9, partenaire.getIdPartenaire());
+            preparedStatement.setString(2, partenaire.getTelephone());
+            preparedStatement.setString(3, partenaire.getAdresse());
+            preparedStatement.setString(4, partenaire.getSiteWeb());
+            preparedStatement.setInt(5, partenaire.getIdPartenaire());
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -146,6 +201,7 @@ public class PartenaireDaoImpl implements PartenaireDao {
             e.printStackTrace();
         }
     }
+
     @Override
     public void updateProfile(User user, PartenaireData partenaireData) {
         String updateUserQuery = "UPDATE utilisateurs SET nom = ?, prenom = ?, email = ?, mot_de_passe = ?, telephone = ?, avatar = ?, statut_verification = ?, status = ? WHERE id_utilisateur = ?";

@@ -50,7 +50,7 @@
             </HBox>
             <!-- Nouvelle image de notification -->
             <ImageView fx:id="notificationIcon" fitHeight="25.0" fitWidth="25.0"
-                       styleClass="notification-icon">
+                       styleClass="notification-icon" onMouseClicked="#handleLoadNotifications">
                 <image>
                     <Image url="@/images/notifications.png"/>
                 </image>
@@ -108,7 +108,7 @@
                     </Button>
 
                     <!-- Bouton Dons -->
-                    <Button fx:id="donationButton" styleClass="sidebar-button" maxWidth="Infinity">
+                    <Button fx:id="donButton" styleClass="sidebar-button" maxWidth="Infinity">
                         <graphic>
                             <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="sidebar-button-content">
                                 <children>

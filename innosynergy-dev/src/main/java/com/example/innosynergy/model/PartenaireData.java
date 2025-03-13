@@ -2,7 +2,7 @@ package com.example.innosynergy.model;
 
 import java.util.Date;
 
-public class PartenaireData {
+public class PartenaireData extends User {
     private int idPartenaire;
     private String nomEntreprise;
     private String typeActivite;

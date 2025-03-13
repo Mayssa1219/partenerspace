@@ -98,6 +98,15 @@
 .main-scroll-pane {
     -fx-background-color: #f9f9f9;
 }
+<<<<<<< HEAD
+=======
+
+.icon-message {
+    -fx-font-family: 'FontAwesome'; /* Utiliser la police FontAwesome */
+    -fx-font-size: 20px;
+    -fx-text-fill: #013A71; /* Couleur des icônes en bleu */
+}
+>>>>>>> 4c44b2a5285ed3de09b2b1d8cc9db6ffe86d71bd
 
 /* Style des icônes */
 .icon-bar-chart,
@@ -113,7 +122,29 @@
     -fx-text-fill: #013A71;
 }
 
+<<<<<<< HEAD
 /* Style des états */
+=======
+.footer-box {
+    -fx-padding: 10px;
+    -fx-border-top-width: 1px; /* Fixed border-top issue */
+    -fx-border-top-color: #ddd;
+    -fx-background-color: #f7f7f7;
+    -fx-margin-top: auto;
+    -fx-text-align: center;
+}
+
+.copyright-text {
+    -fx-font-size: 8px;
+    -fx-text-fill: #888;
+}
+
+.footer-box img {
+    -fx-vertical-align: middle;
+    -fx-margin-right: 15px;
+}
+
+>>>>>>> 4c44b2a5285ed3de09b2b1d8cc9db6ffe86d71bd
 .etat-acceptee {
     -fx-background-color: #d6ffa5;
     -fx-text-fill: #0b8a00;
@@ -130,6 +161,7 @@
 }
 
 /* Réduire l'espace entre les colonnes */
+<<<<<<< HEAD
 .table-view .column-header-background,
 .table-view .column-header,
 .table-view .table-cell,
@@ -137,6 +169,20 @@
     -fx-padding: 0 0 0 0;
 }
 
+=======
+.table-view .column-header-background {
+    -fx-padding: 0; /* Réduire le padding */
+}
+
+.table-view .column-header {
+    -fx-padding: 0; /* Réduire le padding */
+}
+
+.table-view .table-cell {
+    -fx-padding: 2 5; /* Réduire le padding des cellules */
+}
+
+>>>>>>> 4c44b2a5285ed3de09b2b1d8cc9db6ffe86d71bd
 .table-view .table-row-cell {
     -fx-cell-size: 25px;
 }
@@ -252,3 +298,53 @@
     }
 
 }
+<<<<<<< HEAD
+=======
+.dashboard-container {
+    -fx-background-color: #f4f4f4;
+}
+
+.card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15px;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0.2, 0, 4);
+    -fx-min-width: 500px;
+    -fx-alignment: center;
+}
+
+.dashboard-container {
+    -fx-background-color: #f4f4f4;
+}
+
+.card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15px;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0.2, 0, 4);
+    -fx-min-width: 450px;
+}
+
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #013A71;
+}
+
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #013A71;
+}
+
+.clock-container {
+    -fx-alignment: center;
+    -fx-padding: 20px;
+}
+
+.clock-text {
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+>>>>>>> 4c44b2a5285ed3de09b2b1d8cc9db6ffe86d71bd

@@ -1,55 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="notificationContainer" xmlns:fx="http://javafx.com/fxml/1" spacing="15" alignment="TOP_LEFT" style="-fx-padding: 20;" fx:controller="com.example.innosynergy.controller.NotificationController">
+<VBox fx:id="notificationContainer" alignment="TOP_LEFT" prefHeight="457.0" prefWidth="400.0" spacing="15" style="-fx-padding: 20;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.innosynergy.controller.NotificationController">
 
     <!-- Title Section -->
-    <Label text="Notification Settings" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Previously" />
 
-    <!-- Enable Notifications -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <ImageView fitWidth="20" fitHeight="20">
-            <Image url="@/images/notification.png"/>
-        </ImageView>
-        <Label text="Enable Notifications"/>
-        <CheckBox fx:id="enableNotifications" text="Enable Notifications" selected="true" onAction="#handleNotificationToggle"/>
-    </HBox>
+    <!-- Notification Item 1 -->
+    <VBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: white; -fx-padding: 10; -fx-background-radius: 10; -fx-border-color: #d1d5db; -fx-border-radius: 10;">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <VBox alignment="CENTER" style="-fx-background-color: #ec4899; -fx-background-radius: 50%; -fx-min-width: 40; -fx-min-height: 40;">
+                <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="V." />
+            </VBox>
+            <VBox alignment="TOP_LEFT" spacing="5">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Vista rewards club...." />
+                    <Label style="-fx-font-size: 12px; -fx-text-fill: #6b7280;" text="Dec 16, 2023" />
+                </HBox>
+                <Label style="-fx-font-size: 14px; -fx-text-fill: #4b5563;" text="Earn Points without making a purchase. Complete your first mission today!" />
+            </VBox>
+        </HBox>
+    </VBox>
 
-    <!-- Notification Types -->
-    <Label text="Select Notification Types" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+    <!-- Notification Item 2 -->
+    <VBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: white; -fx-padding: 10; -fx-background-radius: 10; -fx-border-color: #d1d5db; -fx-border-radius: 10;">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <VBox alignment="CENTER" style="-fx-background-color: #ec4899; -fx-background-radius: 50%; -fx-min-width: 40; -fx-min-height: 40;">
+                <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="V." />
+            </VBox>
+            <VBox alignment="TOP_LEFT" spacing="5">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="The Vista rewards cl..." />
+                    <Label style="-fx-font-size: 12px; -fx-text-fill: #6b7280;" text="Dec 12, 2023" />
+                </HBox>
+                <Label style="-fx-font-size: 14px; -fx-text-fill: #4b5563;" text="Keep paying with Vista to boost your points and unlock rewards. It's as simple as that." />
+            </VBox>
+        </HBox>
+    </VBox>
 
-    <!-- Email Notifications -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <ImageView fitWidth="20" fitHeight="20">
-            <Image url="@/images/email.png"/>
-        </ImageView>
-        <Label text="Email Notifications"/>
-        <CheckBox fx:id="emailNotifications" text="Email" selected="true" onAction="#handleEmailNotificationToggle"/>
-    </HBox>
+    <!-- Notification Item 3 -->
+    <VBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: white; -fx-padding: 10; -fx-background-radius: 10; -fx-border-color: #d1d5db; -fx-border-radius: 10;">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <VBox alignment="CENTER" style="-fx-background-color: #ec4899; -fx-background-radius: 50%; -fx-min-width: 40; -fx-min-height: 40;">
+                <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="V." />
+            </VBox>
+            <VBox alignment="TOP_LEFT" spacing="5">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="The Vista rewards cl..." />
+                    <Label style="-fx-font-size: 12px; -fx-text-fill: #6b7280;" text="Dec 8, 2023" />
+                </HBox>
+                <Label style="-fx-font-size: 14px; -fx-text-fill: #4b5563;" text="Now you're a member of Vista rewards club, start picking up points with every purchase." />
+            </VBox>
+        </HBox>
+    </VBox>
+    <VBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: white; -fx-padding: 10; -fx-background-radius: 10; -fx-border-color: #d1d5db; -fx-border-radius: 10;">
+        <children>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <children>
+                    <VBox alignment="CENTER" style="-fx-background-color: #ec4899; -fx-background-radius: 50%; -fx-min-width: 40; -fx-min-height: 40;">
+                        <children>
+                            <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="V." />
+                        </children>
+                    </VBox>
+                    <VBox alignment="TOP_LEFT" spacing="5">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <children>
+                                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="The Vista rewards cl..." />
+                                    <Label style="-fx-font-size: 12px; -fx-text-fill: #6b7280;" text="Dec 8, 2023" />
+                                </children>
+                            </HBox>
+                            <Label style="-fx-font-size: 14px; -fx-text-fill: #4b5563;" text="Now you're a member of Vista rewards club, start picking up points with every purchase." />
+                        </children>
+                    </VBox>
+                </children>
+            </HBox>
+        </children>
+    </VBox>
 
-    <!-- SMS Notifications -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <ImageView fitWidth="20" fitHeight="20">
-            <Image url="@/images/sms.png"/>
-        </ImageView>
-        <Label text="SMS Notifications"/>
-        <CheckBox fx:id="smsNotifications" text="SMS" selected="false" onAction="#handleSmsNotificationToggle"/>
-    </HBox>
-
-    <!-- Push Notifications -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <ImageView fitWidth="20" fitHeight="20">
-            <Image url="@/images/push.png"/>
-        </ImageView>
-        <Label text="Push Notifications"/>
-        <CheckBox fx:id="pushNotifications" text="Push" selected="true" onAction="#handlePushNotificationToggle"/>
-    </HBox>
-
-    <!-- Save Changes Button -->
-    <Button text="Save Changes" onAction="#handleSaveChanges" style="-fx-padding: 10 20; -fx-font-size: 14px;" />
+    <!-- Historical Notifications Link -->
+    <Label style="-fx-font-size: 14px; -fx-text-fill: #6b7280;" text="Missing notifications?" />
+    <Hyperlink style="-fx-font-size: 14px; -fx-text-fill: #3b82f6;" text="Go to historical notifications." />
 
 </VBox>

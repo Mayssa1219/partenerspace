@@ -96,10 +96,6 @@ public class LoginController {
             return false;
         }
 
-        if (password.length() < 8) {
-            showError("Le mot de passe doit contenir au moins 8 caractères.");
-            return false;
-        }
 
         hideError();
         return true;

@@ -208,8 +208,10 @@ public class DemandeAideController implements Initializable {
         modal.setScene(scene);
         modal.initModality(Modality.APPLICATION_MODAL);
         modal.show();
+
     }
 
+<<<<<<< HEAD
     private void showAddRequestModal() {
         Stage modal = new Stage();
         modal.setTitle("Ajouter une Demande");
@@ -296,3 +298,6 @@ public class DemandeAideController implements Initializable {
         modal.show();
     }
 }
+=======
+}
+>>>>>>> 4c44b2a5285ed3de09b2b1d8cc9db6ffe86d71bd

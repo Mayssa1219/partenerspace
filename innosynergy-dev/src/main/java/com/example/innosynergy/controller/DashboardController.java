@@ -1,45 +1,65 @@
 package com.example.innosynergy.controller;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.util.Duration;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DashboardController {
 
     @FXML
-    private Label stat1Label;
-
+    private LineChart<Number, Number> usageLineChart;
     @FXML
-    private Label stat2Label;
-
+    private LineChart<Number, Number> contractsLineChart;
     @FXML
-    private Label stat3Label;
+    private Label clockLabel;
 
-    @FXML
-    private ListView<String> recentActivityList;
-
-    @FXML
-    private ListView<String> notificationsList;
+    private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @FXML
     private void initialize() {
-        // Initialize statistics
-        stat1Label.setText("123");
-        stat2Label.setText("456");
-        stat3Label.setText("789");
+        loadUsageData();
+        loadContractData();
+        startClock();
+    }
 
-        // Initialize recent activities
-        recentActivityList.getItems().addAll(
-                "Activité récente 1",
-                "Activité récente 2",
-                "Activité récente 3"
-        );
+    private void loadUsageData() {
+        // Simuler des données d'utilisation
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        series.setName("Utilisation");
+        series.getData().add(new XYChart.Data<>(1, 5));
+        series.getData().add(new XYChart.Data<>(2, 15));
+        series.getData().add(new XYChart.Data<>(3, 10));
+        series.getData().add(new XYChart.Data<>(4, 20));
+        series.getData().add(new XYChart.Data<>(5, 25));
+        usageLineChart.getData().add(series);
+    }
 
-        // Initialize notifications
-        notificationsList.getItems().addAll(
-                "Notification 1",
-                "Notification 2",
-                "Notification 3"
-        );
+    private void loadContractData() {
+        // Simuler des données de contrats
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        series.setName("Contrats");
+        series.getData().add(new XYChart.Data<>(1, 2));
+        series.getData().add(new XYChart.Data<>(2, 3));
+        series.getData().add(new XYChart.Data<>(3, 5));
+        series.getData().add(new XYChart.Data<>(4, 4));
+        series.getData().add(new XYChart.Data<>(5, 6));
+        contractsLineChart.getData().add(series);
+    }
+
+    private void startClock() {
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            LocalDateTime currentTime = LocalDateTime.now();
+            clockLabel.setText(currentTime.format(timeFormatter));
+        }), new KeyFrame(Duration.seconds(1)));
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
     }
 }
