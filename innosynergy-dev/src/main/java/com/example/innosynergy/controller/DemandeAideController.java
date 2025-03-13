@@ -1,6 +1,7 @@
 package com.example.innosynergy.controller;
 
 import com.example.innosynergy.model.DemandeData;
+import com.example.innosynergy.services.DemandeAideService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -11,11 +12,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -48,52 +53,65 @@ public class DemandeAideController implements Initializable {
     @FXML
     private TextField searchField;
 
+    @FXML
+    private Button addRequestButton;
+
     private ObservableList<DemandeData> demandeDataList;
     private FilteredList<DemandeData> filteredData;
+    private DemandeAideService demandeAideService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Initialiser les données
-        demandeDataList = FXCollections.observableArrayList(
-                new DemandeData(
-                        "John Doe",         // demandeur
-                        "123456789",        // telephone
-                        "john@example.com", // email
-                        "123 Rue Exemple",  // adresse
-                        "2023-10-01",       // dateDemande
-                        "preuve1.pdf",      // preuve
-                        "Description de la demande", // description
-                        "http://example.com/preuve1.pdf" // fileUrl
-                ),
-                new DemandeData(
-                        "Jane Doe",         // demandeur
-                        "987654321",        // telephone
-                        "jane@example.com", // email
-                        "456 Rue Exemple",  // adresse
-                        "2023-10-02",       // dateDemande
-                        "preuve2.pdf",      // preuve
-                        "Description de la demande 2", // description
-                        "http://example.com/preuve2.pdf" // fileUrl
-                )
-        );
+        demandeAideService = new DemandeAideService();
+        demandeDataList = FXCollections.observableArrayList(demandeAideService.getAllDemandes());
 
         filteredData = new FilteredList<>(demandeDataList, p -> true);
 
         // Lier les colonnes aux données
-        demandeurColumn.setCellValueFactory(new PropertyValueFactory<>("demandeur"));
-        telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("telephone"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        adresseColumn.setCellValueFactory(new PropertyValueFactory<>("adresse"));
+        demandeurColumn.setCellValueFactory(new PropertyValueFactory<>("idClient"));
+        telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("idPartenaire"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("typeAide"));
+        adresseColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         dateDemandeColumn.setCellValueFactory(new PropertyValueFactory<>("dateDemande"));
-        preuveColumn.setCellValueFactory(new PropertyValueFactory<>("preuve"));
+        preuveColumn.setCellValueFactory(new PropertyValueFactory<>("preuves"));
 
-        // Aligner le contenu des colonnes au centre
-        alignColumnContentToCenter(demandeurColumn);
-        alignColumnContentToCenter(telephoneColumn);
-        alignColumnContentToCenter(emailColumn);
-        alignColumnContentToCenter(adresseColumn);
-        alignColumnContentToCenter(dateDemandeColumn);
-        alignColumnContentToCenter(preuveColumn);
+        // Définir une cellule personnalisée pour la colonne "Preuve"
+        preuveColumn.setCellFactory(column -> new TableCell<DemandeData, String>() {
+            private final Button importButton = new Button("choisir un fichier");
+            private final ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/images/upload.png")));
+
+            {
+                imageView.setFitWidth(20);
+                imageView.setFitHeight(20);
+                importButton.setGraphic(imageView);
+                importButton.setOnAction(event -> {
+                    DemandeData data = getTableRow().getItem();
+                    if (data != null) {
+                        FileChooser fileChooser = new FileChooser();
+                        fileChooser.setTitle("Sélectionner un fichier");
+                        fileChooser.getExtensionFilters().addAll(
+                                new FileChooser.ExtensionFilter("Tous les fichiers", "*.*")
+                        );
+                        File selectedFile = fileChooser.showOpenDialog(null);
+                        if (selectedFile != null) {
+                            data.setPreuves(selectedFile.getName()); // Mettre à jour le nom du fichier
+                            tableView.refresh(); // Rafraîchir la table pour afficher le fichier sélectionné
+                            System.out.println("Fichier sélectionné : " + selectedFile.getAbsolutePath());
+                        }
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(importButton); // Afficher le bouton dans chaque ligne
+                }
+            }
+        });
 
         // Ajouter des boutons d'action à la colonne "Actions"
         actionColumn.setCellFactory(param -> new TableCell<DemandeData, Void>() {
@@ -125,37 +143,26 @@ public class DemandeAideController implements Initializable {
         // Lier les données filtrées au tableau
         tableView.setItems(filteredData);
 
-        // Ajouter des écouteurs pour la recherche
+        // Ajouter un écouteur pour la recherche
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(demande -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
-                return demande.getDemandeur().toLowerCase().contains(lowerCaseFilter) ||
-                        demande.getTelephone().toLowerCase().contains(lowerCaseFilter) ||
-                        demande.getEmail().toLowerCase().contains(lowerCaseFilter) ||
-                        demande.getAdresse().toLowerCase().contains(lowerCaseFilter) ||
+                return String.valueOf(demande.getIdClient()).toLowerCase().contains(lowerCaseFilter) ||
+                        String.valueOf(demande.getIdPartenaire()).toLowerCase().contains(lowerCaseFilter) ||
+                        demande.getTypeAide().toLowerCase().contains(lowerCaseFilter) ||
+                        demande.getDescription().toLowerCase().contains(lowerCaseFilter) ||
                         demande.getDateDemande().toLowerCase().contains(lowerCaseFilter);
             });
         });
-    }
 
-    // Méthode pour aligner le contenu d'une colonne au centre
-    private <T> void alignColumnContentToCenter(TableColumn<DemandeData, T> column) {
-        column.setCellFactory(tc -> new TableCell<DemandeData, T>() {
-            @Override
-            protected void updateItem(T item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    setText(item.toString());
-                    setAlignment(Pos.CENTER); // Aligner le texte au centre
-                }
-            }
-        });
+        // Action pour le bouton "Ajouter Demande"
+        addRequestButton.setOnAction(event -> showAddRequestModal());
+
+        // Rendre les colonnes responsive
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     // Méthode pour afficher une fenêtre modale avec les détails de la demande
@@ -163,33 +170,127 @@ public class DemandeAideController implements Initializable {
         Stage modal = new Stage();
         modal.setTitle("Détails de la Demande");
 
-        // Créer les labels et les champs
-        Label clientLabel = new Label("Nom du Demandeur : " + data.getDemandeur());
-        Label telephoneLabel = new Label("Téléphone : " + data.getTelephone());
-        Label emailLabel = new Label("Email : " + data.getEmail());
-        Label adresseLabel = new Label("Adresse : " + data.getAdresse());
-        Label dateDemandeLabel = new Label("Date de Demande : " + data.getDateDemande());
+        Label clientLabel = new Label("ID Client : " + data.getIdClient());
+        Label partenaireLabel = new Label("ID Partenaire : " + data.getIdPartenaire());
+        Label typeAideLabel = new Label("Type d'Aide : " + data.getTypeAide());
         Label descriptionLabel = new Label("Description : " + data.getDescription());
+        Label montantDemandeLabel = new Label("Montant de la Demande : " + data.getMontantDemande());
+        Label dateDemandeLabel = new Label("Date de Demande : " + data.getDateDemande());
+        Label statusLabel = new Label("Status : " + data.getStatus());
+        Label fichierSelectionneLabel = new Label("Preuves : " + data.getPreuves());
 
         Button downloadButton = new Button("Télécharger le dossier");
-        Button accepterButton = new Button("Accepter");
-        Button refuserButton = new Button("Refuser");
+        Button importerButton = new Button("Importer un fichier");
+
+        // Action pour importer un fichier
+        importerButton.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Tous les fichiers", "*.*"));
+            File selectedFile = fileChooser.showOpenDialog(modal);
+
+            if (selectedFile != null) {
+                fichierSelectionneLabel.setText("Fichier sélectionné : " + selectedFile.getName());
+            }
+        });
 
         // Disposition des boutons
-        HBox buttonLayout = new HBox(20, accepterButton, refuserButton, downloadButton);
+        HBox buttonLayout = new HBox(20, downloadButton, importerButton);
         buttonLayout.setAlignment(Pos.CENTER);
 
-        // Titre de la fenêtre modale
         Label titleLabel = new Label("Détails de la Demande");
         titleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
 
-        // Disposition de la fenêtre modale
-        VBox modalLayout = new VBox(10, titleLabel, clientLabel, telephoneLabel, emailLabel, adresseLabel, dateDemandeLabel, descriptionLabel, buttonLayout);
+        VBox modalLayout = new VBox(10, titleLabel, clientLabel, partenaireLabel, typeAideLabel, descriptionLabel, montantDemandeLabel, dateDemandeLabel, statusLabel, fichierSelectionneLabel, buttonLayout);
         modalLayout.setPadding(new Insets(20));
         modalLayout.setAlignment(Pos.CENTER_LEFT);
 
-        // Configurer la scène de la fenêtre modale
-        Scene scene = new Scene(modalLayout, 450, 500);
+        Scene scene = new Scene(modalLayout, 500, 550);
+        modal.setScene(scene);
+        modal.initModality(Modality.APPLICATION_MODAL);
+        modal.show();
+    }
+
+    private void showAddRequestModal() {
+        Stage modal = new Stage();
+        modal.setTitle("Ajouter une Demande");
+
+        // Message en haut du modal
+        Label titleLabel = new Label("Ajouter une demande d'aide");
+        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+
+        // Champs de formulaire
+        TextField idClientField = new TextField();
+        idClientField.setPromptText("ID Client");
+
+        TextField idPartenaireField = new TextField();
+        idPartenaireField.setPromptText("ID Partenaire");
+
+        TextField typeAideField = new TextField();
+        typeAideField.setPromptText("Type d'Aide");
+
+        TextField descriptionField = new TextField();
+        descriptionField.setPromptText("Description");
+
+        TextField montantDemandeField = new TextField();
+        montantDemandeField.setPromptText("Montant de la Demande");
+
+        DatePicker dateDemandePicker = new DatePicker();
+        dateDemandePicker.setPromptText("Date de Demande");
+        dateDemandePicker.setPrefWidth(400);
+
+        TextField statusField = new TextField();
+        statusField.setPromptText("Status");
+
+        TextField preuvesField = new TextField();
+        preuvesField.setPromptText("Preuves");
+
+        // Bouton Enregistrer en vert
+        Button saveButton = new Button("Enregistrer");
+        saveButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;"); // Vert avec texte blanc
+        saveButton.setOnAction(event -> {
+            DemandeData newData = new DemandeData(
+                    0, // Id Demande will be auto-generated
+                    Integer.parseInt(idClientField.getText()),
+                    Integer.parseInt(idPartenaireField.getText()),
+                    typeAideField.getText(),
+                    descriptionField.getText(),
+                    Double.parseDouble(montantDemandeField.getText()),
+                    dateDemandePicker.getValue().toString(),
+                    statusField.getText(),
+                    preuvesField.getText()
+            );
+            demandeDataList.add(newData);
+            modal.close();
+        });
+
+        // Disposition des éléments
+        VBox modalLayout = new VBox(10); // Espacement de 10 entre les éléments
+        modalLayout.setPadding(new Insets(20)); // Padding général
+        modalLayout.setAlignment(Pos.CENTER); // Centrer tous les éléments dans le VBox
+
+        // Centrer le Label
+        HBox titleBox = new HBox(titleLabel);
+        titleBox.setAlignment(Pos.CENTER); // Centrer le Label dans un HBox
+
+        // Centrer le bouton
+        HBox buttonBox = new HBox(saveButton);
+        buttonBox.setAlignment(Pos.CENTER); // Centrer le bouton dans un HBox
+
+        // Ajouter les éléments au VBox
+        modalLayout.getChildren().addAll(
+                titleBox, // Label centré
+                idClientField,
+                idPartenaireField,
+                typeAideField,
+                descriptionField,
+                montantDemandeField,
+                dateDemandePicker,
+                statusField,
+                preuvesField,
+                buttonBox // Bouton centré
+        );
+
+        Scene scene = new Scene(modalLayout, 400, 400);
         modal.setScene(scene);
         modal.initModality(Modality.APPLICATION_MODAL);
         modal.show();

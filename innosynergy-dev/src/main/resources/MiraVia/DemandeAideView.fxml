@@ -5,22 +5,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<?import java.net.URL?>
-
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import java.net.URL?>
 <BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.innosynergy.controller.DemandeAideController">
     <stylesheets>
         <URL value="@styles/style.css"/>
     </stylesheets>
+
     <!-- Center Section -->
     <center>
-        <VBox spacing="10">
+        <VBox spacing="10" VBox.vgrow="ALWAYS">
             <!-- Search Bar -->
             <HBox alignment="CENTER" spacing="5" styleClass="search-box">
                 <TextField fx:id="searchField" promptText="Rechercher..." HBox.hgrow="ALWAYS"
@@ -34,41 +32,44 @@
                         </ImageView>
                     </graphic>
                 </Button>
+                <Button fx:id="addRequestButton" text="Ajouter Demande" prefHeight="30"
+                        styleClass="add-request-button"/>
             </HBox>
 
-            <TableView fx:id="tableView" prefWidth="1200" prefHeight="800">
+            <!-- Table View -->
+            <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn text="Demandeur" prefWidth="120" minWidth="120" fx:id="demandeurColumn">
+                    <TableColumn fx:id="demandeurColumn" text="ID Client" prefWidth="120">
                         <cellValueFactory>
-                            <PropertyValueFactory property="demandeur"/>
+                            <PropertyValueFactory property="idClient"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn text="Téléphone" prefWidth="120" minWidth="120" fx:id="telephoneColumn">
+                    <TableColumn fx:id="telephoneColumn" text="ID Partenaire" prefWidth="120">
                         <cellValueFactory>
-                            <PropertyValueFactory property="telephone"/>
+                            <PropertyValueFactory property="idPartenaire"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn text="Email" prefWidth="150" minWidth="150" fx:id="emailColumn">
+                    <TableColumn fx:id="emailColumn" text="Type d'Aide" prefWidth="150">
                         <cellValueFactory>
-                            <PropertyValueFactory property="email"/>
+                            <PropertyValueFactory property="typeAide"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn text="Adresse" prefWidth="120" minWidth="120" fx:id="adresseColumn">
+                    <TableColumn fx:id="adresseColumn" text="Description" prefWidth="120">
                         <cellValueFactory>
-                            <PropertyValueFactory property="adresse"/>
+                            <PropertyValueFactory property="description"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn text="Date de Demande" prefWidth="120" minWidth="120" fx:id="dateDemandeColumn">
+                    <TableColumn fx:id="dateDemandeColumn" text="Date de Demande" prefWidth="120">
                         <cellValueFactory>
                             <PropertyValueFactory property="dateDemande"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn text="Preuve" prefWidth="120" minWidth="120" fx:id="preuveColumn">
+                    <TableColumn fx:id="preuveColumn" text="Preuves" prefWidth="180">
                         <cellValueFactory>
-                            <PropertyValueFactory property="preuve"/>
+                            <PropertyValueFactory property="preuves"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn text="Actions" prefWidth="120" minWidth="120" fx:id="actionColumn"/>
+                    <TableColumn fx:id="actionColumn" text="Actions" prefWidth="120"/>
                 </columns>
             </TableView>
         </VBox>

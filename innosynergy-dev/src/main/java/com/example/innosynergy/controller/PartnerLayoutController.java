@@ -34,7 +34,7 @@ public class PartnerLayoutController {
     private Button dashboardButton;
 
     @FXML
-    private Button helpRequestsButton; // Assurez-vous que ce fx:id correspond à celui dans le FXML
+    private Button helpRequestsButton;
 
     @FXML
     private Button consultButton;
@@ -93,13 +93,6 @@ public class PartnerLayoutController {
         });
 
         // Gestionnaire d'événements pour le bouton "Demande d'aide"
-        if (helpRequestsButton == null) {
-            System.err.println("helpRequestsButton est null !");
-        } else {
-            System.out.println("helpRequestsButton est correctement injecté.");
-        }
-
-        // Gestionnaire d'événements pour le bouton "Demande d'aide"
         helpRequestsButton.setOnAction(event -> {
             try {
                 Node demandeAideView = FXMLLoader.load(getClass().getResource("/MiraVia/DemandeAideView.fxml"));
@@ -108,6 +101,20 @@ public class PartnerLayoutController {
             } catch (IOException e) {
                 e.printStackTrace();
                 scrollPane.setContent(new Label("Erreur lors du chargement des demandes d'aide."));
+            }
+        });
+
+        // Gestionnaire d'événements pour le bouton "Événements"
+        eventsButton.setOnAction(event -> {
+            try {
+                System.out.println("Loading EvenementView.fxml..."); // Debug message
+                Node eventView = FXMLLoader.load(getClass().getResource("/MiraVia/EvenementView.fxml"));
+                scrollPane.setContent(eventView);
+                titleLabel.setText("Événements");
+                System.out.println("EvenementView.fxml loaded successfully."); // Debug message
+            } catch (IOException e) {
+                e.printStackTrace();
+                scrollPane.setContent(new Label("Erreur lors du chargement des événements."));
             }
         });
     }
@@ -135,7 +142,7 @@ public class PartnerLayoutController {
                     title = "Tableau de bord";
                     content = FXMLLoader.load(getClass().getResource("/MiraVia/dashboard.fxml"));
                     break;
-                case "helpRequestButton":
+                case "helpRequestsButton":
                     title = "Demandes d'aide";
                     content = FXMLLoader.load(getClass().getResource("/MiraVia/DemandeAideView.fxml"));
                     break;
@@ -149,7 +156,7 @@ public class PartnerLayoutController {
                     break;
                 case "eventsButton":
                     title = "Événements";
-                    content = new Label("Contenu des Événements");
+                    content = FXMLLoader.load(getClass().getResource("/MiraVia/EvenementView.fxml"));
                     break;
                 case "benevolButton":
                     title = "Bénévolat";
