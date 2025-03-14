@@ -1,5 +1,7 @@
 package com.example.innosynergy.utils;
 
+import com.example.innosynergy.controller.NotificationBarController;
+import com.example.innosynergy.dao.NotificationDaoImpl;
 import com.example.innosynergy.model.User;
 
 import java.util.HashMap;
@@ -10,12 +12,23 @@ public class SessionManager {
     private static final long SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
     private static final Map<String, Session> sessions = new HashMap<>();
     private static String currentSessionId;
+    private static NotificationDaoImpl notificationDao;
+
+    public static void initialize(NotificationBarController notificationBarController) {
+        notificationDao = new NotificationDaoImpl(notificationBarController);
+    }
 
     public static String createSession(User user) {
         String sessionId = UUID.randomUUID().toString();
         sessions.put(sessionId, new Session(user, System.currentTimeMillis()));
         currentSessionId = sessionId;
+        sendLoginNotification(user);
         return sessionId;
+    }
+
+    private static void sendLoginNotification(User user) {
+        String message = "Bienvenue cher partenaire" + user.getPrenom() ;
+        notificationDao.insertNotification(user.getIdUtilisateur(), message, "info");
     }
 
     public static User getUser(String sessionId) {

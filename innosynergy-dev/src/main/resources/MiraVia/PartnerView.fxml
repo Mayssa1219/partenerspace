@@ -50,7 +50,7 @@
             </HBox>
             <!-- Nouvelle image de notification -->
             <ImageView fx:id="notificationIcon" fitHeight="25.0" fitWidth="25.0"
-                       styleClass="notification-icon" onMouseClicked="#handleLoadNotifications">
+                       styleClass="notification-icon" >
                 <image>
                     <Image url="@/images/notifications.png"/>
                 </image>

@@ -1,65 +1,92 @@
 package com.example.innosynergy.controller;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import com.example.innosynergy.dao.DashboardDao;
+import com.example.innosynergy.dao.DashboardDaoImlp;
+import com.example.innosynergy.model.Event;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.util.Duration;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class DashboardController {
 
     @FXML
-    private LineChart<Number, Number> usageLineChart;
-    @FXML
-    private LineChart<Number, Number> contractsLineChart;
-    @FXML
-    private Label clockLabel;
-
-    private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private LineChart<Number, Number> lineChart;
 
     @FXML
-    private void initialize() {
-        loadUsageData();
-        loadContractData();
-        startClock();
+    private TableView<Event> eventTable;
+
+    @FXML
+    private TableColumn<Event, String> numberCol;
+
+    @FXML
+    private TableColumn<Event, String> titleCol;
+
+    @FXML
+    private TableColumn<Event, String> descCol;
+
+    @FXML
+    private TableColumn<Event, String> dateCol;
+
+    @FXML
+    private TableColumn<Event, String> placeCol;
+
+    @FXML
+    private TableColumn<Event, String> partnerCol;
+
+    @FXML
+    private TableColumn<Event, String> statusCol;
+
+    @FXML
+    private Label clientCountLabel;
+
+    @FXML
+    private Label partnerCountLabel;
+
+    @FXML
+    private Label helpRequestCountLabel;
+
+    private final DashboardDao dashboardDao = new DashboardDaoImlp();
+
+    @FXML
+    public void initialize() {
+        loadDashboardData();
     }
 
-    private void loadUsageData() {
-        // Simuler des données d'utilisation
+    private void loadDashboardData() {
+        loadStatistics();
+        loadLineChartData();
+        loadEventTableData();
+    }
+
+    private void loadStatistics() {
+        clientCountLabel.setText(String.valueOf(dashboardDao.getClientCount()));
+        partnerCountLabel.setText(String.valueOf(dashboardDao.getPartnerCount()));
+        helpRequestCountLabel.setText(String.valueOf(dashboardDao.getHelpRequestCount()));
+    }
+
+    private void loadLineChartData() {
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("Utilisation");
-        series.getData().add(new XYChart.Data<>(1, 5));
-        series.getData().add(new XYChart.Data<>(2, 15));
-        series.getData().add(new XYChart.Data<>(3, 10));
-        series.getData().add(new XYChart.Data<>(4, 20));
-        series.getData().add(new XYChart.Data<>(5, 25));
-        usageLineChart.getData().add(series);
+        List<XYChart.Data<Number, Number>> data = dashboardDao.getLineChartData();
+        series.getData().addAll(data);
+        lineChart.getData().add(series);
     }
 
-    private void loadContractData() {
-        // Simuler des données de contrats
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("Contrats");
-        series.getData().add(new XYChart.Data<>(1, 2));
-        series.getData().add(new XYChart.Data<>(2, 3));
-        series.getData().add(new XYChart.Data<>(3, 5));
-        series.getData().add(new XYChart.Data<>(4, 4));
-        series.getData().add(new XYChart.Data<>(5, 6));
-        contractsLineChart.getData().add(series);
-    }
+    private void loadEventTableData() {
+        numberCol.setCellValueFactory(new PropertyValueFactory<>("number"));
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("dateEvenement"));
+        placeCol.setCellValueFactory(new PropertyValueFactory<>("place"));
+        partnerCol.setCellValueFactory(new PropertyValueFactory<>("partner"));
+        statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-    private void startClock() {
-        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            LocalDateTime currentTime = LocalDateTime.now();
-            clockLabel.setText(currentTime.format(timeFormatter));
-        }), new KeyFrame(Duration.seconds(1)));
-        clock.setCycleCount(Animation.INDEFINITE);
-        clock.play();
+        List<Event> events = dashboardDao.getEventTableData();
+        eventTable.getItems().addAll(events);
     }
 }

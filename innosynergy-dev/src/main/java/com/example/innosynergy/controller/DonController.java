@@ -2,6 +2,7 @@ package com.example.innosynergy.controller;
 
 import com.example.innosynergy.dao.DonDao;
 import com.example.innosynergy.dao.DonDaoImpl;
+import com.example.innosynergy.dao.NotificationDaoImpl;
 import com.example.innosynergy.model.Don;
 import com.example.innosynergy.utils.SessionManager;
 import com.example.innosynergy.model.User;
@@ -35,11 +36,13 @@ public class DonController {
     private TableColumn<Don, BigDecimal> montantColumn;
     @FXML
     private TableColumn<Don, LocalDateTime> dateDonColumn;
-
+   NotificationBarController notificationBarController;
     private DonDao donDao;
+    private NotificationDaoImpl notificationDao;
 
     public DonController() {
         this.donDao = new DonDaoImpl();
+        this.notificationDao = new NotificationDaoImpl(notificationBarController);
     }
 
     @FXML
@@ -129,6 +132,11 @@ public class DonController {
                 don.setIdPartenaire(partenaireId);
 
                 donDao.insertDon(don);
+
+                // Ajouter une notification pour le don ajouté
+                String message = "Un nouveau don a été ajouté par "  + " d'un montant de " + montant + ".";
+                notificationDao.insertNotification(partenaireId, message, "info");
+
                 loadDons();
                 stage.close();
             }

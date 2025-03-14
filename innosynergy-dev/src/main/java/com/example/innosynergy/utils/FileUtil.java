@@ -7,7 +7,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 public class FileUtil {
-    private static final String UPLOAD_DIR = "src/main/resources/Avatars";
+    private static final String UPLOAD_DIR = "uploads/";
 
     public static String saveFile(File sourceFile) throws IOException {
         // Ensure the upload directory exists

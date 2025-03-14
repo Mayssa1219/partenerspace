@@ -86,7 +86,7 @@ public class DemandeAideController implements Initializable {
                         FileChooser fileChooser = new FileChooser();
                         fileChooser.setTitle("Sélectionner un fichier");
                         fileChooser.getExtensionFilters().addAll(
-                                new FileChooser.ExtensionFilter("Tous les fichiers", "*.*")
+                                new FileChooser.ExtensionFilter("Tous les fichiers", ".")
                         );
                         File selectedFile = fileChooser.showOpenDialog(null);
                         if (selectedFile != null) {
@@ -181,7 +181,7 @@ public class DemandeAideController implements Initializable {
         // Action pour importer un fichier
         importerButton.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Tous les fichiers", "*.*"));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Tous les fichiers", "."));
             File selectedFile = fileChooser.showOpenDialog(modal);
 
             if (selectedFile != null) {
@@ -292,5 +292,9 @@ public class DemandeAideController implements Initializable {
         modal.initModality(Modality.APPLICATION_MODAL);
         modal.show();
     }
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> aca7d87dfea214d8b632278f2808c593d67641d8

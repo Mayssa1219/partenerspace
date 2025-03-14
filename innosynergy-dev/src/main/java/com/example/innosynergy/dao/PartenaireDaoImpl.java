@@ -201,6 +201,17 @@ public class PartenaireDaoImpl implements PartenaireDao {
             e.printStackTrace();
         }
     }
+    public void updateAvatar(int partenaireId, String avatar) {
+        String query = "UPDATE utilisateurs SET avatar = ? WHERE id_utilisateur = ?";
+        try (Connection connection = connexionBD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, avatar);
+            preparedStatement.setInt(2, partenaireId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void updateProfile(User user, PartenaireData partenaireData) {
