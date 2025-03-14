@@ -1,7 +1,6 @@
 package com.example.innosynergy.controller;
 
 import com.example.innosynergy.model.DemandeData;
-import com.example.innosynergy.services.DemandeAideService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -58,12 +57,9 @@ public class DemandeAideController implements Initializable {
 
     private ObservableList<DemandeData> demandeDataList;
     private FilteredList<DemandeData> filteredData;
-    private DemandeAideService demandeAideService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        demandeAideService = new DemandeAideService();
-        demandeDataList = FXCollections.observableArrayList(demandeAideService.getAllDemandes());
 
         filteredData = new FilteredList<>(demandeDataList, p -> true);
 
@@ -211,7 +207,6 @@ public class DemandeAideController implements Initializable {
 
     }
 
-<<<<<<< HEAD
     private void showAddRequestModal() {
         Stage modal = new Stage();
         modal.setTitle("Ajouter une Demande");
@@ -298,6 +293,4 @@ public class DemandeAideController implements Initializable {
         modal.show();
     }
 }
-=======
-}
->>>>>>> 4c44b2a5285ed3de09b2b1d8cc9db6ffe86d71bd
+

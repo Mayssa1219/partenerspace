@@ -34,7 +34,6 @@ public class PartnerLayoutController {
     private VBox sidebar;
 
     @FXML
-<<<<<<< HEAD
     private Button dashboardButton;
 
     @FXML
@@ -57,10 +56,6 @@ public class PartnerLayoutController {
 
     @FXML
     private Button messagesButton;
-=======
-    private Button dashboardButton, helpRequestsButton, consultButton, donButton,
-            eventsButton, benevolButton, settingsButton, messagesButton;
->>>>>>> 4c44b2a5285ed3de09b2b1d8cc9db6ffe86d71bd
 
     @FXML
     private ScrollPane scrollPane;
@@ -91,7 +86,6 @@ public class PartnerLayoutController {
             }
         });
 
-<<<<<<< HEAD
         // Gestionnaire d'événements pour le bouton "Messagerie"
         messagesButton.setOnAction(event -> {
             try {
@@ -129,10 +123,8 @@ public class PartnerLayoutController {
                 scrollPane.setContent(new Label("Erreur lors du chargement des événements."));
             }
         });
-=======
         // Charger le tableau de bord par défaut
         loadView("Tableau de bord", "/MiraVia/dashboard.fxml");
->>>>>>> 4c44b2a5285ed3de09b2b1d8cc9db6ffe86d71bd
     }
 
     @FXML
@@ -167,7 +159,6 @@ public class PartnerLayoutController {
     private void toggleSidebarVisibility() {
         sidebarScrollPane.setVisible(!sidebarScrollPane.isVisible());
     }
-<<<<<<< HEAD
 
     @FXML
     private void updateContentBasedOnButton() {
@@ -224,6 +215,4 @@ public class PartnerLayoutController {
         titleLabel.setText(title);
         scrollPane.setContent(content);
     }
-=======
->>>>>>> 4c44b2a5285ed3de09b2b1d8cc9db6ffe86d71bd
 }

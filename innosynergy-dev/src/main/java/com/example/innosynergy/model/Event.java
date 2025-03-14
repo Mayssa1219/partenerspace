@@ -9,7 +9,6 @@ public class Event {
         private String lieu;
         private Integer idPartenaire;
         private String status;
-    private String imageUrl;
 
     // Getters and Setters
         public int getIdEvenement() {
@@ -68,12 +67,4 @@ public class Event {
             this.status = status;
         }
 
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }

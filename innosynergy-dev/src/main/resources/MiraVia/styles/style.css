@@ -98,15 +98,12 @@
 .main-scroll-pane {
     -fx-background-color: #f9f9f9;
 }
-<<<<<<< HEAD
-=======
 
 .icon-message {
     -fx-font-family: 'FontAwesome'; /* Utiliser la police FontAwesome */
     -fx-font-size: 20px;
     -fx-text-fill: #013A71; /* Couleur des icônes en bleu */
 }
->>>>>>> 4c44b2a5285ed3de09b2b1d8cc9db6ffe86d71bd
 
 /* Style des icônes */
 .icon-bar-chart,
@@ -121,10 +118,6 @@
     -fx-font-size: 20px;
     -fx-text-fill: #013A71;
 }
-
-<<<<<<< HEAD
-/* Style des états */
-=======
 .footer-box {
     -fx-padding: 10px;
     -fx-border-top-width: 1px; /* Fixed border-top issue */
@@ -144,7 +137,6 @@
     -fx-margin-right: 15px;
 }
 
->>>>>>> 4c44b2a5285ed3de09b2b1d8cc9db6ffe86d71bd
 .etat-acceptee {
     -fx-background-color: #d6ffa5;
     -fx-text-fill: #0b8a00;
@@ -160,16 +152,12 @@
     -fx-text-fill: white;
 }
 
-/* Réduire l'espace entre les colonnes */
-<<<<<<< HEAD
 .table-view .column-header-background,
 .table-view .column-header,
 .table-view .table-cell,
 .table-view .table-row-cell {
     -fx-padding: 0 0 0 0;
 }
-
-=======
 .table-view .column-header-background {
     -fx-padding: 0; /* Réduire le padding */
 }
@@ -182,7 +170,6 @@
     -fx-padding: 2 5; /* Réduire le padding des cellules */
 }
 
->>>>>>> 4c44b2a5285ed3de09b2b1d8cc9db6ffe86d71bd
 .table-view .table-row-cell {
     -fx-cell-size: 25px;
 }
@@ -298,8 +285,6 @@
     }
 
 }
-<<<<<<< HEAD
-=======
 .dashboard-container {
     -fx-background-color: #f4f4f4;
 }
@@ -347,4 +332,29 @@
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
->>>>>>> 4c44b2a5285ed3de09b2b1d8cc9db6ffe86d71bd
+
+/* Style pour le bouton Ajouter */
+#ajouterButton, .ajouter-button {
+    -fx-background-color: #7d8c6d; /* Couleur de fond verte */
+    -fx-text-fill: white; /* Texte en blanc */
+    -fx-background-radius: 2px; /* Bordures arrondies */
+    -fx-font-weight: bold; /* Texte en gras */
+}
+
+#ajouterButton:hover, .ajouter-button:hover {
+    -fx-background-color: #3b4c2c;
+    -fx-text-fill: white;/* Couleur de fond verte plus foncée au survol */
+}
+
+/* Style pour le bouton Annuler */
+#annulerButton, .annuler-button {
+    -fx-background-color: #013A71; /* Couleur de fond bleue */
+    -fx-text-fill: white; /* Texte en blanc */
+    -fx-background-radius: 2px; /* Bordures arrondies */
+    -fx-font-weight: bold; /* Texte en gras */
+}
+
+#annulerButton:hover, .annuler-button:hover {
+    -fx-background-color: #9cbdd6; /* Couleur de fond bleue plus claire au survol */
+    -fx-text-fill: #013A71;
+}
