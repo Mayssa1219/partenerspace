@@ -183,6 +183,7 @@
     -fx-border-color: #e0e0e0;
     -fx-padding: 15px;
     -fx-margin: 10px 0; /* Espacement vertical autour de chaque carte */
+    -fx-alignment: center-left;
 }
 
 /* Style pour le titre de l'événement */
@@ -282,6 +283,7 @@
     .menu-button {
         -fx-background-color: #9cbdd6 !important; /* Blue background */
         -fx-text-fill: white !important; /* White text */
+        -fx-alignment: center-left;
     }
 
 }
