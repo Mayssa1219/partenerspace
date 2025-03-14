@@ -17,4 +17,5 @@ public interface PartenaireDao {
     PartenaireProfileModel getPartenaireById(int id);
     PartenaireProfileModel getPartenaireByUserId(int userId);
     void updateAvatar(int partenaireId, String avatar);
+    String getUserImage(int userId);
 }

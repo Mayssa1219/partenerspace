@@ -56,12 +56,12 @@
                 </image>
             </ImageView>
 
-            <ImageView  styleClass="profile-image">
+            <ImageView fx:id="profileImageView" styleClass="profile-image">
                 <image>
                     <Image url="@/images/profile image.png"/>
                 </image>
             </ImageView>
-            <Label text="Maddy Adams" styleClass="profile-name"/>
+            <Label fx:id="profileNameLabel" text="Maddy Adams" styleClass="profile-name"/>
         </HBox>
     </top>
 

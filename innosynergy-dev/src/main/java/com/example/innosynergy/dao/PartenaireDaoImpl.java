@@ -16,6 +16,22 @@ public class PartenaireDaoImpl implements PartenaireDao {
         this.connexionBD = new ConnexionBD();
     }
 
+   @Override
+    public String getUserImage(int userId) {
+        String imageName = null;
+        String query = "SELECT avatar FROM utilisateurs WHERE id_utilisateur = ?";
+        try (Connection connection = ConnexionBD.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                imageName = resultSet.getString("avatar");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return imageName;
+    }
     @Override
     public PartenaireData getPartenaire(int id) {
         String query = "SELECT u.id_utilisateur, u.nom, u.prenom, u.email, u.telephone, u.date_inscription, u.type_utilisateur, u.avatar, u.statut_verification, u.status, " +

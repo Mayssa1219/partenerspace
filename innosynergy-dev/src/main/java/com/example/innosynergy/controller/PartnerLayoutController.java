@@ -1,5 +1,8 @@
 package com.example.innosynergy.controller;
 
+import com.example.innosynergy.dao.PartenaireDaoImpl;
+import com.example.innosynergy.model.User;
+import com.example.innosynergy.utils.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -48,6 +51,11 @@ public class PartnerLayoutController {
     @FXML
     private ImageView profileImageView, notificationsImageView, searchImageView, notificationIcon;
 
+    @FXML
+    private Label profileNameLabel;
+
+    private PartenaireDaoImpl partenaireDao;
+
     private final Map<Button, String[]> buttonViewMappings = new HashMap<>();
 
     @FXML
@@ -82,6 +90,18 @@ public class PartnerLayoutController {
                 e.printStackTrace();
             }
         });
+
+        partenaireDao = new PartenaireDaoImpl();
+        profileImageView.setImage(new Image("/images/user.png"));
+        String sessionId = SessionManager.getCurrentSessionId();
+        User currentUser = SessionManager.getUser(sessionId);
+        if (currentUser != null) {
+            String imageName = partenaireDao.getUserImage(currentUser.getIdUtilisateur());
+            if (imageName != null) {
+                profileImageView.setImage(new Image("file:uploads/" + imageName));
+            }
+            profileNameLabel.setText(currentUser.getNom()+" "+currentUser.getPrenom());
+        }
     }
 
     private void showNotificationPopup(Node anchor) throws IOException {

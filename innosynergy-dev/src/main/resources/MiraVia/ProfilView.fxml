@@ -29,7 +29,6 @@
                 <Image url="@/images/user.png" />
             </image>
             <clip>
-                <!-- Circular Crop -->
                 <Circle fx:id="clip" centerX="50" centerY="50" radius="50" />
             </clip>
         </ImageView>

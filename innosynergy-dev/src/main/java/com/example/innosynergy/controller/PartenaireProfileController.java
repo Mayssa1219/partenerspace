@@ -51,16 +51,23 @@ public class PartenaireProfileController {
     public PartenaireProfileController() {
         partenaireDao = new PartenaireDaoImpl();
         userDao = new UserDaoImpl();
-        String sessionId = SessionManager.getCurrentSessionId();
-        User user = SessionManager.getUser(sessionId);
-        if (user != null) {
-            partenaireprofile = partenaireDao.getPartenaireByUserId(user.getIdUtilisateur());
-        }
     }
 
     @FXML
     private void initialize() {
         profileImage.setImage(new Image("/images/user.png"));
+        String sessionId = SessionManager.getCurrentSessionId();
+        User user = SessionManager.getUser(sessionId);
+        if (user != null) {
+            String imageName = partenaireDao.getUserImage(user.getIdUtilisateur());
+            if (imageName != null) {
+                profileImage.setImage(new Image("file:uploads/" + imageName));
+            }
+            partenaireprofile = partenaireDao.getPartenaireById(user.getIdUtilisateur());
+            if (partenaireprofile != null) {
+                locationLabel.setText(partenaireprofile.getAdresse());
+            }
+        }
         if (clip != null) {
             clip.setRadius(50.0);
         } else {
@@ -72,9 +79,11 @@ public class PartenaireProfileController {
             locationField.setText(partenaireprofile.getAdresse());
             siteWebField.setText(partenaireprofile.getSiteWeb());
         }
-        emailField.setText("");
+        emailField.setText(user.getEmail());
         passwordField.setText("");
         confirmPasswordField.setText("");
+        passwordField.setPromptText("********");
+        confirmPasswordField.setPromptText("********");
     }
 
     @FXML

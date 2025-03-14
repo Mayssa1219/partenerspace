@@ -16,6 +16,7 @@ public class SessionManager {
 
     public static void initialize(NotificationBarController notificationBarController) {
         notificationDao = new NotificationDaoImpl(notificationBarController);
+
     }
 
     public static String createSession(User user) {
@@ -27,7 +28,7 @@ public class SessionManager {
     }
 
     private static void sendLoginNotification(User user) {
-        String message = "Bienvenue cher partenaire" + user.getPrenom() ;
+        String message = "Bienvenue cher partenaire " + user.getNom()+" "+user.getPrenom() ;
         notificationDao.insertNotification(user.getIdUtilisateur(), message, "info");
     }
 
