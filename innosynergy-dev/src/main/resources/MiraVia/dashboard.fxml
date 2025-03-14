@@ -1,118 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.XYChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 
-<?import java.net.URL?>
-<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.innosynergy.controller.DashboardController">
-
-    <stylesheets>
-        <URL value="@styles/style.css"/>
-    </stylesheets>
-
-    <!-- Haut : Liste des contrats et Historique -->
-    <top>
-        <HBox spacing="20.0" BorderPane.margin="20 20 20 20">
-            <!-- Historique des actions -->
-            <VBox spacing="10.0" prefWidth="500.0" styleClass="card">
-                <Label text="Historique des ajouts / actions" styleClass="section-title"/>
-                <TableView fx:id="historyTable">
-                    <columns>
-                        <TableColumn text="Date" prefWidth="120.0">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="date"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn text="Action" prefWidth="350.0">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="action"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                    </columns>
-                </TableView>
-            </VBox>
-
-            <!-- Liste des contrats -->
-            <VBox spacing="10.0" prefWidth="500.0" styleClass="card">
-                <Label text="Liste des contrats" styleClass="section-title"/>
-                <TableView fx:id="contractsTable">
-                    <columns>
-                        <TableColumn text="Contrat ID" prefWidth="100.0">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="id"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn text="Client" prefWidth="200.0">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="client"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn text="Statut" prefWidth="150.0">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="status"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                    </columns>
-                </TableView>
-            </VBox>
-        </HBox>
-    </top>
-
-    <!-- Centre : Statistiques à gauche et Horloge à droite -->
-    <center>
-        <HBox spacing="30.0" padding="30.0">
-            <!-- Graphiques statistiques -->
-            <VBox spacing="20.0" alignment="CENTER" styleClass="card">
-                <Label text="Statistiques" styleClass="section-title"/>
-
-                <VBox spacing="10.0">
-                    <Label text="Utilisation de la plateforme" styleClass="chart-title"/>
-                    <LineChart fx:id="usageLineChart">
-                        <xAxis>
-                            <NumberAxis label="Temps"/>
-                        </xAxis>
-                        <yAxis>
-                            <NumberAxis label="Utilisation"/>
-                        </yAxis>
-                        <data>
-                            <XYChart.Series name="Utilisation">
-                            </XYChart.Series>
-                        </data>
-                    </LineChart>
+<StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.innosynergy.controller.DashboardController">
+    <children>
+        <VBox spacing="20" StackPane.alignment="CENTER">
+            <children>
+                <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 20px;">
+                    <padding>
+                        <Insets bottom="20" left="20" right="20" top="20" />
+                    </padding>
+                    <children>
+                        <Label prefHeight="20.0" prefWidth="148.0" style="-fx-font-size: 24px; -fx-text-fill: #05004E;" text="Statistiques" />
+                        <HBox spacing="20">
+                            <padding>
+                                <Insets bottom="10" left="10" right="10" top="10" />
+                            </padding>
+                            <children>
+                                <VBox style="-fx-background-color: #FFCDD2; -fx-border-color: #E57373; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;">
+                                    <padding>
+                                        <Insets bottom="10" left="10" right="10" top="10" />
+                                    </padding>
+                                    <children>
+                                        <Label fx:id="clientCountLabel" style="-fx-font-size: 18px; -fx-text-fill: #E57373;"  />
+                                        <Label prefHeight="20.0" prefWidth="195.0" style="-fx-font-size: 14px;" text="Nombre de clients" />
+                                        <Label style="-fx-font-size: 12px;" text="" />
+                                    </children>
+                                </VBox>
+                                <VBox style="-fx-background-color: #FFE0B2; -fx-border-color: #FFB74D; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;">
+                                    <padding>
+                                        <Insets bottom="10" left="10" right="10" top="10" />
+                                    </padding>
+                                    <children>
+                                        <Label fx:id="partnerCountLabel" style="-fx-font-size: 18px; -fx-text-fill: #FFB74D;" text="300" />
+                                        <Label style="-fx-font-size: 14px;" text="Nombre de partenaires" />
+                                        <Label style="-fx-font-size: 12px;" text="" />
+                                    </children>
+                                </VBox>
+                                <VBox style="-fx-background-color: #C8E6C9; -fx-border-color: #81C784; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;">
+                                    <padding>
+                                        <Insets bottom="10" left="10" right="10" top="10" />
+                                    </padding>
+                                    <children>
+                                        <Label style="-fx-font-size: 18px; -fx-text-fill: #81C784;" text="80" />
+                                        <Label prefHeight="20.0" prefWidth="194.0" style="-fx-font-size: 14px;" text="Nombre d'évènements" />
+                                        <Label style="-fx-font-size: 12px;" text="+12 hier" />
+                                    </children>
+                                </VBox>
+                                <VBox style="-fx-background-color: #E1BEE7; -fx-border-color: #BA68C8; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;">
+                                    <padding>
+                                        <Insets bottom="10" left="10" right="10" top="10" />
+                                    </padding>
+                                    <children>
+                                        <Label fx:id="helpRequestCountLabel" style="-fx-font-size: 18px; -fx-text-fill: #BA68C8;" text="20" />
+                                        <Label prefHeight="20.0" prefWidth="195.0" style="-fx-font-size: 14px;" text="Nombre de demandes d'aide" />
+                                        <Label style="-fx-font-size: 12px;" text="+5 hier" />
+                                    </children>
+                                </VBox>
+                                <VBox style="-fx-background-color: #BBDEFB; -fx-border-color: #64B5F6; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;">
+                                    <padding>
+                                        <Insets bottom="10" left="10" right="10" top="10" />
+                                    </padding>
+                                    <children>
+                                        <Label style="-fx-font-size: 18px; -fx-text-fill: #64B5F6;" text="2K" />
+                                        <Label prefHeight="20.0" prefWidth="189.0" style="-fx-font-size: 14px;" text="Nombre de visiteurs" />
+                                        <Label style="-fx-font-size: 12px;" text="+25 hier" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </children>
                 </VBox>
-
-                <VBox spacing="10.0">
-                    <Label text="Contrats de partenariat" styleClass="chart-title"/>
-                    <LineChart fx:id="contractsLineChart">
-                        <xAxis>
-                            <NumberAxis label="Temps"/>
-                        </xAxis>
-                        <yAxis>
-                            <NumberAxis label="Nombre de contrats"/>
-                        </yAxis>
-                        <data>
-                            <XYChart.Series name="Contrats">
-                            </XYChart.Series>
-                        </data>
-                    </LineChart>
+                <VBox prefHeight="148.0" prefWidth="1044.0" spacing="10" style="-fx-background-color: white; -fx-background-radius: 20px;">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                    <children>
+                        <Label style="-fx-font-size: 24px; -fx-text-fill: #05004E;" text="évolution de don " />
+                        <LineChart fx:id="lineChart" prefHeight="118.0" prefWidth="1024.0" title="taux de don">
+                            <xAxis>
+                                <NumberAxis label="Mois" prefHeight="0.0" prefWidth="1079.0" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis label="Satisfaction" />
+                            </yAxis>
+                        </LineChart>
+                    </children>
                 </VBox>
-            </VBox>
+                <VBox prefHeight="551.0" prefWidth="1056.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 15px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);">
+                    <Label style="-fx-font-size: 24px; -fx-text-fill: #05004E;" text="Événements" />
+                    <TableView fx:id="eventTable" prefHeight="564.0" prefWidth="1056.0" style="-fx-background-color: transparent;">
+                        <columns>
+                            <TableColumn fx:id="numberCol" text="#" />
+                            <TableColumn fx:id="titleCol" text="Titre" />
+                            <TableColumn fx:id="descCol" text="Description" />
+                            <TableColumn fx:id="dateCol" text="Date de l'événement" />
+                            <TableColumn fx:id="placeCol" text="Lieu" />
+                            <TableColumn fx:id="partnerCol" text="Partenaire" />
+                            <TableColumn fx:id="statusCol" text="Status" />
+                        </columns>
+                    </TableView>
+                </VBox>
+                <HBox prefHeight="270.0" prefWidth="1044.0" spacing="20" style="-fx-background-color: white; -fx-background-radius: 10px;">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
 
-            <!-- Horloge circulaire -->
-            <VBox alignment="CENTER" spacing="20.0" styleClass="clock-container">
-                <Circle radius="100.0" fill="#013A71"/>
-                <Label fx:id="clockLabel" text="12:00" styleClass="clock-text"/>
-            </VBox>
-        </HBox>
-    </center>
-
-</BorderPane>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</StackPane>

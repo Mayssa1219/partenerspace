@@ -1,16 +1,21 @@
 package com.example.innosynergy.controller;
 
-import com.example.innosynergy.dao.NotificationDaoImpl;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -41,7 +46,7 @@ public class PartnerLayoutController {
     private ScrollPane scrollPane;
 
     @FXML
-    private ImageView profileImageView, notificationsImageView, searchImageView;
+    private ImageView profileImageView, notificationsImageView, searchImageView, notificationIcon;
 
     private final Map<Button, String[]> buttonViewMappings = new HashMap<>();
 
@@ -68,16 +73,29 @@ public class PartnerLayoutController {
 
         // Charger le tableau de bord par défaut
         loadView("Tableau de bord", "/MiraVia/dashboard.fxml");
+
+        // Gestionnaire d'événements pour l'icône des notifications
+        notificationIcon.setOnMouseClicked(event -> {
+            try {
+                showNotificationPopup(notificationIcon); // Afficher la popup de notification
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
-    @FXML
-    private Button loadNotificationsButton;
+    private void showNotificationPopup(Node anchor) throws IOException {
+        // Charger le fichier FXML pour la barre de notification
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MiraVia/NotificationBarView.fxml"));
+        Parent notificationContent = loader.load();
 
-    @FXML
-    private void handleLoadNotifications() {
-        NotificationBarController notificationBarController = new NotificationBarController();
-        NotificationDaoImpl notificationDao = new NotificationDaoImpl(notificationBarController);
-        notificationDao.loadNotifications();
+        // Créer un Popup et ajouter le contenu de notification
+        Popup popup = new Popup();
+        popup.getContent().add(notificationContent);
+        popup.setAutoHide(true);
+
+        // Positionner la popup sous l'icône de notification
+        popup.show(anchor.getScene().getWindow(), anchor.getScene().getWindow().getX() + anchor.getLayoutX(), anchor.getScene().getWindow().getY() + anchor.getLayoutY() + anchor.getBoundsInParent().getHeight());
     }
 
     private void loadView(String title, String fxmlPath) {
@@ -95,9 +113,6 @@ public class PartnerLayoutController {
         }
     }
 
-    /**
-     * Affiche ou masque la barre latérale.
-     */
     @FXML
     private void toggleSidebarVisibility() {
         sidebarScrollPane.setVisible(!sidebarScrollPane.isVisible());

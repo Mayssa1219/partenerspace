@@ -130,8 +130,8 @@ public class PartenaireProfileController {
             PartenaireProfileModel partenaireprofile = partenaireDao.getPartenaireById(idPartenaire);
             if (partenaireprofile != null) {
                 System.out.println("New image name: " + newImageName);
-                partenaireprofile.setAvatar(newImageName); // Save the file name in the database
-                partenaireDao.updatePartenaire(partenaireprofile);
+                PartenaireDaoImpl partenaireDao = new PartenaireDaoImpl();
+                partenaireDao.updateAvatar(idPartenaire, newImageName);
                 showAlert("Succès", "Image de profil mise à jour avec succès.");
             }
         } catch (IOException e) {

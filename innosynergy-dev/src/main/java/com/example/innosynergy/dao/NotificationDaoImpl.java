@@ -5,17 +5,30 @@ import com.example.innosynergy.controller.NotificationBarController;
 import javafx.scene.layout.VBox;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class NotificationDaoImpl implements NotificationsDao {
-    private NotificationBarController notificationBarController;
+    private final NotificationBarController notificationBarController;
 
     public NotificationDaoImpl(NotificationBarController notificationBarController) {
         this.notificationBarController = notificationBarController;
     }
-
     @Override
+    public void insertNotification(int userId, String message, String type) {
+        String sql = "INSERT INTO notifications (id_utilisateur, message, type_notification, date_envoi) VALUES (?, ?, ?, NOW())";
+        try (Connection connection = ConnexionBD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, message);
+            preparedStatement.setString(3, type);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+   @Override
     public void loadNotifications() {
         try (Connection connection = ConnexionBD.getConnection();
              Statement statement = connection.createStatement();

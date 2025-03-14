@@ -1,5 +1,6 @@
 package com.example.innosynergy.dao;
 
 public interface NotificationsDao {
-    public void loadNotifications();
+    void insertNotification(int userId, String message, String type);
+     void loadNotifications();
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+        <?import javafx.scene.control.Label?>
+        <?import javafx.scene.control.ScrollPane?>
+        <?import javafx.scene.image.Image?>
+        <?import javafx.scene.image.ImageView?>
+        <?import javafx.scene.layout.VBox?>
+
+<ScrollPane fx:id="scrollPane" fitToWidth="true" style="-fx-background: #bdd4f3;"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.innosynergy.controller.NotificationBarController">
+
+    <VBox fx:id="notificationContainer" alignment="TOP_LEFT" prefHeight="400.0"
+          prefWidth="300.0" spacing="5" style="-fx-padding: 10; -fx-background-color: white;">
+
+
+        <!-- Bouton de fermeture -->
+        <ImageView fx:id="closeImage" fitHeight="43.0" fitWidth="21.0" pickOnBounds="true"
+                   preserveRatio="true" style="padding-left: 15px; -fx-translate-x: 230px; -fx-translate-y: 0px;">
+            <image>
+                <Image url="@../images/icone-fermer-et-x-rouge.png" />
+            </image>
+        </ImageView>
+
+        <!-- Title Section -->
+        <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Notifications" />
+        <Label style="-fx-font-size: 14px; -fx-text-fill: black;" text="notifications manquantes?" />
+
+        <!-- Notifications ajoutées dynamiquement -->
+        <VBox fx:id="noNotificationsPlaceholder" alignment="CENTER" spacing="10" visible="false">
+            <Label style="-fx-font-size: 14px; -fx-text-fill: #6b7280;" text="Aucune notification disponible." />
+        </VBox>
+
+        <!-- Image cliquable pour fermer -->
+        <ImageView fx:id="closeBoxImage" fitHeight="140.0" fitWidth="269.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/clb3wd5gy000a6y9c8ngy0lxf.jpg" />
+            </image>
+        </ImageView>
+
+        <!-- Historical Notifications Link -->
+        <VBox fx:id="historicalNotificationsLink" alignment="TOP_LEFT" spacing="0" />
+
+    </VBox>
+</ScrollPane>
