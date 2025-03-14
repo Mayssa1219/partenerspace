@@ -1,125 +1,49 @@
 package com.example.innosynergy.model;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 public class DemandeData {
-    private StringProperty demandeur;
-    private StringProperty telephone;
-    private StringProperty email;
-    private StringProperty adresse;
-    private StringProperty dateDemande;
-    private StringProperty preuve; // Nouveau champ pour la preuve
-    private StringProperty description; // Champ description
-    private StringProperty fileUrl; // Champ pour l'URL du fichier
+    private int idDemande;
+    private int idClient;
+    private int idPartenaire;
+    private String typeAide;
+    private String description;
+    private double montantDemande;
+    private String dateDemande;
+    private String status;
+    private String preuves;
 
-    // Constructeur
-    public DemandeData(String demandeur, String telephone, String email, String adresse, String dateDemande, String preuve, String description, String fileUrl) {
-        this.demandeur = new SimpleStringProperty(demandeur);
-        this.telephone = new SimpleStringProperty(telephone);
-        this.email = new SimpleStringProperty(email);
-        this.adresse = new SimpleStringProperty(adresse);
-        this.dateDemande = new SimpleStringProperty(dateDemande);
-        this.preuve = new SimpleStringProperty(preuve);
-        this.description = new SimpleStringProperty(description);
-        this.fileUrl = new SimpleStringProperty(fileUrl);
+    public DemandeData(int idDemande, int idClient, int idPartenaire, String typeAide,
+                       String description, double montantDemande, String dateDemande,
+                       String status, String preuves) {
+        this.idDemande = idDemande;
+        this.idClient = idClient;
+        this.idPartenaire = idPartenaire;
+        this.typeAide = typeAide;
+        this.description = description;
+        this.montantDemande = montantDemande;
+        this.dateDemande = dateDemande;
+        this.status = status;
+        this.preuves = preuves;
     }
 
-    // Getters et Setters pour les propriétés
+    // Getters
+    public int getIdDemande() { return idDemande; }
+    public int getIdClient() { return idClient; }
+    public int getIdPartenaire() { return idPartenaire; }
+    public String getTypeAide() { return typeAide; }
+    public String getDescription() { return description; }
+    public double getMontantDemande() { return montantDemande; }
+    public String getDateDemande() { return dateDemande; }
+    public String getStatus() { return status; }
+    public String getPreuves() { return preuves; }
 
-    public String getDemandeur() {
-        return demandeur.get();
-    }
-
-    public void setDemandeur(String demandeur) {
-        this.demandeur.set(demandeur);
-    }
-
-    public StringProperty demandeurProperty() {
-        return demandeur;
-    }
-
-    public String getTelephone() {
-        return telephone.get();
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone.set(telephone);
-    }
-
-    public StringProperty telephoneProperty() {
-        return telephone;
-    }
-
-    public String getEmail() {
-        return email.get();
-    }
-
-    public void setEmail(String email) {
-        this.email.set(email);
-    }
-
-    public StringProperty emailProperty() {
-        return email;
-    }
-
-    public String getAdresse() {
-        return adresse.get();
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse.set(adresse);
-    }
-
-    public StringProperty adresseProperty() {
-        return adresse;
-    }
-
-    public String getDateDemande() {
-        return dateDemande.get();
-    }
-
-    public void setDateDemande(String dateDemande) {
-        this.dateDemande.set(dateDemande);
-    }
-
-    public StringProperty dateDemandeProperty() {
-        return dateDemande;
-    }
-
-    public String getPreuve() {
-        return preuve.get();
-    }
-
-    public void setPreuve(String preuve) {
-        this.preuve.set(preuve);
-    }
-
-    public StringProperty preuveProperty() {
-        return preuve;
-    }
-
-    public String getDescription() {
-        return description.get();
-    }
-
-    public void setDescription(String description) {
-        this.description.set(description);
-    }
-
-    public StringProperty descriptionProperty() {
-        return description;
-    }
-
-    public String getFileUrl() {
-        return fileUrl.get();
-    }
-
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl.set(fileUrl);
-    }
-
-    public StringProperty fileUrlProperty() {
-        return fileUrl;
-    }
+    // Setters
+    public void setIdDemande(int idDemande) { this.idDemande = idDemande; }
+    public void setIdClient(int idClient) { this.idClient = idClient; }
+    public void setIdPartenaire(int idPartenaire) { this.idPartenaire = idPartenaire; }
+    public void setTypeAide(String typeAide) { this.typeAide = typeAide; }
+    public void setDescription(String description) { this.description = description; }
+    public void setMontantDemande(double montantDemande) { this.montantDemande = montantDemande; }
+    public void setDateDemande(String dateDemande) { this.dateDemande = dateDemande; }
+    public void setStatus(String status) { this.status = status; }
+    public void setPreuves(String preuves) { this.preuves = preuves; }
 }

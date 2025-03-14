@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Button?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.innosynergy.controller.EvenementController"
+      styleClass="event-container">
+    <stylesheets>
+        <URL value="@styles/style.css"/>
+    </stylesheets>
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <!-- Filter and Search Bar -->
+    <HBox spacing="10" alignment="CENTER">
+        <TextField fx:id="searchField" promptText="Rechercher..." HBox.hgrow="ALWAYS"
+                   prefHeight="30" prefWidth="250"/>
+        <!-- Search Button -->
+        <Button onAction="#handleSearch" prefWidth="40" prefHeight="30" styleClass="search-button">
+            <graphic>
+                <ImageView fitWidth="20" fitHeight="20">
+                    <image>
+                        <Image url="@/images/recherche.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <!-- Filter by Date -->
+        <DatePicker fx:id="departureDatePicker" HBox.hgrow="ALWAYS"
+                    prefHeight="30" prefWidth="250" promptText="Filtrer par date ..." />
+
+        <!-- Ajouter Button -->
+        <Button id="addButton" text="Ajouter" onAction="#handleAjouter"/>
+    </HBox>
+
+    <!-- Separator -->
+    <Separator styleClass="separator"/>
+
+    <!-- Conteneur pour les cartes d'événements -->
+    <VBox styleClass="card-container" spacing="15"> <!-- Espacement de 20px entre les cartes -->
+        <!-- Festival des Lumières à Chiang Mai -->
+        <HBox styleClass="event-card" spacing="10" alignment="CENTER_LEFT"> <!-- Align image to center-left -->
+            <ImageView fitWidth="100" fitHeight="100">
+                <image>
+                    <Image url="@/images/thaîlande.jpg"/>
+                </image>
+            </ImageView>
+            <VBox spacing="5" alignment="CENTER_LEFT">
+
+                <!-- HBox to align location and menu button on the same line -->
+                <HBox alignment="CENTER_LEFT" spacing="10"> <!-- Align location and menu on the same line -->
+                    <HBox spacing="5" alignment="CENTER_LEFT"> <!-- Align location icon and text -->
+                        <ImageView fitWidth="20" fitHeight="20">
+                            <image>
+                                <Image url="@/images/localisation_1.png"/> <!-- Replace with your icon path -->
+                            </image>
+                        </ImageView>
+                        <Label text="Thailand" styleClass="event-location"/> <!-- Replace with your location -->
+                    </HBox>
+
+                    <!-- Empty Region to push the MenuButton to the right -->
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <!-- Menu button aligned to the right with label "Gérer" -->
+                    <MenuButton text="Gérer" graphicTextGap="5">
+                        <items>
+                            <!-- Modifier Button with pencil icon -->
+                            <MenuItem text="Modifier" onAction="#handleModifier">
+                                <graphic>
+                                    <ImageView fitWidth="18" fitHeight="18">
+                                        <image>
+                                            <Image url="@/images/crayon.png"/> <!-- Path to your pencil icon -->
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </MenuItem>
+                            <!-- Supprimer Button with trash icon -->
+                            <MenuItem text="Supprimer" onAction="#handleSupprimer">
+                                <graphic>
+                                    <ImageView fitWidth="18" fitHeight="18">
+                                        <image>
+                                            <Image url="@/images/poubelle.png"/> <!-- Path to your trash icon -->
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </MenuItem>
+                        </items>
+                    </MenuButton>
+                </HBox>
+
+                <!-- Date with italic style and custom color -->
+                <Label text="2025-03-13" styleClass="event-date"/> <!-- Date styled in italic -->
+
+                <Label text="Festival des Lumières à Chiang Mai (Thailand)" styleClass="event-title"/>
+                <Label text="Par troisième au festival des Lumières en séjournant dans les chaises noires, qui sont un nombre de trois millions d’un rang de ces événements unique." styleClass="event-description" wrapText="true"/>
+
+                <!-- Status aligned to bottom-right -->
+                <HBox alignment="BOTTOM_RIGHT" spacing="10"> <!-- Align status to bottom-right -->
+                    <Label text="Attend" styleClass="event-status"/> <!-- Status -->
+                </HBox>
+            </VBox>
+        </HBox>
+
+    </VBox>
+</VBox>
