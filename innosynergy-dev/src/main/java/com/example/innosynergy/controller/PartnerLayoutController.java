@@ -1,6 +1,10 @@
 package com.example.innosynergy.controller;
 
+import com.example.innosynergy.dao.DonDaoImpl;
+import com.example.innosynergy.dao.EventDaoImpl;
 import com.example.innosynergy.dao.PartenaireDaoImpl;
+import com.example.innosynergy.model.Don;
+import com.example.innosynergy.model.Event;
 import com.example.innosynergy.model.User;
 import com.example.innosynergy.utils.SessionManager;
 import javafx.fxml.FXML;
@@ -10,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -22,6 +27,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PartnerLayoutController {
@@ -101,6 +107,31 @@ public class PartnerLayoutController {
                 profileImageView.setImage(new Image("file:uploads/" + imageName));
             }
             profileNameLabel.setText(currentUser.getNom()+" "+currentUser.getPrenom());
+        }
+        eventDao = new EventDaoImpl();
+        donDao = new DonDaoImpl();
+    }
+    private EventDaoImpl eventDao;
+
+    private DonDaoImpl donDao;
+
+    @FXML
+    private void handleLogout() {
+        // Clear the session
+        SessionManager.invalidateSession(SessionManager.getCurrentSessionId());
+
+        // Load the login view
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MiraVia/LoginView.fxml"));
+            Parent loginView = loader.load();
+            Scene loginScene = new Scene(loginView);
+
+            // Get the current stage
+            Stage stage = (Stage) mainLayout.getScene().getWindow();
+            stage.setScene(loginScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
