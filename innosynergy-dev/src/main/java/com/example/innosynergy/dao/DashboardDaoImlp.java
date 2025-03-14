@@ -94,7 +94,7 @@ public class DashboardDaoImlp implements DashboardDao{
                 String place = resultSet.getString("lieu");
                 String partner = resultSet.getString("id_partenaire");
                 String status = resultSet.getString("status");
-                events.add(new Event(number, title, description, dateEvenement, place, partner, status));
+
             }
 
         } catch (Exception e) {

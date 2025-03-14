@@ -58,10 +58,8 @@ public class DemandeAideController implements Initializable {
     private ObservableList<DemandeData> demandeDataList;
     private FilteredList<DemandeData> filteredData;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
 
         filteredData = new FilteredList<>(demandeDataList, p -> true);
 
@@ -88,7 +86,7 @@ public class DemandeAideController implements Initializable {
                         FileChooser fileChooser = new FileChooser();
                         fileChooser.setTitle("Sélectionner un fichier");
                         fileChooser.getExtensionFilters().addAll(
-                                new FileChooser.ExtensionFilter("Tous les fichiers", "*.*")
+                                new FileChooser.ExtensionFilter("Tous les fichiers", ".")
                         );
                         File selectedFile = fileChooser.showOpenDialog(null);
                         if (selectedFile != null) {
@@ -183,7 +181,7 @@ public class DemandeAideController implements Initializable {
         // Action pour importer un fichier
         importerButton.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Tous les fichiers", "*.*"));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Tous les fichiers", "."));
             File selectedFile = fileChooser.showOpenDialog(modal);
 
             if (selectedFile != null) {
@@ -208,7 +206,6 @@ public class DemandeAideController implements Initializable {
         modal.show();
 
     }
-
 
     private void showAddRequestModal() {
         Stage modal = new Stage();
@@ -296,6 +293,3 @@ public class DemandeAideController implements Initializable {
         modal.show();
     }
 }
-
-
-

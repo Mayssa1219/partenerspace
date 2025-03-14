@@ -57,7 +57,7 @@ public class PartnerLayoutController {
         buttonViewMappings.put(helpRequestsButton, new String[]{"Demandes d'aide", "/MiraVia/DemandeAideView.fxml"});
         buttonViewMappings.put(consultButton, new String[]{"Consulter", null});
         buttonViewMappings.put(donButton, new String[]{"Don", "/MiraVia/DonView.fxml"});
-        buttonViewMappings.put(eventsButton, new String[]{"Événements", null});
+        buttonViewMappings.put(eventsButton, new String[]{"Événements", "/MiraVia/EvenementView.fxml"});
         buttonViewMappings.put(benevolButton, new String[]{"Bénévolat", null});
         buttonViewMappings.put(settingsButton, new String[]{"Paramètres", "/MiraVia/SettingsView.fxml"});
         buttonViewMappings.put(messagesButton, new String[]{"Messagerie", "/MiraVia/MessagerieView.fxml"});
