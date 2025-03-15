@@ -12,4 +12,5 @@ public interface UserDao {
     boolean updatePassword(String email, String newPassword); // Add this method
     String findNameByEmail(String email);
     boolean updatePasswordProfil(String email, String newPassword);
+  User getUserByEmail(String email);
 }

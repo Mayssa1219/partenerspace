@@ -130,7 +130,31 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+     @Override
+    public User getUserByEmail(String email) {
 
+        User user = null;
+
+        String query = "SELECT * FROM utilisateurs WHERE email = ?";
+        try (Connection connection = connexionBD.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User();
+                user.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
+                user.setNom(resultSet.getString("nom"));
+                user.setEmail(resultSet.getString("email"));
+                user.setTypeUtilisateur(resultSet.getString("type_utilisateur"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Gérer l'exception
+        }
+
+        return user;
+    }
     @Override
     public String findNameByEmail(String email) {
         String query = "SELECT nom FROM utilisateurs WHERE email = ?";
