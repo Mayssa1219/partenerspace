@@ -51,6 +51,7 @@ public class Event {
         this.lieu = lieu;
     }
 
+    // getters and setters
     public Integer getIdPartenaire() {
         return idPartenaire;
     }

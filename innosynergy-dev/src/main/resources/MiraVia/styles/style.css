@@ -4,11 +4,6 @@
     -fx-font-size: 14px;
 }
 
-/* Style global pour tous les Label */
-.label {
-    -fx-font-size: 16px; /* Taille de police par défaut */
-}
-
 /* Barre supérieure */
 .top-bar {
     -fx-background-color: #ffffff;
@@ -92,6 +87,7 @@
 
 .sidebar-button-text {
     -fx-text-fill: #013A71;
+    -fx-font-size: 16px;
 }
 
 /* Contenu principal */

@@ -8,4 +8,5 @@ public interface EventDao {
     List<Event> listEvents();
     Event findEventById(int idEvent);
     List<Event> searchEvents(String keyword);
+    void updateEvent(Event event);
 }
