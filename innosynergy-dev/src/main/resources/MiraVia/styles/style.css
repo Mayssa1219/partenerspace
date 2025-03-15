@@ -3,11 +3,6 @@
     -fx-font-family: "Arial";
     -fx-font-size: 14px;
 }
-
-<<<<<<< HEAD
-=======
-
->>>>>>> b13bf6f01b7c6eb9ce2fe5cc276f73b3c903e216
 /* Barre supérieure */
 .top-bar {
     -fx-background-color: #ffffff;
@@ -332,6 +327,30 @@
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
+
+.import-button {
+    -fx-background-color: #aecee6;
+    -fx-text-fill: #003073;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand; /* Curseur en forme de main */
+}
+
+.import-button:hover {
+    -fx-background-color: #003073; /* Couleur de fond au survol */
+    -fx-text-fill: white;
+}
+.modifier-Button {
+    -fx-background-color: #7d8c6d; /* Couleur de fond verte */
+    -fx-text-fill: white; /* Texte en blanc */
+    -fx-background-radius: 2px; /* Bordures arrondies */
+    -fx-font-weight: bold; /* Texte en gras */
+}
+.modifier-Button:hover {
+    -fx-background-color: #3b4c2c;
+    -fx-text-fill: white;/* Couleur de fond verte plus foncée au survol */
+  }
 
 /* Style pour le bouton Ajouter */
 #ajouterButton, .ajouter-button {

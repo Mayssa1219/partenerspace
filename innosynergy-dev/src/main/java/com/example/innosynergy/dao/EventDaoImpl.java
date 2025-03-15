@@ -10,7 +10,7 @@ import java.util.List;
 public class EventDaoImpl implements EventDao {
     // Requête INSERT
     private static final String INSERT_EVENT_SQL = "INSERT INTO evenements (titre, description, " +
-            "date_evenement, lieu, id_partenaire , status ) VALUES (?, ?, ?, ?, ?, ?)";
+            "date_evenement, lieu, id_partenaire , status , imageName ) VALUES (?, ?, ?, ?, ?, ?, ? )";
     // Requête SELECT
     private static final String SELECT_ALL_EVENTS_SQL = "SELECT * FROM evenements";
     private static final String SELECT_EVENT_BY_ID_SQL = "SELECT * FROM evenements WHERE id_evenement = ?";
@@ -18,7 +18,7 @@ public class EventDaoImpl implements EventDao {
             "OR description LIKE ?";
     // Requête UPDATE
     private static final String UPDATE_EVENT_SQL = "UPDATE evenements SET titre = ?, " +
-            "description = ?, date_evenement = ?, lieu = ?, id_partenaire = ?, status = ? " +
+            "description = ?, date_evenement = ?, lieu = ?, id_partenaire = ?, status = ? , imageName = ? " +
             "WHERE id_evenement = ?";
     // Requête DELETE
     private static final String DELETE_EVENT_SQL = "DELETE FROM evenements WHERE id_evenement = ?";
@@ -39,6 +39,7 @@ public class EventDaoImpl implements EventDao {
             preparedStatement.setString(4, event.getLieu()); // Ajouter le lieu
             preparedStatement.setInt(5, event.getIdPartenaire());
             preparedStatement.setString(6, event.getStatus());// Ajouter l'ID du partenaire
+            preparedStatement.setString(7, event.getImageName());
 
             // Exécuter la requête SQL
             int rowsInserted = preparedStatement.executeUpdate();
@@ -74,9 +75,10 @@ public class EventDaoImpl implements EventDao {
                 event.setDateEvenement(rs.getTimestamp("date_evenement").toLocalDateTime());
                 event.setLieu(rs.getString("lieu"));
                 event.setStatus(rs.getString("status"));
+                event.setImageName(rs.getString("imageName")); // Récupérer le champ imageName
                 events.add(event);
 
-                System.out.println("Événement récupéré : " + event.getTitre() + " - " + event.getLieu());
+                System.out.println("Événement récupéré : " + event.getTitre() + " - " + event.getLieu() + " - " + event.getImageName());
             }
             System.out.println("Nombre total d'événements récupérés : " + events.size());
         } catch (SQLException e) {
@@ -151,7 +153,8 @@ public class EventDaoImpl implements EventDao {
             preparedStatement.setString(4, event.getLieu());
             preparedStatement.setInt(5, event.getIdPartenaire());
             preparedStatement.setString(6, event.getStatus());
-            preparedStatement.setInt(7, event.getIdEvenement());
+            preparedStatement.setString(7, event.getImageName());
+            preparedStatement.setInt(8, event.getIdEvenement());
 
             int rowsUpdated = preparedStatement.executeUpdate();
 

@@ -5,6 +5,7 @@ import com.example.innosynergy.model.Event;
 import com.example.innosynergy.model.User;
 import com.example.innosynergy.utils.SessionManager;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -15,10 +16,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;  // Correct import
-
+import javafx.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -37,6 +42,7 @@ public class EvenementController {
     private Button addButton; // Bouton "Ajouter"
 
     private EventDaoImpl eventDao;
+    private File selectedFile;
 
     @FXML
     public void initialize() {
@@ -57,10 +63,25 @@ public class EvenementController {
             eventCard.setUserData(evenement);
 
             // Ajouter une image (si disponible)
-            ImageView imageView = new ImageView(new Image("/images/thaîlande.jpg")); // Remplacez par l'image de l'événement
-            imageView.setFitWidth(100);
-            imageView.setFitHeight(100);
-            eventCard.getChildren().add(imageView);
+            String imageName = evenement.getImageName();
+            ImageView eventImageView = new ImageView();
+            eventImageView.setFitWidth(100);
+            eventImageView.setFitHeight(100);
+            if (imageName != null && !imageName.isEmpty()) {
+                File imageFile = new File("uploads/" + imageName);
+                System.out.println("Chemin de l'image: " + imageFile.getAbsolutePath());
+                // Ajout d'un message de journalisation
+                if (imageFile.exists()) {
+                    Image image = new Image(imageFile.toURI().toString());
+                    eventImageView.setImage(image);
+                    System.out.println("Image affichée pour l'événement: " + evenement.getTitre());
+                } else {
+                    System.out.println("Le fichier image n'existe pas: " + imageFile.getAbsolutePath());
+                }
+            } else {
+                System.out.println("Aucune image pour l'événement: " + evenement.getTitre());
+            }
+            eventCard.getChildren().add(eventImageView);
 
             // Ajouter les détails de l'événement
             VBox detailsBox = new VBox(5); // Espacement de 5px entre les éléments de texte
@@ -86,8 +107,8 @@ public class EvenementController {
             menuButton.getItems().addAll(modifierItem, supprimerItem);
 
             // Ajouter le titre et le MenuButton dans le HBox
-            titleBox.getChildren().addAll(titleLabel, new Region(), menuButton); // Utiliser Region pour pousser le MenuButton à droite
-            HBox.setHgrow(titleBox.getChildren().get(1), Priority.ALWAYS); // Faire en sorte que le Region prenne tout l'espace disponible
+            titleBox.getChildren().addAll(titleLabel, new Region(), menuButton);
+            HBox.setHgrow(titleBox.getChildren().get(1), Priority.ALWAYS);
 
             Label descriptionLabel = new Label(evenement.getDescription());
             descriptionLabel.getStyleClass().add("event-description");
@@ -96,7 +117,7 @@ public class EvenementController {
             Label dateLabel = new Label(evenement.getDateEvenement().toString());
             dateLabel.getStyleClass().add("event-date");
 
-            Label lieuLabel = new Label(evenement.getLieu()); // Ajouter le lieu
+            Label lieuLabel = new Label(evenement.getLieu());
             lieuLabel.getStyleClass().add("event-lieu");
 
             Label statusLabel = new Label(evenement.getStatus());
@@ -115,6 +136,25 @@ public class EvenementController {
         String keyword = searchField.getText();
         List<Event> evenements = eventDao.searchEvents(keyword);
         afficherEvenements(evenements);
+    }
+
+    private String saveImageToUploads(File sourceFile) throws IOException {
+        String uploadsDir = "uploads";
+        File uploadsDirectory = new File(uploadsDir);
+        if (!uploadsDirectory.exists()) {
+            uploadsDirectory.mkdirs(); // Crée le dossier s'il n'existe pas
+        }
+
+        // Générer un nom de fichier unique pour éviter les conflits
+        String fileName = sourceFile.getName();
+        File destFile = new File(uploadsDirectory, fileName);
+
+        // Copier le fichier dans le dossier uploads
+        Files.copy(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+        // Retourner uniquement le nom du fichier
+        System.out.println("Image enregistrée: " + fileName); // Ajout d'un message de journalisation
+        return fileName;
     }
 
     @FXML
@@ -142,6 +182,29 @@ public class EvenementController {
         TextField statutField = new TextField();
         statutField.setPromptText("Entrez le statut de l'événement");
 
+        // Champ pour l'importation d'image
+        Button importImageButton = new Button("Importer une image");
+        importImageButton.setPrefWidth(400); // Définir la largeur du bouton
+        importImageButton.getStyleClass().add("import-button"); // Ajouter une classe CSS
+
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(100);
+
+        importImageButton.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choisir une image");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif")
+            );
+            selectedFile = fileChooser.showOpenDialog(new Stage());
+            if (selectedFile != null) {
+                Image image = new Image(selectedFile.toURI().toString());
+                imageView.setImage(image);
+                System.out.println("Nom du fichier sélectionné: " + selectedFile.getName()); // Ajout d'un message de journalisation
+            }
+        });
+
         // Boutons pour valider ou annuler
         Button ajouterButton = new Button("Ajouter");
         Button annulerButton = new Button("Annuler");
@@ -158,20 +221,29 @@ public class EvenementController {
             LocalDateTime date = datePicker.getValue().atStartOfDay();
             String lieu = lieuField.getText();
             String statut = statutField.getText();
+            String imageName = null;
+
+            if (selectedFile != null) {
+                try {
+                    imageName = saveImageToUploads(selectedFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    showAlert("Erreur", "Échec de l'enregistrement de l'image.");
+                    return;
+                }
+            }
 
             int idPartenaire = SessionManager.getUser(SessionManager.getCurrentSessionId()).getIdUtilisateur(); // Récupérer l'ID du partenaire depuis la session
-
-            // Vérifier l'ID du partenaire dans le terminal
-            System.out.println("ID du partenaire courant : " + idPartenaire);
 
             // Créer un nouvel événement
             Event nouvelEvenement = new Event();
             nouvelEvenement.setTitre(titre);
             nouvelEvenement.setDescription(description);
             nouvelEvenement.setDateEvenement(date);
-            nouvelEvenement.setLieu(lieu); // Ajouter le lieu
+            nouvelEvenement.setLieu(lieu);
             nouvelEvenement.setStatus(statut);
-            nouvelEvenement.setIdPartenaire(idPartenaire); // Ajouter l'ID du partenaire
+            nouvelEvenement.setIdPartenaire(idPartenaire);
+            nouvelEvenement.setImageName(imageName); // Ajouter le nom de l'image
 
             // Ajouter l'événement à la base de données
             eventDao.insertEvent(nouvelEvenement);
@@ -189,7 +261,7 @@ public class EvenementController {
 
         // Créer un HBox pour les boutons et les centrer
         HBox buttonBox = new HBox(10); // Espacement de 10px entre les boutons
-        buttonBox.setAlignment(javafx.geometry.Pos.CENTER); // Centrer les boutons
+        buttonBox.setAlignment(Pos.CENTER); // Centrer les boutons
         buttonBox.getChildren().addAll(annulerButton, ajouterButton);
 
         // Titre de la fenêtre modale
@@ -198,12 +270,12 @@ public class EvenementController {
 
         // Centrer le titre dans un HBox
         HBox titleBox = new HBox();
-        titleBox.setAlignment(javafx.geometry.Pos.CENTER); // Centrer le titre
+        titleBox.setAlignment(Pos.CENTER); // Centrer le titre
         titleBox.getChildren().add(titleLabel);
 
         // Organiser les champs dans un VBox
         VBox vbox = new VBox(10);
-        vbox.setPadding(new javafx.geometry.Insets(10));
+        vbox.setPadding(new Insets(10));
         vbox.getChildren().addAll(
                 titleBox, // Ajouter le HBox contenant le titre centré
                 new Label("Titre :"), titreField,
@@ -211,15 +283,25 @@ public class EvenementController {
                 new Label("Date :"), datePicker,
                 new Label("Lieu :"), lieuField,
                 new Label("Statut :"), statutField,
+                new Label("Image :"), importImageButton, imageView,
                 buttonBox // Ajouter le HBox des boutons
         );
 
         // Créer une scène et afficher la fenêtre modale
-        Scene scene = new Scene(vbox, 400, 450); // Ajuster la taille de la fenêtre
+        Scene scene = new Scene(vbox, 400, 600); // Ajuster la taille de la fenêtre
         scene.getStylesheets().add(getClass().getResource("/MiraVia/styles/style.css").toExternalForm());
 
         dialogStage.setScene(scene);
         dialogStage.showAndWait();
+    }
+
+    // Méthode pour afficher une alerte
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
@@ -273,12 +355,49 @@ public class EvenementController {
         TextField lieuField = new TextField(evenement.getLieu());
         TextField statutField = new TextField(evenement.getStatus());
 
+        // Champ pour l'importation d'image
+        Button importImageButton = new Button("Importer une image");
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(100);
+        if (evenement.getImageName() != null && !evenement.getImageName().isEmpty()) {
+            File imageFile = new File("uploads/" + evenement.getImageName());
+            if (imageFile.exists()) {
+                Image image = new Image(imageFile.toURI().toString());
+                imageView.setImage(image);
+                System.out.println("Image affichée pour l'événement à modifier: " + evenement.getTitre()); // Ajout d'un message de journalisation
+            } else {
+                System.out.println("Le fichier image à modifier n'existe pas: " + imageFile.getAbsolutePath()); // Ajout d'un message de journalisation
+            }
+        }
+
+        ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/crayon.png")));
+
+        editIcon.setFitWidth(20);
+        editIcon.setFitHeight(20);
+        editIcon.setOnMouseClicked(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choisir une image");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif")
+            );
+            selectedFile = fileChooser.showOpenDialog(dialogStage);
+            if (selectedFile != null) {
+                Image image = new Image(selectedFile.toURI().toString());
+                imageView.setImage(image);
+                System.out.println("Image sélectionnée pour modification: " + selectedFile.getAbsolutePath()); // Ajout d'un message de journalisation
+            }
+        });
+
+        HBox imageBox = new HBox(10, imageView, editIcon);
+        imageBox.setAlignment(Pos.CENTER_LEFT);
+
         // Boutons pour valider ou annuler
         Button modifierButton = new Button("Modifier");
         Button annulerButton = new Button("Annuler");
 
         // Appliquer les classes CSS
-        modifierButton.getStyleClass().add("modifier-button");
+        modifierButton.getStyleClass().add("modifier-Button");
         annulerButton.getStyleClass().add("annuler-button");
 
         // Gérer l'action du bouton "Modifier"
@@ -289,6 +408,18 @@ public class EvenementController {
             LocalDateTime date = datePicker.getValue().atStartOfDay();
             String lieu = lieuField.getText();
             String statut = statutField.getText();
+            String imageName = evenement.getImageName();
+
+            if (selectedFile != null) {
+                try {
+                    imageName = saveImageToUploads(selectedFile);
+                    System.out.println("Image enregistrée: " + imageName);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    showAlert("Erreur", "Échec de l'enregistrement de l'image.");
+                    return;
+                }
+            }
 
             // Modifier l'événement existant
             evenement.setTitre(titre);
@@ -297,6 +428,7 @@ public class EvenementController {
             evenement.setLieu(lieu);
             evenement.setStatus(statut);
             evenement.setIdPartenaire(idPartenaire); // Ajouter l'ID du partenaire
+            evenement.setImageName(imageName); // Ajouter le nom de l'image
 
             // Mettre à jour l'événement dans la base de données
             eventDao.updateEvent(evenement);
@@ -314,7 +446,7 @@ public class EvenementController {
 
         // Créer un HBox pour les boutons et les centrer
         HBox buttonBox = new HBox(10); // Espacement de 10px entre les boutons
-        buttonBox.setAlignment(javafx.geometry.Pos.CENTER); // Centrer les boutons
+        buttonBox.setAlignment(Pos.CENTER); // Centrer les boutons
         buttonBox.getChildren().addAll(annulerButton, modifierButton);
 
         // Titre de la fenêtre modale
@@ -323,12 +455,12 @@ public class EvenementController {
 
         // Centrer le titre dans un HBox
         HBox titleBox = new HBox();
-        titleBox.setAlignment(javafx.geometry.Pos.CENTER); // Centrer le titre
+        titleBox.setAlignment(Pos.CENTER); // Centrer le titre
         titleBox.getChildren().add(titleLabel);
 
         // Organiser les champs dans un VBox
         VBox vbox = new VBox(10);
-        vbox.setPadding(new javafx.geometry.Insets(10));
+        vbox.setPadding(new Insets(10));
         vbox.getChildren().addAll(
                 titleBox, // Ajouter le HBox contenant le titre centré
                 new Label("Titre :"), titreField,
@@ -336,17 +468,17 @@ public class EvenementController {
                 new Label("Date :"), datePicker,
                 new Label("Lieu :"), lieuField,
                 new Label("Statut :"), statutField,
+                new Label("Image :"), imageBox,
                 buttonBox // Ajouter le HBox des boutons
         );
 
         // Créer une scène et afficher la fenêtre modale
-        Scene scene = new Scene(vbox, 400, 450); // Ajuster la taille de la fenêtre
+        Scene scene = new Scene(vbox, 400, 600); // Ajuster la taille de la fenêtre
         scene.getStylesheets().add(getClass().getResource("/MiraVia/styles/style.css").toExternalForm());
 
         dialogStage.setScene(scene);
         dialogStage.showAndWait();
     }
-
     // Méthode pour récupérer l'événement à partir de la carte
     private Event getEventFromCard(HBox eventCard) {
         // Récupérer l'objet Event associé à la carte via setUserData

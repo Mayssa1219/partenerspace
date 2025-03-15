@@ -52,11 +52,9 @@
     <VBox fx:id="cardContainer" styleClass="card-container" spacing="15">
         <!-- Les cartes d'événements seront ajoutées dynamiquement ici -->
         <HBox styleClass="event-card" spacing="10" alignment="CENTER_LEFT"> <!-- Espacement de 10px entre l'image et le texte -->
-            <ImageView fitWidth="100" fitHeight="100">
-                <image>
-                    <Image url="@/images/thaîlande.jpg"/>
-                </image>
-            </ImageView>
+            <!-- Image de l'événement -->
+            <ImageView fx:id="eventImageView" fitWidth="100" fitHeight="100"/> <!-- ImageView pour afficher l'image de l'événement -->
+
             <VBox spacing="5" alignment="CENTER_LEFT"> <!-- Espacement de 5px entre les éléments de texte -->
                 <!-- HBox pour aligner le titre et le MenuButton -->
                 <HBox alignment="CENTER_LEFT" spacing="10">
