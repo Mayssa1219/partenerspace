@@ -101,13 +101,18 @@ public class PartnerLayoutController {
         profileImageView.setImage(new Image("/images/user.png"));
         String sessionId = SessionManager.getCurrentSessionId();
         User currentUser = SessionManager.getUser(sessionId);
-        if (currentUser != null) {
-            String imageName = partenaireDao.getUserImage(currentUser.getIdUtilisateur());
-            if (imageName != null) {
-                profileImageView.setImage(new Image("file:uploads/" + imageName));
+            if (currentUser != null) {
+                String imageName = partenaireDao.getUserImage(currentUser.getIdUtilisateur());
+                if (imageName != null) {
+                    profileImageView.setImage(new Image("file:uploads/" + imageName));
+                }
+                if (currentUser.getPrenom() != null && !currentUser.getPrenom().isEmpty()) {
+                    profileNameLabel.setText(currentUser.getNom() + " " + currentUser.getPrenom());
+                } else {
+                    profileNameLabel.setText(currentUser.getNom());
+                }
+
             }
-            profileNameLabel.setText(currentUser.getNom()+" "+currentUser.getPrenom());
-        }
         eventDao = new EventDaoImpl();
         donDao = new DonDaoImpl();
     }

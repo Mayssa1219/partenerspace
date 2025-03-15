@@ -3,20 +3,23 @@ package com.example.innosynergy.model;
 import java.time.LocalDateTime;
 
 public class Benevol {
+
     private int id;
     private int idPartenaire;
     private String titre;
     private String description;
     private LocalDateTime dateBenevolat;
     private String status;
+    private String image;
 
-    public Benevol(int id, int idPartenaire, String titre, String description, LocalDateTime dateBenevolat, String status) {
+    public Benevol(int id, int idPartenaire, String titre, String description, LocalDateTime dateBenevolat, String status, String image) {
         this.id = id;
         this.idPartenaire = idPartenaire;
         this.titre = titre;
         this.description = description;
         this.dateBenevolat = dateBenevolat;
         this.status = status;
+        this.image = image;
     }
 
     public int getId() {
@@ -43,6 +46,10 @@ public class Benevol {
         return status;
     }
 
+    public String getImage() {
+        return image;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -65,5 +72,9 @@ public class Benevol {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
