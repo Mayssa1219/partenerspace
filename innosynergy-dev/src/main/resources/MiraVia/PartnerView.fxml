@@ -58,7 +58,7 @@
 
             <ImageView fx:id="profileImageView" styleClass="profile-image">
                 <image>
-                    <Image url="@/images/profile image.png"/>
+                    <Image url="@/images/profile.png"/>
                 </image>
             </ImageView>
             <Label fx:id="profileNameLabel" text="Maddy Adams" styleClass="profile-name"/>
@@ -195,7 +195,7 @@
                     <Region HBox.hgrow="ALWAYS" />
 
                     <!-- Bouton Log Out -->
-                    <Button fx:id="logoutButton" styleClass="sidebar-button logout-button" maxWidth="Infinity">
+                    <Button fx:id="logoutButton" styleClass="sidebar-button logout-button" maxWidth="Infinity" onAction="#handleLogout">
                         <graphic>
                             <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="sidebar-button-content">
                                 <children>

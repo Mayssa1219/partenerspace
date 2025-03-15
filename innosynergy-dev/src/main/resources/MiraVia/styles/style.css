@@ -4,6 +4,10 @@
     -fx-font-size: 14px;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> b13bf6f01b7c6eb9ce2fe5cc276f73b3c903e216
 /* Barre supérieure */
 .top-bar {
     -fx-background-color: #ffffff;
@@ -275,11 +279,9 @@
         -fx-padding: 10px 0; /* Espacement vertical autour du séparateur */
     }
     /* Style for the MenuButton with text "Gérer" */
-    /* Style for the MenuButton with text "Gérer" */
     .menu-button {
         -fx-background-color: #9cbdd6 !important; /* Blue background */
         -fx-text-fill: white !important; /* White text */
-        -fx-alignment: center-left;
     }
 
 }
@@ -355,4 +357,14 @@
 #annulerButton:hover, .annuler-button:hover {
     -fx-background-color: #9cbdd6; /* Couleur de fond bleue plus claire au survol */
     -fx-text-fill: #013A71;
+}
+
+.button-oui {
+    -fx-background-color: #7d8c6d;
+    -fx-text-fill: white;
+}
+
+.button-non {
+    -fx-background-color: #dc6f6f;
+    -fx-text-fill: white;
 }
