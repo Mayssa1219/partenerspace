@@ -47,8 +47,16 @@ public class EvenementController {
     @FXML
     public void initialize() {
         eventDao = new EventDaoImpl();
-        List<Event> evenements = eventDao.listEvents();
-        afficherEvenements(evenements);
+
+        // Récupérer l'ID du partenaire actuel depuis la session
+        User currentUser = SessionManager.getUser(SessionManager.getCurrentSessionId());
+        if (currentUser != null) {
+            int idPartenaire = currentUser.getIdUtilisateur();
+            List<Event> evenements = eventDao.listEventsByPartenaireId(idPartenaire);
+            afficherEvenements(evenements);
+        } else {
+            System.err.println("Erreur : l'utilisateur courant est null.");
+        }
     }
 
     private void afficherEvenements(List<Event> evenements) {
@@ -130,7 +138,6 @@ public class EvenementController {
             cardContainer.getChildren().add(eventCard);
         }
     }
-
     @FXML
     private void handleSearch() {
         String keyword = searchField.getText();

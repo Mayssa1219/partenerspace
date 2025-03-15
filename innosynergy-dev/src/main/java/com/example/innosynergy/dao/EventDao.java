@@ -9,4 +9,5 @@ public interface EventDao {
     Event findEventById(int idEvent);
     List<Event> searchEvents(String keyword);
     void updateEvent(Event event);
+    List<Event> listEventsByPartenaireId(int idPartenaire);
 }
