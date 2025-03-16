@@ -142,7 +142,7 @@
                     </Button>
 
                     <!-- Bouton Bénévolat -->
-                    <Button fx:id="volunteerButton" styleClass="sidebar-button" maxWidth="Infinity">
+                    <Button fx:id="benevolButton" styleClass="sidebar-button" maxWidth="Infinity">
                         <graphic>
                             <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="sidebar-button-content">
                                 <children>

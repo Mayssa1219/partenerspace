@@ -1,10 +1,13 @@
 package com.example.innosynergy.controller;
 
+import com.example.innosynergy.utils.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.VBox;  // Utilisation de VBox ici
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -78,6 +81,24 @@ public class SettingsController {
             // Remplacer le contenu dans mainContainer avec la vue des notifications
             mainContainer.getChildren().clear();
             mainContainer.getChildren().add(notificationView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void handleLogout() {
+        // Clear the session
+        SessionManager.invalidateSession(SessionManager.getCurrentSessionId());
+
+        // Load the login view
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MiraVia/LoginView.fxml"));
+            Parent loginView = loader.load();
+            Scene loginScene = new Scene(loginView);
+
+            // Remplacer le contenu dans mainContainer avec la vue des notifications
+            mainContainer.getChildren().clear();
+            mainContainer.getChildren().add(loginView);
         } catch (IOException e) {
             e.printStackTrace();
         }
