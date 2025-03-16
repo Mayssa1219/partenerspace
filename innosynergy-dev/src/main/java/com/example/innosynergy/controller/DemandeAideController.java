@@ -1,6 +1,14 @@
 package com.example.innosynergy.controller;
 
+import com.example.innosynergy.dao.DemandeDao;
+import com.example.innosynergy.dao.DemandeDaoImpl;
 import com.example.innosynergy.model.DemandeData;
+import com.example.innosynergy.model.User;
+import com.example.innosynergy.utils.SessionManager;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -11,16 +19,23 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class DemandeAideController implements Initializable {
@@ -29,10 +44,7 @@ public class DemandeAideController implements Initializable {
     private TableView<DemandeData> tableView;
 
     @FXML
-    private TableColumn<DemandeData, String> demandeurColumn;
-
-    @FXML
-    private TableColumn<DemandeData, String> telephoneColumn;
+    private TableColumn<DemandeData, Integer> demandeurColumn;
 
     @FXML
     private TableColumn<DemandeData, String> emailColumn;
@@ -41,7 +53,13 @@ public class DemandeAideController implements Initializable {
     private TableColumn<DemandeData, String> adresseColumn;
 
     @FXML
-    private TableColumn<DemandeData, String> dateDemandeColumn;
+    private TableColumn<DemandeData, Double> MontantColumn;
+
+    @FXML
+    private TableColumn<DemandeData, LocalDateTime> dateDemandeColumn;
+
+    @FXML
+    private TableColumn<DemandeData, String> StatusColumn;
 
     @FXML
     private TableColumn<DemandeData, String> preuveColumn;
@@ -58,42 +76,46 @@ public class DemandeAideController implements Initializable {
     private ObservableList<DemandeData> demandeDataList;
     private FilteredList<DemandeData> filteredData;
 
+    private DemandeDao demandeDao;
+
+    private File selectedFile;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        demandeDao = new DemandeDaoImpl();
+        User currentUser = SessionManager.getUser(SessionManager.getCurrentSessionId());
+        if (currentUser != null) {
+            int idPartenaire = currentUser.getIdUtilisateur();
+            demandeDataList = FXCollections.observableArrayList(demandeDao.getDemandesByPartenaire(idPartenaire));
+        } else {
+            demandeDataList = FXCollections.observableArrayList();
+        }
         filteredData = new FilteredList<>(demandeDataList, p -> true);
 
         // Lier les colonnes aux données
         demandeurColumn.setCellValueFactory(new PropertyValueFactory<>("idClient"));
-        telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("idPartenaire"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("typeAide"));
         adresseColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        MontantColumn.setCellValueFactory(new PropertyValueFactory<>("montantDemande"));
         dateDemandeColumn.setCellValueFactory(new PropertyValueFactory<>("dateDemande"));
+        StatusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         preuveColumn.setCellValueFactory(new PropertyValueFactory<>("preuves"));
 
         // Définir une cellule personnalisée pour la colonne "Preuve"
         preuveColumn.setCellFactory(column -> new TableCell<DemandeData, String>() {
-            private final Button importButton = new Button("choisir un fichier");
-            private final ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/images/upload.png")));
+            private final ImageView imageView = new ImageView();
+            private final Button downloadButton = new Button("Télécharger");
 
             {
-                imageView.setFitWidth(20);
-                imageView.setFitHeight(20);
-                importButton.setGraphic(imageView);
-                importButton.setOnAction(event -> {
+                imageView.setFitWidth(100);
+                imageView.setFitHeight(100);
+                setGraphic(imageView);
+                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                downloadButton.getStyleClass().add("download-button"); // Ajouter la classe CSS
+                downloadButton.setOnAction(event -> {
                     DemandeData data = getTableRow().getItem();
                     if (data != null) {
-                        FileChooser fileChooser = new FileChooser();
-                        fileChooser.setTitle("Sélectionner un fichier");
-                        fileChooser.getExtensionFilters().addAll(
-                                new FileChooser.ExtensionFilter("Tous les fichiers", ".")
-                        );
-                        File selectedFile = fileChooser.showOpenDialog(null);
-                        if (selectedFile != null) {
-                            data.setPreuves(selectedFile.getName()); // Mettre à jour le nom du fichier
-                            tableView.refresh(); // Rafraîchir la table pour afficher le fichier sélectionné
-                            System.out.println("Fichier sélectionné : " + selectedFile.getAbsolutePath());
-                        }
+                        downloadFile(data.getPreuves());
                     }
                 });
             }
@@ -104,7 +126,16 @@ public class DemandeAideController implements Initializable {
                 if (empty || item == null) {
                     setGraphic(null);
                 } else {
-                    setGraphic(importButton); // Afficher le bouton dans chaque ligne
+                    if (item.toLowerCase().endsWith(".pdf")) {
+                        imageView.setImage(new Image(getClass().getResourceAsStream("/images/crayon.png")));
+                    } else {
+                        File file = new File("uploads/" + item);
+                        if (file.exists()) {
+                            imageView.setImage(new Image(file.toURI().toString()));
+                        }
+                    }
+                    setGraphic(imageView);
+                    setGraphic(downloadButton);
                 }
             }
         });
@@ -146,11 +177,15 @@ public class DemandeAideController implements Initializable {
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
+                // Convertir LocalDateTime en String
+                String dateDemandeStr = demande.getDateDemande().toString().toLowerCase();
+
                 return String.valueOf(demande.getIdClient()).toLowerCase().contains(lowerCaseFilter) ||
-                        String.valueOf(demande.getIdPartenaire()).toLowerCase().contains(lowerCaseFilter) ||
                         demande.getTypeAide().toLowerCase().contains(lowerCaseFilter) ||
                         demande.getDescription().toLowerCase().contains(lowerCaseFilter) ||
-                        demande.getDateDemande().toLowerCase().contains(lowerCaseFilter);
+                        String.valueOf(demande.getMontantDemande()).toLowerCase().contains(lowerCaseFilter) ||
+                        dateDemandeStr.contains(lowerCaseFilter) ||
+                        demande.getStatus().toLowerCase().contains(lowerCaseFilter);
             });
         });
 
@@ -176,21 +211,12 @@ public class DemandeAideController implements Initializable {
         Label fichierSelectionneLabel = new Label("Preuves : " + data.getPreuves());
 
         Button downloadButton = new Button("Télécharger le dossier");
-        Button importerButton = new Button("Importer un fichier");
+        downloadButton.getStyleClass().add("download-button"); // Ajouter la classe CSS
 
-        // Action pour importer un fichier
-        importerButton.setOnAction(event -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Tous les fichiers", "."));
-            File selectedFile = fileChooser.showOpenDialog(modal);
-
-            if (selectedFile != null) {
-                fichierSelectionneLabel.setText("Fichier sélectionné : " + selectedFile.getName());
-            }
-        });
+        downloadButton.setOnAction(event -> generateAndDownloadPdf(data)); // Ajouter action pour générer et télécharger le PDF
 
         // Disposition des boutons
-        HBox buttonLayout = new HBox(20, downloadButton, importerButton);
+        HBox buttonLayout = new HBox(20, downloadButton);
         buttonLayout.setAlignment(Pos.CENTER);
 
         Label titleLabel = new Label("Détails de la Demande");
@@ -204,7 +230,6 @@ public class DemandeAideController implements Initializable {
         modal.setScene(scene);
         modal.initModality(Modality.APPLICATION_MODAL);
         modal.show();
-
     }
 
     private void showAddRequestModal() {
@@ -216,17 +241,17 @@ public class DemandeAideController implements Initializable {
         titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
         // Champs de formulaire
-        TextField idClientField = new TextField();
-        idClientField.setPromptText("ID Client");
+        TextField clientNameField = new TextField();
+        clientNameField.setPromptText("Nom du Client");
 
-        TextField idPartenaireField = new TextField();
-        idPartenaireField.setPromptText("ID Partenaire");
+        // Utiliser une ComboBox pour le type d'aide
+        ComboBox<String> typeAideComboBox = new ComboBox<>();
+        typeAideComboBox.setPromptText("Type d'Aide");
+        typeAideComboBox.getItems().addAll("financiere", "non_financiere");
+        typeAideComboBox.setPrefWidth(400); // Définir la largeur de la ComboBox
 
-        TextField typeAideField = new TextField();
-        typeAideField.setPromptText("Type d'Aide");
-
-        TextField descriptionField = new TextField();
-        descriptionField.setPromptText("Description");
+        TextArea descriptionField = new TextArea();
+        descriptionField.setText("Description");
 
         TextField montantDemandeField = new TextField();
         montantDemandeField.setPromptText("Montant de la Demande");
@@ -235,29 +260,63 @@ public class DemandeAideController implements Initializable {
         dateDemandePicker.setPromptText("Date de Demande");
         dateDemandePicker.setPrefWidth(400);
 
-        TextField statusField = new TextField();
-        statusField.setPromptText("Status");
+        // Champ pour l'importation d'image ou PDF
+        Button importFileButton = new Button("Importer un fichier");
+        importFileButton.setPrefWidth(400); // Définir la largeur du bouton
+        importFileButton.getStyleClass().add("import-button"); // Ajouter une classe CSS
 
-        TextField preuvesField = new TextField();
-        preuvesField.setPromptText("Preuves");
+        Label importedFileLabel = new Label("Aucun fichier sélectionné");
+
+        importFileButton.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choisir un fichier");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Images et PDF", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.pdf")
+            );
+            selectedFile = fileChooser.showOpenDialog(new Stage());
+            if (selectedFile != null) {
+                importedFileLabel.setText("Fichier sélectionné : " + selectedFile.getName());
+                System.out.println("Fichier sélectionné : " + selectedFile.getName());
+            }
+        });
 
         // Bouton Enregistrer en vert
         Button saveButton = new Button("Enregistrer");
         saveButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;"); // Vert avec texte blanc
         saveButton.setOnAction(event -> {
-            DemandeData newData = new DemandeData(
-                    0, // Id Demande will be auto-generated
-                    Integer.parseInt(idClientField.getText()),
-                    Integer.parseInt(idPartenaireField.getText()),
-                    typeAideField.getText(),
-                    descriptionField.getText(),
-                    Double.parseDouble(montantDemandeField.getText()),
-                    dateDemandePicker.getValue().toString(),
-                    statusField.getText(),
-                    preuvesField.getText()
-            );
-            demandeDataList.add(newData);
-            modal.close();
+            // Récupérer l'utilisateur courant depuis la session
+            User currentUser = SessionManager.getUser(SessionManager.getCurrentSessionId());
+            if (currentUser != null) {
+                int idPartenaire = currentUser.getIdUtilisateur();
+
+                // Récupérer l'ID du client à partir de son nom
+                String clientName = clientNameField.getText();
+                int idClient = demandeDao.getClientIdByName(clientName);
+                if (idClient == -1) {
+                    showAlert("Erreur", "Client non trouvé.");
+                    return;
+                }
+
+                DemandeData newData = new DemandeData();
+                newData.setIdClient(idClient); // Utiliser l'ID du client récupéré
+                newData.setIdPartenaire(idPartenaire); // Utiliser l'idPartenaire récupéré depuis la session
+                newData.setTypeAide(typeAideComboBox.getValue()); // Utiliser la valeur sélectionnée dans la ComboBox
+                newData.setDescription(descriptionField.getText());
+                newData.setMontantDemande(Double.parseDouble(montantDemandeField.getText()));
+                newData.setDateDemande(dateDemandePicker.getValue().atStartOfDay());
+                newData.setStatus("en_attente"); // Définir le statut par défaut à "en attente"
+
+                if (selectedFile != null) {
+                    String fileName = saveFileToUploads(selectedFile);
+                    newData.setPreuves(fileName);
+                }
+
+                demandeDao.insertDemande(newData);
+                demandeDataList.add(newData);
+                modal.close();
+            } else {
+                showAlert("Erreur", "Utilisateur courant non trouvé.");
+            }
         });
 
         // Disposition des éléments
@@ -276,24 +335,107 @@ public class DemandeAideController implements Initializable {
         // Ajouter les éléments au VBox
         modalLayout.getChildren().addAll(
                 titleBox, // Label centré
-                idClientField,
-                idPartenaireField,
-                typeAideField,
+                clientNameField,
+                typeAideComboBox, // Utiliser ComboBox pour le type d'aide
                 descriptionField,
                 montantDemandeField,
                 dateDemandePicker,
-                statusField,
-                preuvesField,
+                importFileButton, // Bouton d'importation
+                importedFileLabel, // Label pour afficher le nom du fichier importé
                 buttonBox // Bouton centré
         );
-
-        Scene scene = new Scene(modalLayout, 400, 400);
+        Scene scene = new Scene(modalLayout, 400, 600);
         modal.setScene(scene);
         modal.initModality(Modality.APPLICATION_MODAL);
         modal.show();
     }
 
+    private String saveFileToUploads(File sourceFile) {
+        String uploadsDir = "uploads";
+        File uploadsDirectory = new File(uploadsDir);
+        if (!uploadsDirectory.exists()) {
+            uploadsDirectory.mkdirs(); // Crée le dossier s'il n'existe pas
+        }
+
+        // Générer un nom de fichier unique pour éviter les conflits
+        String fileName = sourceFile.getName();
+        File destFile = new File(uploadsDirectory, fileName);
+
+        try {
+            // Copier le fichier dans le dossier uploads
+            Files.copy(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            // Retourner uniquement le nom du fichier
+            return fileName;
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Échec de l'enregistrement du fichier.");
+            return null;
+        }
+    }
+
+    private void downloadFile(String fileName) {
+        File file = new File("uploads/" + fileName);
+        if (file.exists()) {
+            // Open the file with the default application
+            try {
+                new ProcessBuilder("cmd", "/c", file.getAbsolutePath()).start();
+            } catch (IOException e) {
+                e.printStackTrace();
+                showAlert("Erreur", "Échec de l'ouverture du fichier.");
+            }
+        } else {
+            showAlert("Erreur", "Le fichier n'existe pas.");
+        }
+    }
+
+    private void generateAndDownloadPdf(DemandeData data) {
+        String formattedDate = data.getDateDemande().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        String fileName = "dossier_" + data.getIdClient() + "_" + formattedDate + ".pdf";
+        String uploadsDir = "uploads";
+        File uploadsDirectory = new File(uploadsDir);
+        if (!uploadsDirectory.exists()) {
+            uploadsDirectory.mkdirs(); // Crée le dossier s'il n'existe pas
+        }
+
+        File pdfFile = new File(uploadsDirectory, fileName);
+        try (FileOutputStream fos = new FileOutputStream(pdfFile)) {
+            Document document = new Document();
+            PdfWriter.getInstance(document, fos);
+            document.open();
+
+            // Ajouter le titre
+            Paragraph title = new Paragraph("Dossier de Demande d'Aide", new Font(Font.FontFamily.HELVETICA, 20, Font.BOLD));
+            title.setSpacingAfter(20);
+            document.add(title);
+
+            // Ajouter les informations de la demande
+            document.add(new Paragraph("ID Client: " + data.getIdClient()));
+            document.add(new Paragraph("ID Partenaire: " + data.getIdPartenaire()));
+            document.add(new Paragraph("Type d'Aide: " + data.getTypeAide()));
+            document.add(new Paragraph("Description: " + data.getDescription()));
+            document.add(new Paragraph("Montant de la Demande: " + data.getMontantDemande()));
+            document.add(new Paragraph("Date de Demande: " + data.getDateDemande().toString()));
+            document.add(new Paragraph("Status: " + data.getStatus()));
+
+            document.close();
+            showAlert("Succès", "Le fichier PDF a été généré et enregistré avec succès.");
+
+            // Ouvrir automatiquement le fichier PDF généré
+            if (pdfFile.exists()) {
+                Desktop.getDesktop().open(pdfFile);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Échec de la génération du fichier PDF.");
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 }
-
-
-
