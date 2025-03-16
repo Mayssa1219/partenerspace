@@ -52,6 +52,11 @@ public class SessionManager {
     public static String getCurrentSessionId() {
         return currentSessionId;
     }
+    // Exemple de méthode pour obtenir l'ID de l'utilisateur à partir de la session
+    public static int getUserId(String sessionId) {
+        User user = getUser(sessionId);  // Récupère l'utilisateur par sessionId
+        return (user != null) ? user.getIdUtilisateur() : -1;  // Si utilisateur trouvé, retourne l'ID, sinon -1
+    }
 
     private static class Session {
         private final User user;

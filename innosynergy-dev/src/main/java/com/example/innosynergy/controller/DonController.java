@@ -49,6 +49,9 @@ public class DonController {
 
     @FXML
     private void initialize() {
+        //Initialisation du champ de recherche
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> handleSearch());
+
         indexColumn.setCellValueFactory(cellData -> {
             // This sets the index for each item in the table
             return new ReadOnlyObjectWrapper<>(tableView.getItems().indexOf(cellData.getValue()) + 1);

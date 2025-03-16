@@ -98,7 +98,7 @@
                 <ImageView fitHeight="20" fitWidth="20">
                     <Image url="@/images/Logout.png" />
                 </ImageView>
-                <Label text="Log out" />
+                <Label onMouseClicked="#handleLogout" text="Log out" />
             </HBox>
         </VBox>
     </Pane>

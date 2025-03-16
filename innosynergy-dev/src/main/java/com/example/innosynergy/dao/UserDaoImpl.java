@@ -5,11 +5,13 @@ import com.example.innosynergy.config.ConnexionBD;
 import com.example.innosynergy.utils.PasswordUtil;
 
 import java.awt.*;
+import java.util.List; // Assurez-vous que cette classe est importée
 import java.net.URI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,6 +22,7 @@ public class UserDaoImpl implements UserDao {
     public UserDaoImpl() {
         this.connexionBD = new ConnexionBD();
     }
+
 
     @Override
     public User authenticateUser(String email, String password) {
@@ -231,4 +234,68 @@ public class UserDaoImpl implements UserDao {
             e.printStackTrace();
         }
     }
+    @Override
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM utilisateurs";
+
+        try (Connection connection = connexionBD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                User user = new User();
+                user.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
+                user.setNom(resultSet.getString("nom"));
+                user.setPrenom(resultSet.getString("prenom"));
+                user.setEmail(resultSet.getString("email"));
+                user.setMotDePasse(resultSet.getString("mot_de_passe"));
+                user.setTelephone(resultSet.getString("telephone"));
+                user.setAvatar(resultSet.getString("avatar"));
+                user.setStatutVerification(resultSet.getString("statut_verification"));
+                user.setStatus(resultSet.getString("status"));
+                user.setTypeUtilisateur(resultSet.getString("type_utilisateur"));
+
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Gérer l'exception
+        }
+
+        return users;
+    }
+    @Override
+    public User getUserById(int id) {
+        User user = null;
+        String query = "SELECT * FROM utilisateurs WHERE id_utilisateur = ?";
+
+        try (Connection connection = connexionBD.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    user = new User();
+                    user.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
+                    user.setNom(resultSet.getString("nom"));
+                    user.setPrenom(resultSet.getString("prenom"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setMotDePasse(resultSet.getString("mot_de_passe"));
+                    user.setTelephone(resultSet.getString("telephone"));
+                    user.setAvatar(resultSet.getString("avatar"));
+                    user.setStatutVerification(resultSet.getString("statut_verification"));
+                    user.setStatus(resultSet.getString("status"));
+                    user.setTypeUtilisateur(resultSet.getString("type_utilisateur"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception
+        }
+
+        return user;
+    }
+
+
 }
