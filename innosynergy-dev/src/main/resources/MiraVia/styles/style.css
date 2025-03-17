@@ -567,3 +567,33 @@
     -fx-background-color:  #aecee6; /* Couleur de fond bleue */
     -fx-text-fill: #003073; /* Couleur du texte en blanc */
 }
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #013A71;
+}
+
+.custom-chart {
+    -fx-background-color: transparent;
+    -fx-border-color: #013A71;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.chart-line-symbol {
+    -fx-background-color: #FF5733, white;
+    -fx-padding: 5px;
+    -fx-background-radius: 10px;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 2px;
+}
+
+.chart-plot-background {
+    -fx-background-color: #f9f9f9;
+}
+
+.chart-legend {
+    -fx-background-color: transparent;
+}

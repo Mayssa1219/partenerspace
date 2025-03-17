@@ -91,23 +91,33 @@ public class DashboardDaoImpl implements DashboardDao {
     }
 
     @Override
-    public List<XYChart.Data<Number, Number>> getLineChartData() {
-        List<XYChart.Data<Number, Number>> data = new ArrayList<>();
+    public List<XYChart.Data<String, Number>> getLineChartData() {
+        List<XYChart.Data<String, Number>> data = new ArrayList<>();
+        String[] moisNoms = {"Jan", "Fév", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"};
+
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LINE_CHART_DATA_SQL);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
-                int month = resultSet.getInt("mois");
-                double montantTotal = resultSet.getDouble("montant_total");
-                data.add(new XYChart.Data<>(month, montantTotal));
+                int month = resultSet.getInt("mois"); // Colonne qui stocke le mois sous forme de numéro (1 = Janvier, etc.)
+                double montantTotal = resultSet.getDouble("montant_total"); // Valeur associée
+
+                // Vérifier que le mois est valide (entre 1 et 12)
+                if (month >= 1 && month <= 12) {
+                    data.add(new XYChart.Data<>(moisNoms[month - 1], montantTotal));
+                } else {
+                    System.out.println("⚠ Mois invalide détecté: " + month);
+                }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return data;
     }
+
 
     @Override
     public List<Event> getEventTableData(int idPartenaire) {

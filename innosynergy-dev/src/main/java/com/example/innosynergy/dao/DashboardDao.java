@@ -10,6 +10,6 @@ public interface DashboardDao {
     int getEventCount(int idPartenaire);
     int getBenevoleCount(int idPartenaire);
     int getHelpRequestCountByPartenaire(int idPartenaire);
-    List<XYChart.Data<Number, Number>> getLineChartData();
+    List<XYChart.Data<String, Number>> getLineChartData();
     List<Event> getEventTableData(int idPartenaire);
 }
