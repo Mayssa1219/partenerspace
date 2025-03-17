@@ -541,3 +541,20 @@
     -fx-font-size: 18px; /* Ajustez la taille selon vos besoins */
     -fx-text-fill: #003073; /* Couleur du texte */
 }
+#hourHand {
+    -fx-stroke: darkslategray;
+    -fx-stroke-width: 4;
+    -fx-stroke-line-cap: round;
+}
+
+#minuteHand {
+    -fx-stroke: derive(darkslategray, -5%);
+    -fx-stroke-width: 3;
+    -fx-stroke-line-cap: round;
+}
+
+#secondHand {
+    -fx-stroke: derive(firebrick, -15%);
+    -fx-stroke-width: 2;
+    -fx-stroke-line-cap: round;
+}
