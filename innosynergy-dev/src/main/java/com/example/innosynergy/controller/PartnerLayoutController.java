@@ -1,5 +1,6 @@
 package com.example.innosynergy.controller;
 
+import javafx.scene.input.MouseEvent; // Importer MouseEvent de JavaFX
 import com.example.innosynergy.dao.DonDaoImpl;
 import com.example.innosynergy.dao.EventDaoImpl;
 import com.example.innosynergy.dao.PartenaireDaoImpl;
@@ -24,8 +25,8 @@ import javafx.scene.Node;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +66,14 @@ public class PartnerLayoutController {
     private final Map<Button, String[]> buttonViewMappings = new HashMap<>();
 
     @FXML
+    private ImageView chatbotImageView;
+
+    @FXML
     private void initialize() {
+
+        // Gestionnaire d'événements pour le chatbot
+        chatbotImageView.setOnMouseClicked(event -> openChatbotWindow());
+
         // Associer les boutons aux vues correspondantes
         buttonViewMappings.put(dashboardButton, new String[]{"Tableau de bord", "/MiraVia/dashboard.fxml"});
         buttonViewMappings.put(helpRequestsButton, new String[]{"Demandes d'aide", "/MiraVia/DemandeAideView.fxml"});
@@ -116,6 +124,24 @@ public class PartnerLayoutController {
         eventDao = new EventDaoImpl();
         donDao = new DonDaoImpl();
     }
+
+    private void openChatbotWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MiraVia/ChatbotView.fxml"));
+            Scene chatbotScene = new Scene(loader.load());
+            chatbotScene.getStylesheets().add(getClass().getResource("/MiraVia/styles/style.css").toExternalForm()); // Appliquer le CSS
+
+            Stage chatbotStage = new Stage();
+            chatbotStage.setTitle("Chatbot");
+            chatbotStage.initModality(Modality.APPLICATION_MODAL);
+            chatbotStage.setScene(chatbotScene);
+            chatbotStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private EventDaoImpl eventDao;
 
     private DonDaoImpl donDao;

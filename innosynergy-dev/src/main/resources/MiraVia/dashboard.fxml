@@ -1,125 +1,149 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import java.net.URL?>
 
-<StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.innosynergy.controller.DashboardController">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.innosynergy.controller.DashboardController">
+    <stylesheets>
+        <URL value="@styles/style.css"></URL>
+    </stylesheets>
+
     <children>
-        <VBox spacing="20" StackPane.alignment="CENTER">
+        <VBox id="mainVBox" spacing="20" StackPane.alignment="CENTER">
             <children>
-                <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 20px;">
-                    <padding>
-                        <Insets bottom="20" left="20" right="20" top="20" />
-                    </padding>
+                <!-- Statistiques -->
+                <VBox id="statisticsVBox" spacing="10">
                     <children>
-                        <Label prefHeight="20.0" prefWidth="148.0" style="-fx-font-size: 24px; -fx-text-fill: #05004E;" text="Statistiques" />
-                        <HBox spacing="20">
+                        <Label id="statisticsLabel" text="Statistiques" />
+                        <HBox id="statisticsHBox" spacing="20">
                             <padding>
                                 <Insets bottom="10" left="10" right="10" top="10" />
                             </padding>
                             <children>
-                                <VBox style="-fx-background-color: #FFCDD2; -fx-border-color: #E57373; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;">
+                                <!-- Nombre de clients -->
+                                <!-- Nombre de clients -->
+                                <VBox id="clientVBox">
                                     <padding>
                                         <Insets bottom="10" left="10" right="10" top="10" />
                                     </padding>
                                     <children>
-                                        <Label fx:id="clientCountLabel" style="-fx-font-size: 18px; -fx-text-fill: #E57373;"  />
-                                        <Label prefHeight="20.0" prefWidth="195.0" style="-fx-font-size: 14px;" text="Nombre de clients" />
-                                        <Label style="-fx-font-size: 12px;" text="" />
+                                        <!-- Conteneur horizontal pour l'image et le label -->
+                                        <HBox alignment="CENTER_LEFT" spacing="5">
+                                            <children>
+                                                <!-- Image pour les statistiques des clients -->
+                                                <ImageView fx:id="nombre_clients" fitHeight="20" fitWidth="20">
+                                                    <image>
+                                                        <Image url="@/images/clients.png" />
+                                                    </image>
+                                                </ImageView>
+                                                <!-- Label pour le nombre de clients -->
+                                                <Label fx:id="clientCountLabel" />
+                                            </children>
+                                        </HBox>
+                                        <!-- Label pour la description -->
+                                        <Label id="clientLabel" text="Nombre de clients" />
                                     </children>
                                 </VBox>
-                                <VBox style="-fx-background-color: #FFE0B2; -fx-border-color: #FFB74D; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;">
+
+                                <!-- Nombre d'événements -->
+                                <VBox id="eventVBox">
                                     <padding>
                                         <Insets bottom="10" left="10" right="10" top="10" />
                                     </padding>
                                     <children>
-                                        <Label fx:id="partnerCountLabel" style="-fx-font-size: 18px; -fx-text-fill: #FFB74D;" text="300" />
-                                        <Label style="-fx-font-size: 14px;" text="Nombre de partenaires" />
-                                        <Label style="-fx-font-size: 12px;" text="" />
+                                        <!-- Conteneur horizontal pour l'image et le label -->
+                                        <HBox alignment="CENTER_LEFT" spacing="5">
+                                            <children>
+                                                <!-- Image pour les statistiques des événements -->
+                                                <ImageView fx:id="nombre_events" fitHeight="20" fitWidth="20">
+                                                    <image>
+                                                        <Image url="@/images/calendrier.png" />
+                                                    </image>
+                                                </ImageView>
+
+                                                <!-- Label pour le nombre d'événements -->
+                                                <Label fx:id="eventCountLabel" text="80" />
+                                            </children>
+                                        </HBox>
+                                        <!-- Label pour la description -->
+                                        <Label id="eventLabel" text="Nombre d’événements" />
                                     </children>
                                 </VBox>
-                                <VBox style="-fx-background-color: #C8E6C9; -fx-border-color: #81C784; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;">
+
+                                <!-- Nombre de demandes d'aide -->
+                                <VBox id="helpRequestVBox">
                                     <padding>
                                         <Insets bottom="10" left="10" right="10" top="10" />
                                     </padding>
                                     <children>
-                                        <Label style="-fx-font-size: 18px; -fx-text-fill: #81C784;" text="80" />
-                                        <Label prefHeight="20.0" prefWidth="194.0" style="-fx-font-size: 14px;" text="Nombre d'évènements" />
-                                        <Label style="-fx-font-size: 12px;" text="+12 hier" />
+                                        <!-- Conteneur horizontal pour l'image et le label -->
+                                        <HBox alignment="CENTER_LEFT" spacing="5">
+                                            <children>
+                                                <!-- Image pour les statistiques des événements -->
+                                                <ImageView fx:id="nombre_dm" fitHeight="20" fitWidth="20">
+                                                    <image>
+                                                        <Image url="@/images/interrogatoire.png" />
+                                                    </image>
+                                                </ImageView>
+                                                <!-- Label pour le nombre d'événements -->
+                                                <Label fx:id="helpRequestCountLabel" text="20" />
+                                            </children>
+                                        </HBox>
+                                        <!-- Label pour la description -->
+                                        <Label id="helpRequestLabel" text="Nombre de demandes d'aide" />
                                     </children>
                                 </VBox>
-                                <VBox style="-fx-background-color: #E1BEE7; -fx-border-color: #BA68C8; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;">
-                                    <padding>
-                                        <Insets bottom="10" left="10" right="10" top="10" />
-                                    </padding>
-                                    <children>
-                                        <Label fx:id="helpRequestCountLabel" style="-fx-font-size: 18px; -fx-text-fill: #BA68C8;" text="20" />
-                                        <Label prefHeight="20.0" prefWidth="195.0" style="-fx-font-size: 14px;" text="Nombre de demandes d'aide" />
-                                        <Label style="-fx-font-size: 12px;" text="+5 hier" />
-                                    </children>
-                                </VBox>
-                                <VBox style="-fx-background-color: #BBDEFB; -fx-border-color: #64B5F6; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;">
-                                    <padding>
-                                        <Insets bottom="10" left="10" right="10" top="10" />
-                                    </padding>
-                                    <children>
-                                        <Label style="-fx-font-size: 18px; -fx-text-fill: #64B5F6;" text="2K" />
-                                        <Label prefHeight="20.0" prefWidth="189.0" style="-fx-font-size: 14px;" text="Nombre de visiteurs" />
-                                        <Label style="-fx-font-size: 12px;" text="+25 hier" />
-                                    </children>
-                                </VBox>
+
                             </children>
                         </HBox>
                     </children>
                 </VBox>
-                <VBox prefHeight="148.0" prefWidth="1044.0" spacing="10" style="-fx-background-color: white; -fx-background-radius: 20px;">
+
+                <!-- Graphique -->
+                <VBox id="donationVBox" spacing="10">
                     <padding>
                         <Insets bottom="10" left="10" right="10" top="10" />
                     </padding>
                     <children>
-                        <Label style="-fx-font-size: 24px; -fx-text-fill: #05004E;" text="évolution de don " />
-                        <LineChart fx:id="lineChart" prefHeight="118.0" prefWidth="1024.0" title="taux de don">
+                        <Label id="donationLabel" text="Statistication des clients" />
+                        <LineChart fx:id="lineChart" prefHeight="118.0" prefWidth="1024.0" title="Mois dernier | Mois actuel">
                             <xAxis>
-                                <NumberAxis label="Mois" prefHeight="0.0" prefWidth="1079.0" />
+                                <NumberAxis label="Mois" />
                             </xAxis>
                             <yAxis>
-                                <NumberAxis label="Satisfaction" />
+                                <NumberAxis label="Pourcentage" />
                             </yAxis>
                         </LineChart>
                     </children>
                 </VBox>
-                <VBox prefHeight="551.0" prefWidth="1056.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 15px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);">
-                    <Label style="-fx-font-size: 24px; -fx-text-fill: #05004E;" text="Événements" />
-                    <TableView fx:id="eventTable" prefHeight="564.0" prefWidth="1056.0" style="-fx-background-color: transparent;">
-                        <columns>
-                            <TableColumn fx:id="numberCol" text="#" />
-                            <TableColumn fx:id="titleCol" text="Titre" />
-                            <TableColumn fx:id="descCol" text="Description" />
-                            <TableColumn fx:id="dateCol" text="Date de l'événement" />
-                            <TableColumn fx:id="placeCol" text="Lieu" />
-                            <TableColumn fx:id="partnerCol" text="Partenaire" />
-                            <TableColumn fx:id="statusCol" text="Status" />
-                        </columns>
-                    </TableView>
-                </VBox>
-                <HBox prefHeight="270.0" prefWidth="1044.0" spacing="20" style="-fx-background-color: white; -fx-background-radius: 10px;">
-                    <padding>
-                        <Insets bottom="10" left="10" right="10" top="10" />
-                    </padding>
-                </HBox>
-                <HBox alignment="CENTER_RIGHT" spacing="10">
-                    <padding>
-                        <Insets bottom="10" left="10" right="10" top="10" />
-                    </padding>
 
-                </HBox>
+                <!-- Tableau des événements -->
+                <VBox id="eventTableVBox" spacing="10">
+                    <children>
+                        <Label id="eventTableLabel" text="Événements" />
+                        <TableView fx:id="eventTable" prefHeight="564.0" prefWidth="1056.0">
+                            <columns>
+                                <TableColumn fx:id="titleCol" text="Titre" />
+                                <TableColumn fx:id="descCol" text="Description" />
+                                <TableColumn fx:id="dateCol" text="Date de l'événement" />
+                                <TableColumn fx:id="placeCol" text="Lieu" />
+                                <TableColumn fx:id="statusCol" text="Status" />
+                                <TableColumn fx:id="imageCol" text="Image" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
             </children>
         </VBox>
     </children>

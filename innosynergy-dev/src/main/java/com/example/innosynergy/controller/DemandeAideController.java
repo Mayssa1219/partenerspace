@@ -437,5 +437,4 @@ public class DemandeAideController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }
