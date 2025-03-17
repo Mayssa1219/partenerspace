@@ -1,5 +1,7 @@
 package com.example.innosynergy.dao;
 import com.example.innosynergy.model.DemandeData;
+import com.example.innosynergy.model.Event;
+
 import java.util.List;
 
 public interface DemandeDao {
@@ -11,4 +13,5 @@ public interface DemandeDao {
     int getClientIdByName(String clientName);
     void updateDemande(DemandeData demande);
     void deleteDemande(int idDemande);
+    List<Event> getEventTableData(int idPartenaire);
 }

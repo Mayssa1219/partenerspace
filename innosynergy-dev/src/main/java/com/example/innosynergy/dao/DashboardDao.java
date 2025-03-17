@@ -6,8 +6,10 @@ import javafx.scene.chart.XYChart;
 import java.util.List;
 
 public interface DashboardDao {
-    int getClientCount();
+    int getClientCount(int idPartenaire);
     int getPartnerCount();
-    int getHelpRequestCount();
+    int getEventCount(int idPartenaire);
+    int getHelpRequestCountByPartenaire(int idPartenaire);
     List<XYChart.Data<Number, Number>> getLineChartData();
-    List<Event> getEventTableData();}
+    List<Event> getEventTableData(int idPartenaire);
+}

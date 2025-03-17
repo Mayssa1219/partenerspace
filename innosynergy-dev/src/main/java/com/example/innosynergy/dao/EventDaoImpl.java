@@ -14,7 +14,8 @@ public class EventDaoImpl implements EventDao {
     // Requête SELECT
     private static final String SELECT_ALL_EVENTS_SQL = "SELECT * FROM evenements";
     private static final String SELECT_EVENT_BY_ID_SQL = "SELECT * FROM evenements WHERE id_evenement = ?";
-    private static final String SELECT_EVENTS_BY_PARTENAIRE_ID_SQL = "SELECT * FROM evenements WHERE id_partenaire = ?";
+    private static final String SELECT_EVENTS_BY_PARTENAIRE_ID_SQL = "SELECT * FROM evenements WHERE " +
+            "id_partenaire = ?";
 
     private static final String SEARCH_EVENTS_SQL = "SELECT * FROM evenements WHERE titre LIKE ? " +
             "OR description LIKE ?";

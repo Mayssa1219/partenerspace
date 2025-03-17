@@ -11,14 +11,16 @@ public class ConnexionBD {
 
     private static Connection connection; // Connexion statique pour réutilisation
 
-    // Connexion au moment où elle est demandée (pas dans le constructeur)
-    public static Connection getConnection() throws SQLException {
+    // Get connection with thread safety
+
+    public static synchronized Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
             System.out.println("Database connection established.");
         }
         return connection;
     }
+
 
     // Méthode pour fermer la connexion si nécessaire
     public static void closeConnection() {

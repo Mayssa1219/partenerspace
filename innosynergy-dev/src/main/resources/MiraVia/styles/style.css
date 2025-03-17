@@ -406,3 +406,133 @@
 .download-button:pressed {
     -fx-background-color:  #aecee6; /* Vert encore plus foncé lors du clic */
 }
+
+/* style.css */
+.chatbot-image {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);
+    -fx-cursor: hand; /* Change le curseur en main au survol */
+}
+
+.chatbot-image:hover {
+    -fx-opacity: 0.8; /* Réduit l'opacité au survol */
+}
+
+/* chatbot.css */
+.popup {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);
+}
+
+.text-flow {
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+}
+
+.user-message {
+    -fx-background-color: #d1e7dd; /* Couleur pour les messages de l'utilisateur */
+}
+
+.bot-message {
+    -fx-background-color: #f8d7da; /* Couleur pour les messages du chatbot */
+}
+
+/* style.css */
+
+#mainVBox {
+    -fx-background-color: #f4f4f4;
+}
+
+#statisticsVBox {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+    -fx-padding: 20px;
+}
+
+#statisticsLabel {
+    -fx-font-family: "Poppins";
+    -fx-font-weight: 600; /* SemiBold */
+    -fx-font-size: 20 px; /* Ajustez la taille selon vos besoins */
+    -fx-text-fill: #003073; /* Couleur du texte */
+}
+#clientVBox HBox {
+    -fx-alignment: CENTER_LEFT;
+    -fx-spacing: 5;
+}
+#statisticsHBox {
+    -fx-padding: 10px;
+}
+
+#clientVBox {
+    -fx-background-color: #ffe2e5;
+    -fx-border-color : #fa5a7d ;
+    -fx-border-width: 1;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 10px;
+}
+#eventVBox{
+    -fx-background-color: #dcfce7;
+    -fx-border-color : #3cd856 ;
+    -fx-border-width: 1;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 10px;
+}
+#helpRequestVBox {
+    -fx-background-color: #f3e8ff;
+    -fx-border-color : #bf83ff ;
+    -fx-border-width: 1;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 10px;
+}
+/* Style pour le conteneur horizontal */
+#eventVBox HBox {
+    -fx-alignment: CENTER_LEFT;
+    -fx-spacing: 5;
+}
+
+#donationVBox {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+    -fx-padding: 10px;
+}
+#helpRequestCountLabel {
+    -fx-font-family: "Poppins";
+    -fx-font-weight: 600; /* SemiBold */
+    -fx-font-size: 18px; /* Ajustez la taille selon vos besoins */
+    -fx-text-fill: #003073; /* Couleur du texte */
+}
+#donationLabel {
+    -fx-font-size: 24px;
+    -fx-text-fill: #003073;
+}
+/* Charger la police Poppins */
+@font-face {
+    src: url("/fonts/Poppins-SemiBold.ttf");
+    font-family: "Poppins";
+    font-weight: 600; /* SemiBold */
+}
+
+#clientCountLabel {
+    -fx-font-family: "Poppins";
+    -fx-font-weight: 600; /* SemiBold */
+    -fx-font-size: 18px; /* Ajustez la taille selon vos besoins */
+    -fx-text-fill: #003073; /* Couleur du texte */
+}
+
+#eventTableVBox {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);
+}
+/* Style pour le label eventCountLabel */
+#eventCountLabel {
+    -fx-font-family: "Poppins";
+    -fx-font-weight: 600; /* SemiBold */
+    -fx-font-size: 18px; /* Ajustez la taille selon vos besoins */
+    -fx-text-fill: #003073; /* Couleur du texte */
+}

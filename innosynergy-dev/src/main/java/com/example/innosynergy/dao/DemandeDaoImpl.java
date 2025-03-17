@@ -2,12 +2,13 @@ package com.example.innosynergy.dao;
 
 import com.example.innosynergy.config.ConnexionBD;
 import com.example.innosynergy.model.DemandeData;
+import com.example.innosynergy.model.Event;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DemandeDaoImpl implements DemandeDao {
+public  class DemandeDaoImpl implements DemandeDao {
     private static final String INSERT_DEMANDE_SQL = "INSERT INTO demandes_aide " +
             "(id_client, id_partenaire, type_aide, " +
             "description, montant_demande, date_demande, status, preuves) " +
@@ -242,5 +243,10 @@ public class DemandeDaoImpl implements DemandeDao {
             System.err.println("Erreur lors de la suppression de la demande : " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Event> getEventTableData(int idPartenaire) {
+        return List.of();
     }
 }

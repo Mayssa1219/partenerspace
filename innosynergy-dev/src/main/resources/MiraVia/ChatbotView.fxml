@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/16"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.innosynergy.controller.ChatbotController"
+      spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10;
+      -fx-border-color: #ccc; -fx-border-width: 1px;">
+
+    <!-- Titre de la fenêtre -->
+    <Label text="Chatbot" style="-fx-font-size: 18px; -fx-font-weight: bold;
+    -fx-padding: 0 0 10 0;"/>
+
+    <!-- Zone de discussion -->
+    <ScrollPane fx:id="chatScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS">
+        <VBox fx:id="chatBox" spacing="10"/>
+    </ScrollPane>
+
+    <!-- Zone de saisie de message -->
+    <HBox spacing="10">
+        <TextField fx:id="messageField" promptText="Tapez votre message..." HBox.hgrow="ALWAYS"/>
+        <Button text="Envoyer" onAction="#handleSendMessage"/>
+    </HBox>
+</VBox>
