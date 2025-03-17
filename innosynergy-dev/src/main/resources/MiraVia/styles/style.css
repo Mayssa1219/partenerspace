@@ -603,3 +603,22 @@
 .chart-legend {
     -fx-background-color: transparent;
 }
+.default-color0.chart-series-area-fill {
+    -fx-fill: rgba(255, 99, 132, 0.5); /* Rouge Rosé */
+}
+.default-color1.chart-series-area-fill {
+    -fx-fill: rgba(255, 206, 86, 0.5); /* Jaune Clair */
+}
+.default-color2.chart-series-area-fill {
+    -fx-fill: rgba(75, 192, 192, 0.5); /* Bleu-Vert Pastel */
+}
+
+.default-color0.chart-series-area-line {
+    -fx-stroke: #FF6384; /* Rouge */
+}
+.default-color1.chart-series-area-line {
+    -fx-stroke: #FFCE56; /* Jaune */
+}
+.default-color2.chart-series-area-line {
+    -fx-stroke: #4BC0C0; /* Bleu-Vert */
+}

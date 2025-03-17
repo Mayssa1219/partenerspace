@@ -5,6 +5,7 @@ import com.example.innosynergy.dao.DashboardDaoImpl;
 import com.example.innosynergy.model.Event;
 import com.example.innosynergy.utils.SessionManager;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -12,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 
 import java.io.File;
 import java.util.List;
@@ -55,13 +57,16 @@ public class DashboardController {
     private Label benevoleCountLabel;
 
     @FXML
-    private AreaChart<Number, Number> areaChart; // Remplacer LineChart par AreaChart
+    private AreaChart<String, Number> areaChart;
 
     private final DashboardDao dashboardDao = new DashboardDaoImpl();
     private int idPartenaire;
 
     @FXML
     public void initialize() {
+        areaChart.getStylesheets().add(getClass().getResource("/MiraVia/styles/style.css").toExternalForm());
+        createCustomLegend(); // Ajoute la légende après avoir chargé les données
+
         // Récupérer l'ID du partenaire courant
         String sessionId = SessionManager.getCurrentSessionId();
         idPartenaire = SessionManager.getUserId(sessionId);
@@ -90,6 +95,33 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+    @FXML
+    private HBox legendBox; // Assurez-vous d'avoir un HBox dans votre FXML
+
+    private void createCustomLegend() {
+        legendBox.getChildren().clear(); // Nettoyer l'ancienne légende
+
+        legendBox.getChildren().addAll(
+                createLegendItem("Perches", "#FF6384"),   // Rouge Rosé
+                createLegendItem("Brochets", "#FFCE56"),  // Jaune Clair
+                createLegendItem("Truites", "#4BC0C0")    // Bleu-Vert Pastel
+        );
+    }
+
+    private HBox createLegendItem(String text, String color) {
+        Label colorBox = new Label(" ");
+        colorBox.setMinSize(12, 12);
+        colorBox.setStyle("-fx-background-color: " + color + "; -fx-border-color: black;");
+
+        Label label = new Label(text);
+        label.setStyle("-fx-font-size: 14px; -fx-padding: 5px;");
+
+        HBox legendItem = new HBox(5, colorBox, label);
+        legendItem.setAlignment(Pos.CENTER_LEFT);
+        return legendItem;
+    }
+
+
 
     private void loadLineChartData() {
         try {
@@ -114,35 +146,45 @@ public class DashboardController {
 
     private void loadAreaChartData() {
         try {
-            // Créer les séries de données
-            XYChart.Series<Number, Number> seriesPerches = new XYChart.Series<>();
+            // Nettoyer l'ancien graphique
+            areaChart.getData().clear();
+
+            // Créer les séries de données avec des couleurs modernes
+            XYChart.Series<String, Number> seriesPerches = new XYChart.Series<>();
             seriesPerches.setName("Perches");
-            seriesPerches.getData().add(new XYChart.Data<>(2011, 15));
-            seriesPerches.getData().add(new XYChart.Data<>(2012, 20));
-            seriesPerches.getData().add(new XYChart.Data<>(2013, 19));
-            seriesPerches.getData().add(new XYChart.Data<>(2014, 22));
+            seriesPerches.getData().add(new XYChart.Data<>("Janvier", 15));
+            seriesPerches.getData().add(new XYChart.Data<>("Février", 20));
+            seriesPerches.getData().add(new XYChart.Data<>("Mars", 19));
+            seriesPerches.getData().add(new XYChart.Data<>("Avril", 22));
 
-            XYChart.Series<Number, Number> seriesBrochets = new XYChart.Series<>();
+            XYChart.Series<String, Number> seriesBrochets = new XYChart.Series<>();
             seriesBrochets.setName("Brochets");
-            seriesBrochets.getData().add(new XYChart.Data<>(2011, 26));
-            seriesBrochets.getData().add(new XYChart.Data<>(2012, 24));
-            seriesBrochets.getData().add(new XYChart.Data<>(2013, 8));
-            seriesBrochets.getData().add(new XYChart.Data<>(2014, 7));
+            seriesBrochets.getData().add(new XYChart.Data<>("Janvier", 26));
+            seriesBrochets.getData().add(new XYChart.Data<>("Février", 24));
+            seriesBrochets.getData().add(new XYChart.Data<>("Mars", 8));
+            seriesBrochets.getData().add(new XYChart.Data<>("Avril", 7));
 
-            XYChart.Series<Number, Number> seriesTruites = new XYChart.Series<>();
+            XYChart.Series<String, Number> seriesTruites = new XYChart.Series<>();
             seriesTruites.setName("Truites");
-            seriesTruites.getData().add(new XYChart.Data<>(2011, 5));
-            seriesTruites.getData().add(new XYChart.Data<>(2012, 0));
-            seriesTruites.getData().add(new XYChart.Data<>(2013, 8));
-            seriesTruites.getData().add(new XYChart.Data<>(2014, 12));
+            seriesTruites.getData().add(new XYChart.Data<>("Janvier", 5));
+            seriesTruites.getData().add(new XYChart.Data<>("Février", 0));
+            seriesTruites.getData().add(new XYChart.Data<>("Mars", 8));
+            seriesTruites.getData().add(new XYChart.Data<>("Avril", 12));
 
             // Ajouter les séries au graphique
-            areaChart.getData().clear();
             areaChart.getData().addAll(seriesPerches, seriesBrochets, seriesTruites);
+
+            // Ajouter des classes CSS aux séries
+            seriesPerches.getNode().getStyleClass().add("perches");
+            seriesBrochets.getNode().getStyleClass().add("brochets");
+            seriesTruites.getNode().getStyleClass().add("truites");
+
+            System.out.println("Graphique AreaChart mis à jour avec les mois !");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     private void loadEventTableData(int idPartenaire) {
         try {
