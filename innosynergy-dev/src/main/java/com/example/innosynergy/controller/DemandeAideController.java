@@ -271,7 +271,7 @@ public class DemandeAideController implements Initializable {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Choisir un fichier");
             fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Images et PDF", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.pdf")
+                    new FileChooser.ExtensionFilter("Images et PDF", ".png", ".jpg", ".jpeg", ".gif", "*.pdf")
             );
             selectedFile = fileChooser.showOpenDialog(new Stage());
             if (selectedFile != null) {
@@ -416,8 +416,8 @@ public class DemandeAideController implements Initializable {
             document.add(new Paragraph("Montant de la Demande: " + data.getMontantDemande()));
             document.add(new Paragraph("Date de Demande: " + data.getDateDemande().toString()));
             document.add(new Paragraph("Status: " + data.getStatus()));
-
             document.close();
+
             showAlert("Succès", "Le fichier PDF a été généré et enregistré avec succès.");
 
             // Ouvrir automatiquement le fichier PDF généré
