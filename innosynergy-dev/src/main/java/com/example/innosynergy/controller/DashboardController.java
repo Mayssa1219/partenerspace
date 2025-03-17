@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.TableCell;
 import com.example.innosynergy.utils.SessionManager;
+import javafx.scene.layout.GridPane;
 
 import java.util.List;
 
@@ -60,7 +61,6 @@ public class DashboardController {
 
     @FXML
     public void initialize() {
-
         // Récupérer l'ID de session courant
         String sessionId = SessionManager.getCurrentSessionId();
 

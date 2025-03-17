@@ -1,10 +1,6 @@
 package com.example.innosynergy.controller;
 
-import com.example.innosynergy.Main;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.scene.input.MouseEvent; // Importer MouseEvent de JavaFX
+import javafx.scene.input.MouseEvent;
 import com.example.innosynergy.dao.DonDaoImpl;
 import com.example.innosynergy.dao.EventDaoImpl;
 import com.example.innosynergy.dao.PartenaireDaoImpl;
@@ -29,12 +25,8 @@ import javafx.scene.Node;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,21 +64,14 @@ public class PartnerLayoutController {
     private PartenaireDaoImpl partenaireDao;
 
     private final Map<Button, String[]> buttonViewMappings = new HashMap<>();
-    @FXML
-    private Label timeLabel;
+
     @FXML
     private ImageView chatbotImageView;
-    private final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+    private Button lastActiveButton = null; // Pour garder une référence au dernier bouton actif
 
     @FXML
     private void initialize() {
-        // Mise à jour de l'heure toutes les secondes
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(1), event -> updateClock())
-        );
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-
         // Gestionnaire d'événements pour le chatbot
         chatbotImageView.setOnMouseClicked(event -> openChatbotWindow());
 
@@ -103,11 +88,18 @@ public class PartnerLayoutController {
         // Attacher les événements à chaque bouton
         buttonViewMappings.forEach((button, viewInfo) -> {
             if (button != null) {
-                button.setOnAction(event -> loadView(viewInfo[0], viewInfo[1]));
+                button.setOnAction(event -> handleButtonClick(button));
             } else {
                 System.err.println("Bouton non injecté dans FXML !");
             }
         });
+
+        // Appliquer le style actif au premier bouton par défaut
+        if (!sidebar.getChildren().isEmpty() && sidebar.getChildren().get(0) instanceof Button) {
+            Button firstButton = (Button) sidebar.getChildren().get(0);
+            firstButton.getStyleClass().add("active-button");
+            lastActiveButton = firstButton;
+        }
 
         // Charger le tableau de bord par défaut
         loadView("Tableau de bord", "/MiraVia/dashboard.fxml");
@@ -125,46 +117,40 @@ public class PartnerLayoutController {
         profileImageView.setImage(new Image("/images/user.png"));
         String sessionId = SessionManager.getCurrentSessionId();
         User currentUser = SessionManager.getUser(sessionId);
-            if (currentUser != null) {
-                String imageName = partenaireDao.getUserImage(currentUser.getIdUtilisateur());
-                if (imageName != null) {
-                    profileImageView.setImage(new Image("file:uploads/" + imageName));
-                }
-                if (currentUser.getPrenom() != null && !currentUser.getPrenom().isEmpty()) {
-                    profileNameLabel.setText(currentUser.getNom() + " " + currentUser.getPrenom());
-                } else {
-                    profileNameLabel.setText(currentUser.getNom());
-                }
-
+        if (currentUser != null) {
+            String imageName = partenaireDao.getUserImage(currentUser.getIdUtilisateur());
+            if (imageName != null) {
+                profileImageView.setImage(new Image("file:uploads/" + imageName));
             }
+            if (currentUser.getPrenom() != null && !currentUser.getPrenom().isEmpty()) {
+                profileNameLabel.setText(currentUser.getNom() + " " + currentUser.getPrenom());
+            } else {
+                profileNameLabel.setText(currentUser.getNom());
+            }
+        }
+
         eventDao = new EventDaoImpl();
         donDao = new DonDaoImpl();
     }
-    private void updateClock() {
-        timeLabel.setText(LocalTime.now().format(timeFormat));
-    }
-    private Stage clockStage = null; // Stocke l'instance de la fenêtre de l'horloge
 
-    public void openClock() {
-        try {
-            if (clockStage != null && clockStage.isShowing()) {
-                clockStage.close(); // Ferme l'horloge si elle est déjà ouverte
-                clockStage = null;
-                return;
-            }
+    private void handleButtonClick(Button clickedButton) {
+        // Réinitialiser le style du dernier bouton actif
+        if (lastActiveButton != null) {
+            lastActiveButton.getStyleClass().remove("active-button");
+        }
 
-            Main clockApp = new Main(); // Crée une instance de l'horloge
-            clockStage = new Stage(); // Initialise la fenêtre
+        // Appliquer le style au bouton cliqué
+        clickedButton.getStyleClass().add("active-button");
 
-            clockApp.start(clockStage); // Démarre l'horloge
+        // Mettre à jour la référence du dernier bouton actif
+        lastActiveButton = clickedButton;
 
-            clockStage.setOnHidden(event -> clockStage = null); // Réinitialise lorsque la fenêtre se ferme
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Charger la vue associée au bouton (si nécessaire)
+        String[] viewInfo = buttonViewMappings.get(clickedButton);
+        if (viewInfo != null) {
+            loadView(viewInfo[0], viewInfo[1]);
         }
     }
-
 
     private void openChatbotWindow() {
         try {
@@ -181,7 +167,6 @@ public class PartnerLayoutController {
             e.printStackTrace();
         }
     }
-
 
     private EventDaoImpl eventDao;
 

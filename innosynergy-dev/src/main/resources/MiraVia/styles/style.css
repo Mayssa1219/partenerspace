@@ -447,6 +447,7 @@
 #statisticsVBox {
     -fx-background-color: white;
     -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);
 }
 
 #statisticsLabel {
@@ -455,6 +456,7 @@
     -fx-font-size: 20px; /* Ajustez la taille selon vos besoins */
     -fx-text-fill: #003073; /* Couleur du texte */
     -fx-padding: 10px 10px 0px 10px; /* haut droite bas gauche */
+
 }
 #clientVBox HBox {
     -fx-alignment: CENTER_LEFT;
@@ -500,8 +502,9 @@
 }
 
 #donationVBox {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);
     -fx-background-color: white;
-    -fx-background-radius: 20px;
+    -fx-background-radius: 10px;
     -fx-padding: 10px;
 }
 #helpRequestCountLabel {
@@ -511,8 +514,10 @@
     -fx-text-fill: #003073; /* Couleur du texte */
 }
 #donationLabel {
-    -fx-font-size: 24px;
-    -fx-text-fill: #003073;
+    -fx-font-family: "Poppins";
+    -fx-font-weight: 600; /* SemiBold */
+    -fx-font-size: 18px; /* Ajustez la taille selon vos besoins */
+    -fx-text-fill: #003073; /* Couleur du texte */
 }
 /* Charger la police Poppins */
 @font-face {
@@ -557,4 +562,8 @@
     -fx-stroke: derive(firebrick, -15%);
     -fx-stroke-width: 2;
     -fx-stroke-line-cap: round;
+}
+.active-button {
+    -fx-background-color:  #aecee6; /* Couleur de fond bleue */
+    -fx-text-fill: #003073; /* Couleur du texte en blanc */
 }
