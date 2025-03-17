@@ -446,22 +446,19 @@
 
 #statisticsVBox {
     -fx-background-color: white;
-    -fx-background-radius: 20px;
-    -fx-padding: 20px;
+    -fx-background-radius: 10px;
 }
 
 #statisticsLabel {
     -fx-font-family: "Poppins";
     -fx-font-weight: 600; /* SemiBold */
-    -fx-font-size: 20 px; /* Ajustez la taille selon vos besoins */
+    -fx-font-size: 20px; /* Ajustez la taille selon vos besoins */
     -fx-text-fill: #003073; /* Couleur du texte */
+    -fx-padding: 10px 10px 0px 10px; /* haut droite bas gauche */
 }
 #clientVBox HBox {
     -fx-alignment: CENTER_LEFT;
     -fx-spacing: 5;
-}
-#statisticsHBox {
-    -fx-padding: 10px;
 }
 
 #clientVBox {
@@ -483,6 +480,14 @@
 #helpRequestVBox {
     -fx-background-color: #f3e8ff;
     -fx-border-color : #bf83ff ;
+    -fx-border-width: 1;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 10px;
+}
+#benevoleVBox{
+    -fx-background-color: #d1e9f9;
+    -fx-border-color : #81a8c5 ;
     -fx-border-width: 1;
     -fx-background-radius: 10;
     -fx-border-radius: 10;

@@ -52,11 +52,15 @@ public class DashboardController {
     @FXML
     private Label eventCountLabel;
 
+    @FXML
+    private Label benevoleCountLabel; // Ajoutez cette ligne
+
     private final DashboardDao dashboardDao = new DashboardDaoImpl();
     private int idPartenaire;
 
     @FXML
     public void initialize() {
+
         // Récupérer l'ID de session courant
         String sessionId = SessionManager.getCurrentSessionId();
 
@@ -66,6 +70,7 @@ public class DashboardController {
         // Charger les données du tableau de bord avec l'ID du partenaire
         loadDashboardData(idPartenaire);
     }
+
 
     private void loadDashboardData(int idPartenaire) {
         loadStatistics(idPartenaire);
@@ -79,6 +84,7 @@ public class DashboardController {
             clientCountLabel.setText(String.valueOf(dashboardDao.getClientCount(idPartenaire)));
             helpRequestCountLabel.setText(String.valueOf(dashboardDao.getHelpRequestCountByPartenaire(idPartenaire))); // Utiliser la nouvelle méthode
             eventCountLabel.setText(String.valueOf(dashboardDao.getEventCount(idPartenaire))); // Passer idPartenaire
+            benevoleCountLabel.setText(String.valueOf(dashboardDao.getBenevoleCount(idPartenaire))); // Ajoutez cette ligne
         } catch (Exception e) {
             e.printStackTrace();
         }

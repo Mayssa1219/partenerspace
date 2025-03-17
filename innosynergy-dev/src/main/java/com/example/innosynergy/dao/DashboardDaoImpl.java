@@ -31,23 +31,26 @@ public class DashboardDaoImpl implements DashboardDao {
     private static final String SELECT_ACTIVE_EVENTS_SQL = "SELECT * FROM evenements WHERE " +
             "status = 'actif' AND id_partenaire = ?"
             ;
+    private static final String SELECT_BENEVOLE_COUNT_SQL = "SELECT COUNT(*) AS benevole_count " +
+            "FROM benevolat WHERE id_partenaire = ?";
 
     private ConnexionBD DBConnection;
 
     @Override
-    public int getPartnerCount() {
+    public int getBenevoleCount(int idPartenaire) {
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PARTNER_COUNT_SQL);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BENEVOLE_COUNT_SQL)) {
+            preparedStatement.setInt(1, idPartenaire);
 
-            if (resultSet.next()) {
-                return resultSet.getInt("partner_count");
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("benevole_count");
+                }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0;
+        return 0; // Retourner 0 en cas d'erreur
     }
 
     @Override

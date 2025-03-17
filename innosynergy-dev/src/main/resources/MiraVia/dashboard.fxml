@@ -10,9 +10,10 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
 <?import java.net.URL?>
-
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.Priority?>
+
 <StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.example.innosynergy.controller.DashboardController">
     <stylesheets>
@@ -21,97 +22,110 @@
 
     <children>
         <VBox id="mainVBox" spacing="20" StackPane.alignment="CENTER">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
             <children>
-                <!-- Statistiques -->
-                <VBox id="statisticsVBox" spacing="10">
+                <!-- Conteneur pour les cartes (statistiques et horloge) -->
+                <HBox id="cardsContainer" spacing="20" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label id="statisticsLabel" text="Statistiques" />
-                        <HBox id="statisticsHBox" spacing="20">
-                            <padding>
-                                <Insets bottom="10" left="10" right="10" top="10" />
-                            </padding>
+                        <!-- Carte des statistiques -->
+                        <VBox id="statisticsVBox" spacing="10" HBox.hgrow="ALWAYS">
                             <children>
-                                <!-- Nombre de clients -->
-                                <!-- Nombre de clients -->
-                                <VBox id="clientVBox">
+                                <Label id="statisticsLabel" text="Statistiques" />
+                                <HBox id="statisticsHBox" spacing="20" HBox.hgrow="ALWAYS">
                                     <padding>
                                         <Insets bottom="10" left="10" right="10" top="10" />
                                     </padding>
                                     <children>
-                                        <!-- Conteneur horizontal pour l'image et le label -->
-                                        <HBox alignment="CENTER_LEFT" spacing="5">
+                                        <!-- Nombre de clients -->
+                                        <VBox id="clientVBox" HBox.hgrow="ALWAYS">
+                                            <padding>
+                                                <Insets bottom="10" left="10" right="10" top="10" />
+                                            </padding>
                                             <children>
-                                                <!-- Image pour les statistiques des clients -->
-                                                <ImageView fx:id="nombre_clients" fitHeight="20" fitWidth="20">
-                                                    <image>
-                                                        <Image url="@/images/clients.png" />
-                                                    </image>
-                                                </ImageView>
-                                                <!-- Label pour le nombre de clients -->
-                                                <Label fx:id="clientCountLabel" />
+                                                <HBox alignment="CENTER_LEFT" spacing="5">
+                                                    <children>
+                                                        <ImageView fx:id="nombre_clients" fitHeight="20" fitWidth="20">
+                                                            <image>
+                                                                <Image url="@/images/clients.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                        <Label fx:id="clientCountLabel" />
+                                                    </children>
+                                                </HBox>
+                                                <Label id="clientLabel" text="Nombre de clients" />
                                             </children>
-                                        </HBox>
-                                        <!-- Label pour la description -->
-                                        <Label id="clientLabel" text="Nombre de clients" />
-                                    </children>
-                                </VBox>
+                                        </VBox>
 
-                                <!-- Nombre d'événements -->
-                                <VBox id="eventVBox">
-                                    <padding>
-                                        <Insets bottom="10" left="10" right="10" top="10" />
-                                    </padding>
-                                    <children>
-                                        <!-- Conteneur horizontal pour l'image et le label -->
-                                        <HBox alignment="CENTER_LEFT" spacing="5">
+                                        <!-- Nombre d'événements -->
+                                        <VBox id="eventVBox" HBox.hgrow="ALWAYS">
+                                            <padding>
+                                                <Insets bottom="10" left="10" right="10" top="10" />
+                                            </padding>
                                             <children>
-                                                <!-- Image pour les statistiques des événements -->
-                                                <ImageView fx:id="nombre_events" fitHeight="20" fitWidth="20">
-                                                    <image>
-                                                        <Image url="@/images/calendrier.png" />
-                                                    </image>
-                                                </ImageView>
-
-                                                <!-- Label pour le nombre d'événements -->
-                                                <Label fx:id="eventCountLabel" text="80" />
+                                                <HBox alignment="CENTER_LEFT" spacing="5">
+                                                    <children>
+                                                        <ImageView fx:id="nombre_events" fitHeight="20" fitWidth="20">
+                                                            <image>
+                                                                <Image url="@/images/calendrier.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                        <Label fx:id="eventCountLabel" text="80" />
+                                                    </children>
+                                                </HBox>
+                                                <Label id="eventLabel" text="Nombre d’événements" />
                                             </children>
-                                        </HBox>
-                                        <!-- Label pour la description -->
-                                        <Label id="eventLabel" text="Nombre d’événements" />
-                                    </children>
-                                </VBox>
+                                        </VBox>
 
-                                <!-- Nombre de demandes d'aide -->
-                                <VBox id="helpRequestVBox">
-                                    <padding>
-                                        <Insets bottom="10" left="10" right="10" top="10" />
-                                    </padding>
-                                    <children>
-                                        <!-- Conteneur horizontal pour l'image et le label -->
-                                        <HBox alignment="CENTER_LEFT" spacing="5">
+                                        <!-- Nombre de demandes d'aide -->
+                                        <VBox id="helpRequestVBox" HBox.hgrow="ALWAYS">
+                                            <padding>
+                                                <Insets bottom="10" left="10" right="10" top="10" />
+                                            </padding>
                                             <children>
-                                                <!-- Image pour les statistiques des événements -->
-                                                <ImageView fx:id="nombre_dm" fitHeight="20" fitWidth="20">
-                                                    <image>
-                                                        <Image url="@/images/interrogatoire.png" />
-                                                    </image>
-                                                </ImageView>
-                                                <!-- Label pour le nombre d'événements -->
-                                                <Label fx:id="helpRequestCountLabel" text="20" />
+                                                <HBox alignment="CENTER_LEFT" spacing="5">
+                                                    <children>
+                                                        <ImageView fx:id="nombre_dm" fitHeight="20" fitWidth="20">
+                                                            <image>
+                                                                <Image url="@/images/interrogatoire.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                        <Label fx:id="helpRequestCountLabel" text="20" />
+                                                    </children>
+                                                </HBox>
+                                                <Label id="helpRequestLabel" text="Nombre de demandes d'aide" />
                                             </children>
-                                        </HBox>
-                                        <!-- Label pour la description -->
-                                        <Label id="helpRequestLabel" text="Nombre de demandes d'aide" />
-                                    </children>
-                                </VBox>
+                                        </VBox>
 
+                                        <!-- Nombre de bénévoles -->
+                                        <VBox id="benevoleVBox" HBox.hgrow="ALWAYS">
+                                            <padding>
+                                                <Insets bottom="10" left="10" right="10" top="10" />
+                                            </padding>
+                                            <children>
+                                                <HBox alignment="CENTER_LEFT" spacing="5">
+                                                    <children>
+                                                        <ImageView fx:id="nombre_benevoles" fitHeight="20" fitWidth="20">
+                                                            <image>
+                                                                <Image url="@/images/benevolat.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                        <Label fx:id="benevoleCountLabel" />
+                                                    </children>
+                                                </HBox>
+                                                <Label id="benevoleLabel" text="Nombre de bénévoles" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
                             </children>
-                        </HBox>
+                        </VBox>
                     </children>
-                </VBox>
+                </HBox>
 
                 <!-- Graphique -->
-                <VBox id="donationVBox" spacing="10">
+                <VBox id="donationVBox" spacing="10" VBox.vgrow="ALWAYS">
                     <padding>
                         <Insets bottom="10" left="10" right="10" top="10" />
                     </padding>
@@ -129,7 +143,7 @@
                 </VBox>
 
                 <!-- Tableau des événements -->
-                <VBox id="eventTableVBox" spacing="10">
+                <VBox id="eventTableVBox" spacing="10" VBox.vgrow="ALWAYS">
                     <children>
                         <Label id="eventTableLabel" text="Événements" />
                         <TableView fx:id="eventTable" prefHeight="564.0" prefWidth="1056.0">

@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface DashboardDao {
     int getClientCount(int idPartenaire);
-    int getPartnerCount();
     int getEventCount(int idPartenaire);
+    int getBenevoleCount(int idPartenaire);
     int getHelpRequestCountByPartenaire(int idPartenaire);
     List<XYChart.Data<Number, Number>> getLineChartData();
     List<Event> getEventTableData(int idPartenaire);
