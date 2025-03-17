@@ -14,7 +14,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.Priority?>
 
-<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.AreaChart?>
 <StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.example.innosynergy.controller.DashboardController">
     <stylesheets>
@@ -126,23 +126,25 @@
                     </children>
                 </HBox>
 
+                <!-- Graphique -->
                 <VBox id="donationVBox" spacing="10" VBox.vgrow="ALWAYS">
                     <padding>
                         <Insets bottom="10" left="10" right="10" top="10" />
                     </padding>
                     <children>
-                        <Label id="donationLabel" text="Statistiques des clients" styleClass="chart-title" />
-
-                        <LineChart fx:id="lineChart" prefHeight="300.0" prefWidth="1024.0" title="Comparaison des Mois" styleClass="custom-chart">
+                        <Label id="donationLabel" text="Statistication des clients" />
+                        <AreaChart fx:id="areaChart" prefHeight="118.0" prefWidth="1024.0"
+                                   title="Population observée">
                             <xAxis>
-                                <CategoryAxis label="Mois" />
+                                <NumberAxis label="Années" />
                             </xAxis>
                             <yAxis>
-                                <NumberAxis label="Pourcentage" autoRanging="true" forceZeroInRange="false" />
+                                <NumberAxis label="Individus" />
                             </yAxis>
-                        </LineChart>
+                        </AreaChart>
                     </children>
                 </VBox>
+
                 <!-- Tableau des événements -->
                 <VBox id="eventTableVBox" spacing="10" VBox.vgrow="ALWAYS">
                     <children>

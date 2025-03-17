@@ -3,7 +3,6 @@ package com.example.innosynergy.controller;
 import com.example.innosynergy.Main;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.input.MouseEvent;
 import com.example.innosynergy.dao.DonDaoImpl;
 import com.example.innosynergy.dao.EventDaoImpl;
@@ -30,11 +29,14 @@ import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+import javafx.animation.Timeline; // Importation de Timeline
+import javafx.animation.KeyFrame; // Importation de KeyFrame
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PartnerLayoutController {
@@ -75,6 +77,7 @@ public class PartnerLayoutController {
     private ImageView chatbotImageView;
 
     private Button lastActiveButton = null; // Pour garder une référence au dernier bouton actif
+
     @FXML
     private Label timeLabel;
 
@@ -88,6 +91,7 @@ public class PartnerLayoutController {
         );
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+
         // Gestionnaire d'événements pour le chatbot
         chatbotImageView.setOnMouseClicked(event -> openChatbotWindow());
 
@@ -144,28 +148,8 @@ public class PartnerLayoutController {
                 profileNameLabel.setText(currentUser.getNom());
             }
         }
-
         eventDao = new EventDaoImpl();
         donDao = new DonDaoImpl();
-    }
-
-    private void handleButtonClick(Button clickedButton) {
-        // Réinitialiser le style du dernier bouton actif
-        if (lastActiveButton != null) {
-            lastActiveButton.getStyleClass().remove("active-button");
-        }
-
-        // Appliquer le style au bouton cliqué
-        clickedButton.getStyleClass().add("active-button");
-
-        // Mettre à jour la référence du dernier bouton actif
-        lastActiveButton = clickedButton;
-
-        // Charger la vue associée au bouton (si nécessaire)
-        String[] viewInfo = buttonViewMappings.get(clickedButton);
-        if (viewInfo != null) {
-            loadView(viewInfo[0], viewInfo[1]);
-        }
     }
     private void updateClock() {
         timeLabel.setText(LocalTime.now().format(timeFormat));
@@ -191,7 +175,24 @@ public class PartnerLayoutController {
             e.printStackTrace();
         }
     }
+    private void handleButtonClick(Button clickedButton) {
+        // Réinitialiser le style du dernier bouton actif
+        if (lastActiveButton != null) {
+            lastActiveButton.getStyleClass().remove("active-button");
+        }
 
+        // Appliquer le style au bouton cliqué
+        clickedButton.getStyleClass().add("active-button");
+
+        // Mettre à jour la référence du dernier bouton actif
+        lastActiveButton = clickedButton;
+
+        // Charger la vue associée au bouton (si nécessaire)
+        String[] viewInfo = buttonViewMappings.get(clickedButton);
+        if (viewInfo != null) {
+            loadView(viewInfo[0], viewInfo[1]);
+        }
+    }
 
     private void openChatbotWindow() {
         try {

@@ -513,6 +513,12 @@
     -fx-font-size: 18px; /* Ajustez la taille selon vos besoins */
     -fx-text-fill: #003073; /* Couleur du texte */
 }
+#eventTableLabel {
+    -fx-font-family: "Poppins";
+    -fx-font-weight: 600; /* SemiBold */
+    -fx-font-size: 18px; /* Ajustez la taille selon vos besoins */
+    -fx-text-fill: #003073; /* Couleur du texte */
+}
 #donationLabel {
     -fx-font-family: "Poppins";
     -fx-font-weight: 600; /* SemiBold */
