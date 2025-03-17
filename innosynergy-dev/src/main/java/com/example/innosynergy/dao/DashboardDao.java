@@ -12,4 +12,6 @@ public interface DashboardDao {
     int getHelpRequestCountByPartenaire(int idPartenaire);
     List<XYChart.Data<Number, Number>> getLineChartData();
     List<Event> getEventTableData(int idPartenaire);
+
+    List<XYChart.Data<Number, Number>> getDonationsByMonth(int idPartenaire);
 }

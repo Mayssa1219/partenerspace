@@ -573,3 +573,77 @@
     -fx-background-color:  #aecee6; /* Couleur de fond bleue */
     -fx-text-fill: #003073; /* Couleur du texte en blanc */
 }
+.chart-series-area-fill {
+    -fx-fill: rgba(255, 0, 0, 0.3); /* Rouge avec transparence */
+}
+.chart-series-area-line {
+    -fx-stroke: #ff0000; /* Rouge */
+}
+.area-chart {
+    -fx-background-color: #ffffff; /* Blanc */
+}
+/* Style général pour l'AreaChart */
+.area-chart {
+    -fx-background-color: #f4f4f4; /* Couleur de fond du graphique */
+    -fx-padding: 10px; /* Espacement interne */
+}
+
+/* Style pour les axes */
+.axis {
+    -fx-tick-label-fill: #333333; /* Couleur des étiquettes des axes */
+    -fx-tick-length: 5px; /* Longueur des ticks */
+}
+
+.axis-label {
+    -fx-text-fill: #003073; /* Couleur du texte des étiquettes des axes */
+    -fx-font-size: 14px; /* Taille de la police */
+    -fx-font-weight: bold; /* Gras */
+}
+
+/* Style pour les séries de données */
+.default-color0.chart-series-area-line { /* Perches */
+    -fx-stroke: #003073; /* Couleur de la ligne */
+    -fx-stroke-width: 2px; /* Épaisseur de la ligne */
+}
+
+.default-color0.chart-series-area-fill { /* Perches */
+    -fx-fill: rgba(0, 48, 115, 0.3); /* Couleur de remplissage avec transparence */
+}
+
+.default-color1.chart-series-area-line { /* Brochets */
+    -fx-stroke: #ff0000; /* Couleur de la ligne */
+    -fx-stroke-width: 2px; /* Épaisseur de la ligne */
+}
+
+.default-color1.chart-series-area-fill { /* Brochets */
+    -fx-fill: rgba(255, 0, 0, 0.3); /* Couleur de remplissage avec transparence */
+}
+
+.default-color2.chart-series-area-line { /* Truites */
+    -fx-stroke: #00ff00; /* Couleur de la ligne */
+    -fx-stroke-width: 2px; /* Épaisseur de la ligne */
+}
+
+.default-color2.chart-series-area-fill { /* Truites */
+    -fx-fill: rgba(0, 255, 0, 0.3); /* Couleur de remplissage avec transparence */
+}
+
+/* Style pour la légende */
+.chart-legend {
+    -fx-background-color: #ffffff; /* Couleur de fond de la légende */
+    -fx-border-color: #cccccc; /* Couleur de la bordure */
+    -fx-border-width: 1px; /* Épaisseur de la bordure */
+    -fx-padding: 5px; /* Espacement interne */
+}
+
+.chart-legend-item {
+    -fx-text-fill: #003073; /* Couleur du texte de la légende */
+    -fx-font-size: 12px; /* Taille de la police */
+}
+
+/* Style pour le titre du graphique */
+.chart-title {
+    -fx-text-fill: #003073; /* Couleur du titre */
+    -fx-font-size: 16px; /* Taille de la police */
+    -fx-font-weight: bold; /* Gras */
+}

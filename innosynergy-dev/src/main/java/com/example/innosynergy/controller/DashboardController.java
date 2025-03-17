@@ -94,44 +94,23 @@ public class DashboardController {
         }
     }
 
-    private void loadLineChartData() {
-        try {
-            XYChart.Series<Number, Number> series = new XYChart.Series<>();
-            List<XYChart.Data<Number, Number>> data = dashboardDao.getLineChartData();
-            series.getData().addAll(data);
-            lineChart.getData().add(series);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     private void loadAreaChartData() {
         try {
-            // Créer les séries de données
-            XYChart.Series<Number, Number> seriesPerches = new XYChart.Series<>();
-            seriesPerches.setName("Perches");
-            seriesPerches.getData().add(new XYChart.Data<>(2011, 15));
-            seriesPerches.getData().add(new XYChart.Data<>(2012, 20));
-            seriesPerches.getData().add(new XYChart.Data<>(2013, 19));
-            seriesPerches.getData().add(new XYChart.Data<>(2014, 22));
+            // Récupérer les données des dons par mois
+            List<XYChart.Data<Number, Number>> donationsData = dashboardDao.getDonationsByMonth(idPartenaire);
 
-            XYChart.Series<Number, Number> seriesBrochets = new XYChart.Series<>();
-            seriesBrochets.setName("Brochets");
-            seriesBrochets.getData().add(new XYChart.Data<>(2011, 26));
-            seriesBrochets.getData().add(new XYChart.Data<>(2012, 24));
-            seriesBrochets.getData().add(new XYChart.Data<>(2013, 8));
-            seriesBrochets.getData().add(new XYChart.Data<>(2014, 7));
+            // Créer une série pour l'AreaChart
+            XYChart.Series<Number, Number> series = new XYChart.Series<>();
+            series.setName("Nombre de dons par mois");
 
-            XYChart.Series<Number, Number> seriesTruites = new XYChart.Series<>();
-            seriesTruites.setName("Truites");
-            seriesTruites.getData().add(new XYChart.Data<>(2011, 5));
-            seriesTruites.getData().add(new XYChart.Data<>(2012, 0));
-            seriesTruites.getData().add(new XYChart.Data<>(2013, 8));
-            seriesTruites.getData().add(new XYChart.Data<>(2014, 12));
+            // Ajouter les données à la série
+            series.getData().addAll(donationsData);
 
-            // Ajouter les séries au graphique
+            // Ajouter la série au graphique
             areaChart.getData().clear();
-            areaChart.getData().addAll(seriesPerches, seriesBrochets, seriesTruites);
+            areaChart.getData().add(series);
         } catch (Exception e) {
             e.printStackTrace();
         }

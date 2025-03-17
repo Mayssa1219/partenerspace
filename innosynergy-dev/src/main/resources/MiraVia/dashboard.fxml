@@ -134,12 +134,12 @@
                     <children>
                         <Label id="donationLabel" text="Statistication des clients" />
                         <AreaChart fx:id="areaChart" prefHeight="118.0" prefWidth="1024.0"
-                                   title="Population observée">
+                                   title="Nombre de dons par mois">
                             <xAxis>
-                                <NumberAxis label="Années" />
+                                <NumberAxis label="Mois" />
                             </xAxis>
                             <yAxis>
-                                <NumberAxis label="Individus" />
+                                <NumberAxis label="Nombre de dons" />
                             </yAxis>
                         </AreaChart>
                     </children>

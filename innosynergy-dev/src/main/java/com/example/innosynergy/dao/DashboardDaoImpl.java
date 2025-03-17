@@ -34,6 +34,9 @@ public class DashboardDaoImpl implements DashboardDao {
     private static final String SELECT_BENEVOLE_COUNT_SQL = "SELECT COUNT(*) AS benevole_count " +
             "FROM benevolat WHERE id_partenaire = ?";
 
+    private static final String SELECT_DONATIONS_BY_MONTH_SQL = "SELECT MONTH(date_don) AS mois, COUNT(*) AS nombre_dons " +
+            "FROM dons WHERE id_partenaire = ? GROUP BY mois";
+
     private ConnexionBD DBConnection;
 
     @Override
@@ -164,4 +167,23 @@ public class DashboardDaoImpl implements DashboardDao {
         return 0; // Retourner 0 en cas d'erreur
     }
 
+    @Override
+    public List<XYChart.Data<Number, Number>> getDonationsByMonth(int idPartenaire) {
+        List<XYChart.Data<Number, Number>> data = new ArrayList<>();
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DONATIONS_BY_MONTH_SQL)) {
+            preparedStatement.setInt(1, idPartenaire);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int mois = resultSet.getInt("mois");
+                    int nombreDons = resultSet.getInt("nombre_dons");
+                    data.add(new XYChart.Data<>(mois, nombreDons));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
 }
