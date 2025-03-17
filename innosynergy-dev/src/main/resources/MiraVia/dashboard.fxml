@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.Priority?>
 
 <?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.CategoryAxis?>
 <StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.example.innosynergy.controller.DashboardController">
     <stylesheets>
@@ -133,15 +134,15 @@
                     </padding>
                     <children>
                         <Label id="donationLabel" text="Statistication des clients" />
-                        <AreaChart fx:id="areaChart" prefHeight="118.0" prefWidth="1024.0"
-                                   title="Nombre de dons par mois">
+                        <AreaChart fx:id="areaChart">
                             <xAxis>
-                                <NumberAxis label="Mois" />
+                                <CategoryAxis label="Mois"/>
                             </xAxis>
                             <yAxis>
-                                <NumberAxis label="Nombre de dons" />
+                                <NumberAxis label="Valeurs"/>
                             </yAxis>
                         </AreaChart>
+                        <HBox fx:id="legendBox" spacing="10" alignment="CENTER" />
                     </children>
                 </VBox>
 

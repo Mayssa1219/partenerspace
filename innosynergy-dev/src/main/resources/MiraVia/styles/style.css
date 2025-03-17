@@ -647,3 +647,72 @@
     -fx-font-size: 16px; /* Taille de la police */
     -fx-font-weight: bold; /* Gras */
 }
+
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #013A71;
+}
+
+.custom-chart {
+    -fx-background-color: transparent;
+    -fx-border-color: #013A71;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.chart-line-symbol {
+    -fx-background-color: #FF5733, white;
+    -fx-padding: 5px;
+    -fx-background-radius: 10px;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 2px;
+}
+
+.chart-plot-background {
+    -fx-background-color: #f9f9f9;
+}
+
+.chart-legend {
+    -fx-background-color: transparent;
+}
+.default-color0.chart-series-area-fill {
+    -fx-fill: rgba(255, 99, 132, 0.5); /* Rouge Rosé */
+}
+.default-color1.chart-series-area-fill {
+    -fx-fill: rgba(255, 206, 86, 0.5); /* Jaune Clair */
+}
+.default-color2.chart-series-area-fill {
+    -fx-fill: rgba(75, 192, 192, 0.5); /* Bleu-Vert Pastel */
+}
+
+.default-color0.chart-series-area-line {
+    -fx-stroke: #FF6384; /* Rouge */
+}
+.default-color1.chart-series-area-line {
+    -fx-stroke: #FFCE56; /* Jaune */
+}
+.default-color2.chart-series-area-line {
+    -fx-stroke: #4BC0C0; /* Bleu-Vert */
+}
+.default-color0.chart-series-area-fill {
+    -fx-fill: rgba(255, 99, 132, 0.5); /* Rouge Rosé */
+}
+.default-color1.chart-series-area-fill {
+    -fx-fill: rgba(255, 206, 86, 0.5); /* Jaune Clair */
+}
+.default-color2.chart-series-area-fill {
+    -fx-fill: rgba(75, 192, 192, 0.5); /* Bleu-Vert Pastel */
+}
+
+.default-color0.chart-series-area-line {
+    -fx-stroke: #FF6384; /* Rouge */
+}
+.default-color1.chart-series-area-line {
+    -fx-stroke: #FFCE56; /* Jaune */
+}
+.default-color2.chart-series-area-line {
+    -fx-stroke: #4BC0C0; /* Bleu-Vert */
+}
