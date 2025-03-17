@@ -388,3 +388,21 @@
     -fx-background-color: #dc6f6f;
     -fx-text-fill: white;
 }
+
+.download-button {
+    -fx-background-color: #aecee6;
+    -fx-text-fill: #003073;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand; /* Curseur en forme de main */
+}
+
+.download-button:hover {
+    -fx-background-color: #003073; /* Couleur de fond au survol */
+    -fx-text-fill: white;
+}
+
+.download-button:pressed {
+    -fx-background-color:  #aecee6; /* Vert encore plus foncé lors du clic */
+}

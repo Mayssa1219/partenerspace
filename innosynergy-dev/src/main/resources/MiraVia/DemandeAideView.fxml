@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.geometry.Insets?>
-<?import javafx.geometry.Pos?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-
-<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.TextField?>
 <?import java.net.URL?>
 <BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.innosynergy.controller.DemandeAideController">
@@ -39,14 +38,9 @@
             <!-- Table View -->
             <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="demandeurColumn" text="ID Client" prefWidth="120">
+                    <TableColumn fx:id="demandeurColumn" text="Nom de client" prefWidth="120">
                         <cellValueFactory>
                             <PropertyValueFactory property="idClient"/>
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn fx:id="telephoneColumn" text="ID Partenaire" prefWidth="120">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="idPartenaire"/>
                         </cellValueFactory>
                     </TableColumn>
                     <TableColumn fx:id="emailColumn" text="Type d'Aide" prefWidth="150">
@@ -59,9 +53,19 @@
                             <PropertyValueFactory property="description"/>
                         </cellValueFactory>
                     </TableColumn>
+                    <TableColumn fx:id="MontantColumn" text="Montant de Demande" prefWidth="120">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="montantDemande"/>
+                        </cellValueFactory>
+                    </TableColumn>
                     <TableColumn fx:id="dateDemandeColumn" text="Date de Demande" prefWidth="120">
                         <cellValueFactory>
                             <PropertyValueFactory property="dateDemande"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="StatusColumn" text="Status" prefWidth="120">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="status"/>
                         </cellValueFactory>
                     </TableColumn>
                     <TableColumn fx:id="preuveColumn" text="Preuves" prefWidth="180">
