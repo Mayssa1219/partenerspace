@@ -34,6 +34,7 @@
                             </image>
                         </ImageView>
                         <Label fx:id="titleLabel" text="Tableau de bord" styleClass="title-label"/>
+                        <Label fx:id="timeLabel" text="00:00:00" styleClass="time-label" onMouseClicked="#openClock"/>
                     </children>
                 </HBox>
                 <Region fx:id="spacerNavbar" HBox.hgrow="ALWAYS"/>

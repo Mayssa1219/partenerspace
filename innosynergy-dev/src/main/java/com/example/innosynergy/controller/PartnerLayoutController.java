@@ -1,5 +1,9 @@
 package com.example.innosynergy.controller;
 
+import com.example.innosynergy.Main;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.input.MouseEvent; // Importer MouseEvent de JavaFX
 import com.example.innosynergy.dao.DonDaoImpl;
 import com.example.innosynergy.dao.EventDaoImpl;
@@ -25,8 +29,12 @@ import javafx.scene.Node;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,12 +72,20 @@ public class PartnerLayoutController {
     private PartenaireDaoImpl partenaireDao;
 
     private final Map<Button, String[]> buttonViewMappings = new HashMap<>();
-
+    @FXML
+    private Label timeLabel;
     @FXML
     private ImageView chatbotImageView;
+    private final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @FXML
     private void initialize() {
+        // Mise à jour de l'heure toutes les secondes
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), event -> updateClock())
+        );
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
 
         // Gestionnaire d'événements pour le chatbot
         chatbotImageView.setOnMouseClicked(event -> openChatbotWindow());
@@ -124,6 +140,31 @@ public class PartnerLayoutController {
         eventDao = new EventDaoImpl();
         donDao = new DonDaoImpl();
     }
+    private void updateClock() {
+        timeLabel.setText(LocalTime.now().format(timeFormat));
+    }
+    private Stage clockStage = null; // Stocke l'instance de la fenêtre de l'horloge
+
+    public void openClock() {
+        try {
+            if (clockStage != null && clockStage.isShowing()) {
+                clockStage.close(); // Ferme l'horloge si elle est déjà ouverte
+                clockStage = null;
+                return;
+            }
+
+            Main clockApp = new Main(); // Crée une instance de l'horloge
+            clockStage = new Stage(); // Initialise la fenêtre
+
+            clockApp.start(clockStage); // Démarre l'horloge
+
+            clockStage.setOnHidden(event -> clockStage = null); // Réinitialise lorsque la fenêtre se ferme
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void openChatbotWindow() {
         try {
