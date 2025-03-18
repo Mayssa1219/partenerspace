@@ -102,9 +102,8 @@ public class DashboardController {
         legendBox.getChildren().clear(); // Nettoyer l'ancienne légende
 
         legendBox.getChildren().addAll(
-                createLegendItem("Perches", "#FF6384"),   // Rouge Rosé
-                createLegendItem("Brochets", "#FFCE56"),  // Jaune Clair
-                createLegendItem("Truites", "#4BC0C0")    // Bleu-Vert Pastel
+                createLegendItem("Dons financières", "#FF6384"),   // Rouge Rosé
+                createLegendItem("Dons non financières", "#FFCE56") // Jaune Clair
         );
     }
 
