@@ -99,12 +99,12 @@ public class DashboardController {
     private HBox legendBox; // Assurez-vous d'avoir un HBox dans votre FXML
 
     private void createCustomLegend() {
-        legendBox.getChildren().clear(); // Nettoyer l'ancienne légende
+        legendBox.getChildren().clear();
 
         legendBox.getChildren().addAll(
-                createLegendItem("Perches", "#FF6384"),   // Rouge Rosé
-                createLegendItem("Brochets", "#FFCE56"),  // Jaune Clair
-                createLegendItem("Truites", "#4BC0C0")    // Bleu-Vert Pastel
+                createLegendItem("Dons mensuels", "#FF6384"),   // Rouge Rosé
+                createLegendItem("Dons ponctuels", "#FFCE56"),   // Jaune Clair
+                createLegendItem("Dons en ligne", "#4BC0C0")      // Bleu-Vert Pastel
         );
     }
 
@@ -123,68 +123,33 @@ public class DashboardController {
 
 
 
-    private void loadLineChartData() {
-        try {
-            // Nettoyer l'ancien graphique
-            lineChart.getData().clear();
-
-            // Créer une série
-            XYChart.Series<String, Number> series = new XYChart.Series<>();
-            series.setName("Évolution des inscriptions");
-
-            List<XYChart.Data<String, Number>> data = dashboardDao.getLineChartData();
-            series.getData().addAll(data);
-
-            // Ajouter la série au graphique
-            lineChart.getData().add(series);
-
-            System.out.println("Données du graphique mises à jour !");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private void loadAreaChartData() {
         try {
             // Nettoyer l'ancien graphique
             areaChart.getData().clear();
 
-            // Créer les séries de données avec des couleurs modernes
-            XYChart.Series<String, Number> seriesPerches = new XYChart.Series<>();
-            seriesPerches.setName("Perches");
-            seriesPerches.getData().add(new XYChart.Data<>("Janvier", 15));
-            seriesPerches.getData().add(new XYChart.Data<>("Février", 20));
-            seriesPerches.getData().add(new XYChart.Data<>("Mars", 19));
-            seriesPerches.getData().add(new XYChart.Data<>("Avril", 22));
+            // Créer les séries de données pour les demandes de dons par mois
+            XYChart.Series<String, Number> seriesDemandesDons = new XYChart.Series<>();
+            seriesDemandesDons.setName("Demandes de Dons");
 
-            XYChart.Series<String, Number> seriesBrochets = new XYChart.Series<>();
-            seriesBrochets.setName("Brochets");
-            seriesBrochets.getData().add(new XYChart.Data<>("Janvier", 26));
-            seriesBrochets.getData().add(new XYChart.Data<>("Février", 24));
-            seriesBrochets.getData().add(new XYChart.Data<>("Mars", 8));
-            seriesBrochets.getData().add(new XYChart.Data<>("Avril", 7));
+            // Récupérer les données réelles depuis la base de données (par exemple, dashboardDao.getDonsDataByMonth())
+            List<XYChart.Data<String, Number>> data = dashboardDao.getDonsDataByMonth(idPartenaire);  // Méthode à implémenter dans le DAO
 
-            XYChart.Series<String, Number> seriesTruites = new XYChart.Series<>();
-            seriesTruites.setName("Truites");
-            seriesTruites.getData().add(new XYChart.Data<>("Janvier", 5));
-            seriesTruites.getData().add(new XYChart.Data<>("Février", 0));
-            seriesTruites.getData().add(new XYChart.Data<>("Mars", 8));
-            seriesTruites.getData().add(new XYChart.Data<>("Avril", 12));
+            // Ajouter les données à la série
+            seriesDemandesDons.getData().addAll(data);
 
-            // Ajouter les séries au graphique
-            areaChart.getData().addAll(seriesPerches, seriesBrochets, seriesTruites);
+            // Ajouter la série au graphique
+            areaChart.getData().add(seriesDemandesDons);
 
-            // Ajouter des classes CSS aux séries
-            seriesPerches.getNode().getStyleClass().add("perches");
-            seriesBrochets.getNode().getStyleClass().add("brochets");
-            seriesTruites.getNode().getStyleClass().add("truites");
+            // Ajouter des classes CSS à la série (si besoin)
+            seriesDemandesDons.getNode().getStyleClass().add("demandesDons");
 
-            System.out.println("Graphique AreaChart mis à jour avec les mois !");
+            System.out.println("Graphique AreaChart mis à jour avec les données de demandes de dons !");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     private void loadEventTableData(int idPartenaire) {
         try {

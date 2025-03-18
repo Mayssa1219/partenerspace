@@ -91,8 +91,10 @@ public class DashboardDaoImpl implements DashboardDao {
     }
 
     @Override
-    public List<XYChart.Data<String, Number>> getLineChartData() {
-        List<XYChart.Data<String, Number>> data = new ArrayList<>();
+    public XYChart.Series<String, Number> getLineChartData() {
+        XYChart.Series<String, Number> seriesDons = new XYChart.Series<>();
+        seriesDons.setName("Demandes de Dons");
+
         String[] moisNoms = {"Jan", "Fév", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"};
 
         try (Connection connection = DBConnection.getConnection();
@@ -101,11 +103,12 @@ public class DashboardDaoImpl implements DashboardDao {
 
             while (resultSet.next()) {
                 int month = resultSet.getInt("mois"); // Colonne qui stocke le mois sous forme de numéro (1 = Janvier, etc.)
-                double montantTotal = resultSet.getDouble("montant_total"); // Valeur associée
+                double montantTotal = resultSet.getDouble("montant_total"); // Valeur des dons pour ce mois
 
                 // Vérifier que le mois est valide (entre 1 et 12)
                 if (month >= 1 && month <= 12) {
-                    data.add(new XYChart.Data<>(moisNoms[month - 1], montantTotal));
+                    String monthName = moisNoms[month - 1]; // Récupérer le nom du mois
+                    seriesDons.getData().add(new XYChart.Data<>(monthName, montantTotal));
                 } else {
                     System.out.println("⚠ Mois invalide détecté: " + month);
                 }
@@ -115,8 +118,36 @@ public class DashboardDaoImpl implements DashboardDao {
             e.printStackTrace();
         }
 
+        return seriesDons;
+    }
+    public List<XYChart.Data<String, Number>> getDonsDataByMonth(int idPartenaire) {
+        List<XYChart.Data<String, Number>> data = new ArrayList<>();
+        String[] moisNoms = {"Jan", "Fév", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"};
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT mois, SUM(montant) AS montant_total FROM dons WHERE id_partenaire = ? GROUP BY mois ORDER BY mois")) {
+
+            preparedStatement.setInt(1, idPartenaire);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int month = resultSet.getInt("mois");  // Mois de la demande
+                double montantTotal = resultSet.getDouble("montant_total");  // Montant total des dons pour ce mois
+
+                if (month >= 1 && month <= 12) {
+                    // Ajouter les données récupérées au format XYChart.Data
+                    data.add(new XYChart.Data<>(moisNoms[month - 1], montantTotal));
+                } else {
+                    System.out.println("⚠ Mois invalide détecté: " + month);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return data;
     }
+
 
 
     @Override

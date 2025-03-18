@@ -133,7 +133,7 @@
                         <Insets bottom="10" left="10" right="10" top="10" />
                     </padding>
                     <children>
-                        <Label id="donationLabel" text="Statistication des clients" />
+                        <Label id="donationLabel" text="Demandes de Dons" />
                         <AreaChart fx:id="areaChart">
                             <xAxis>
                                 <CategoryAxis label="Mois"/>
