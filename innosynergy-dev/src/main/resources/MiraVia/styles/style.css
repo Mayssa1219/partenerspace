@@ -600,24 +600,6 @@
     -fx-font-weight: bold; /* Gras */
 }
 
-/* Style pour les séries de données */
-.default-color0.chart-series-area-line { /* Perches */
-    -fx-stroke: #003073; /* Couleur de la ligne */
-    -fx-stroke-width: 2px; /* Épaisseur de la ligne */
-}
-
-.default-color0.chart-series-area-fill { /* Perches */
-    -fx-fill: rgba(0, 48, 115, 0.3); /* Couleur de remplissage avec transparence */
-}
-
-.default-color1.chart-series-area-line { /* Brochets */
-    -fx-stroke: #ff0000; /* Couleur de la ligne */
-    -fx-stroke-width: 2px; /* Épaisseur de la ligne */
-}
-
-.default-color1.chart-series-area-fill { /* Brochets */
-    -fx-fill: rgba(255, 0, 0, 0.3); /* Couleur de remplissage avec transparence */
-}
 
 .default-color2.chart-series-area-line { /* Truites */
     -fx-stroke: #00ff00; /* Couleur de la ligne */
@@ -689,7 +671,7 @@
 }
 
 .default-color0.chart-series-area-line {
-    -fx-stroke: #FF6384; /* Rouge */
+    -fx-stroke: #ffe2e5; /* Rouge */
 }
 .default-color1.chart-series-area-line {
     -fx-stroke: #FFCE56; /* Jaune */
@@ -708,11 +690,23 @@
 }
 
 .default-color0.chart-series-area-line {
-    -fx-stroke: #FF6384; /* Rouge */
+    -fx-stroke: #ffe2e5; /* Rouge */
 }
 .default-color1.chart-series-area-line {
     -fx-stroke: #FFCE56; /* Jaune */
 }
 .default-color2.chart-series-area-line {
     -fx-stroke: #4BC0C0; /* Bleu-Vert */
+}
+/* Style pour le titre de la carte */
+.card-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #013A71; /* Couleur du texte */
+}
+
+/* Style pour le sous-titre de la carte */
+.card-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #4a4a4a; /* Couleur du texte */
 }

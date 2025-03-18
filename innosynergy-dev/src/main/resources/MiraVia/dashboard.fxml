@@ -133,7 +133,15 @@
                         <Insets bottom="10" left="10" right="10" top="10" />
                     </padding>
                     <children>
-                        <Label id="donationLabel" text="Statistication des clients" />
+                        <!-- Titre et sous-titre -->
+                        <VBox spacing="5" alignment="CENTER">
+                            <children>
+                                <Label text="Nombre de dons par mois" styleClass="card-title" />
+                                <Label text="Dons financiers" styleClass="card-subtitle" />
+                            </children>
+                        </VBox>
+
+                        <!-- Graphique AreaChart -->
                         <AreaChart fx:id="areaChart">
                             <xAxis>
                                 <CategoryAxis label="Mois"/>
@@ -142,6 +150,8 @@
                                 <NumberAxis label="Valeurs"/>
                             </yAxis>
                         </AreaChart>
+
+                        <!-- Légende -->
                         <HBox fx:id="legendBox" spacing="10" alignment="CENTER" />
                     </children>
                 </VBox>

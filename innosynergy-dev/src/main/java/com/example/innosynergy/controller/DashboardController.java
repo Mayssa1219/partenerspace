@@ -111,7 +111,7 @@ public class DashboardController {
     private HBox createLegendItem(String text, String color) {
         Label colorBox = new Label(" ");
         colorBox.setMinSize(12, 12);
-        colorBox.setStyle("-fx-background-color: " + color + "; -fx-border-color: black;");
+        colorBox.setStyle("-fx-background-color: " + color);
 
         Label label = new Label(text);
         label.setStyle("-fx-font-size: 14px; -fx-padding: 5px;");
@@ -149,43 +149,32 @@ public class DashboardController {
             // Nettoyer l'ancien graphique
             areaChart.getData().clear();
 
-            // Créer les séries de données avec des couleurs modernes
-            XYChart.Series<String, Number> seriesPerches = new XYChart.Series<>();
-            seriesPerches.setName("Perches");
-            seriesPerches.getData().add(new XYChart.Data<>("Janvier", 15));
-            seriesPerches.getData().add(new XYChart.Data<>("Février", 20));
-            seriesPerches.getData().add(new XYChart.Data<>("Mars", 19));
-            seriesPerches.getData().add(new XYChart.Data<>("Avril", 22));
+            // Récupérer les données de dons par mois depuis le DAO
+            List<XYChart.Data<Number, Number>> donationsData = dashboardDao.getDonationsByMonth(idPartenaire);
 
-            XYChart.Series<String, Number> seriesBrochets = new XYChart.Series<>();
-            seriesBrochets.setName("Brochets");
-            seriesBrochets.getData().add(new XYChart.Data<>("Janvier", 26));
-            seriesBrochets.getData().add(new XYChart.Data<>("Février", 24));
-            seriesBrochets.getData().add(new XYChart.Data<>("Mars", 8));
-            seriesBrochets.getData().add(new XYChart.Data<>("Avril", 7));
+            // Créer une série de données pour les dons
+            XYChart.Series<String, Number> seriesDons = new XYChart.Series<>();
+            seriesDons.setName("Dons par mois");
 
-            XYChart.Series<String, Number> seriesTruites = new XYChart.Series<>();
-            seriesTruites.setName("Truites");
-            seriesTruites.getData().add(new XYChart.Data<>("Janvier", 5));
-            seriesTruites.getData().add(new XYChart.Data<>("Février", 0));
-            seriesTruites.getData().add(new XYChart.Data<>("Mars", 8));
-            seriesTruites.getData().add(new XYChart.Data<>("Avril", 12));
+            // Convertir les données en format compatible avec l'AreaChart
+            String[] moisNoms = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"};
+            for (XYChart.Data<Number, Number> data : donationsData) {
+                int mois = data.getXValue().intValue();
+                int nombreDons = data.getYValue().intValue();
+                seriesDons.getData().add(new XYChart.Data<>(moisNoms[mois - 1], nombreDons));
+            }
 
-            // Ajouter les séries au graphique
-            areaChart.getData().addAll(seriesPerches, seriesBrochets, seriesTruites);
+            // Ajouter la série au graphique
+            areaChart.getData().add(seriesDons);
 
-            // Ajouter des classes CSS aux séries
-            seriesPerches.getNode().getStyleClass().add("perches");
-            seriesBrochets.getNode().getStyleClass().add("brochets");
-            seriesTruites.getNode().getStyleClass().add("truites");
+            // Ajouter une classe CSS à la série
+            seriesDons.getNode().getStyleClass().add("dons");
 
-            System.out.println("Graphique AreaChart mis à jour avec les mois !");
+            System.out.println("Graphique AreaChart mis à jour avec les dons par mois !");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
     private void loadEventTableData(int idPartenaire) {
         try {
             // Configurer les colonnes
