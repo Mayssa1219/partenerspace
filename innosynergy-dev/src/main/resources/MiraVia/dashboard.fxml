@@ -137,7 +137,6 @@
                         <VBox spacing="5" alignment="CENTER">
                             <children>
                                 <Label text="Nombre de dons par mois" styleClass="card-title" />
-                                <Label text="Dons financiers" styleClass="card-subtitle" />
                             </children>
                         </VBox>
 
