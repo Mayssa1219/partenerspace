@@ -34,6 +34,9 @@ public class DashboardDaoImpl implements DashboardDao {
     private static final String SELECT_BENEVOLE_COUNT_SQL = "SELECT COUNT(*) AS benevole_count " +
             "FROM benevolat WHERE id_partenaire = ?";
 
+    private static final String SELECT_DONATIONS_BY_MONTH_SQL = "SELECT MONTH(date_don) AS mois, COUNT(*) AS nombre_dons " +
+            "FROM dons WHERE id_partenaire = ? GROUP BY mois";
+
     private ConnexionBD DBConnection;
 
     @Override
@@ -91,10 +94,8 @@ public class DashboardDaoImpl implements DashboardDao {
     }
 
     @Override
-    public XYChart.Series<String, Number> getLineChartData() {
-        XYChart.Series<String, Number> seriesDons = new XYChart.Series<>();
-        seriesDons.setName("Demandes de Dons");
-
+    public List<XYChart.Data<String, Number>> getLineChartData() {
+        List<XYChart.Data<String, Number>> data = new ArrayList<>();
         String[] moisNoms = {"Jan", "Fév", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"};
 
         try (Connection connection = DBConnection.getConnection();
@@ -103,52 +104,22 @@ public class DashboardDaoImpl implements DashboardDao {
 
             while (resultSet.next()) {
                 int month = resultSet.getInt("mois"); // Colonne qui stocke le mois sous forme de numéro (1 = Janvier, etc.)
-                double montantTotal = resultSet.getDouble("montant_total"); // Valeur des dons pour ce mois
+                double montantTotal = resultSet.getDouble("montant_total"); // Valeur associée
 
                 // Vérifier que le mois est valide (entre 1 et 12)
                 if (month >= 1 && month <= 12) {
-                    String monthName = moisNoms[month - 1]; // Récupérer le nom du mois
-                    seriesDons.getData().add(new XYChart.Data<>(monthName, montantTotal));
-                } else {
-                    System.out.println("⚠ Mois invalide détecté: " + month);
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return seriesDons;
-    }
-    public List<XYChart.Data<String, Number>> getDonsDataByMonth(int idPartenaire) {
-        List<XYChart.Data<String, Number>> data = new ArrayList<>();
-        String[] moisNoms = {"Jan", "Fév", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"};
-
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT mois, SUM(montant) AS montant_total FROM dons WHERE id_partenaire = ? GROUP BY mois ORDER BY mois")) {
-
-            preparedStatement.setInt(1, idPartenaire);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int month = resultSet.getInt("mois");  // Mois de la demande
-                double montantTotal = resultSet.getDouble("montant_total");  // Montant total des dons pour ce mois
-
-                if (month >= 1 && month <= 12) {
-                    // Ajouter les données récupérées au format XYChart.Data
                     data.add(new XYChart.Data<>(moisNoms[month - 1], montantTotal));
                 } else {
                     System.out.println("⚠ Mois invalide détecté: " + month);
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return data;
     }
-
-
 
     @Override
     public List<Event> getEventTableData(int idPartenaire) {
@@ -205,4 +176,23 @@ public class DashboardDaoImpl implements DashboardDao {
         return 0; // Retourner 0 en cas d'erreur
     }
 
+    @Override
+    public List<XYChart.Data<Number, Number>> getDonationsByMonth(int idPartenaire) {
+        List<XYChart.Data<Number, Number>> data = new ArrayList<>();
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DONATIONS_BY_MONTH_SQL)) {
+            preparedStatement.setInt(1, idPartenaire);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int mois = resultSet.getInt("mois");
+                    int nombreDons = resultSet.getInt("nombre_dons");
+                    data.add(new XYChart.Data<>(mois, nombreDons));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
 }

@@ -573,6 +573,63 @@
     -fx-background-color:  #aecee6; /* Couleur de fond bleue */
     -fx-text-fill: #003073; /* Couleur du texte en blanc */
 }
+.chart-series-area-fill {
+    -fx-fill: rgba(255, 0, 0, 0.3); /* Rouge avec transparence */
+}
+.chart-series-area-line {
+    -fx-stroke: #ff0000; /* Rouge */
+}
+.area-chart {
+    -fx-background-color: #ffffff; /* Blanc */
+}
+/* Style général pour l'AreaChart */
+.area-chart {
+    -fx-background-color: #f4f4f4; /* Couleur de fond du graphique */
+    -fx-padding: 10px; /* Espacement interne */
+}
+
+/* Style pour les axes */
+.axis {
+    -fx-tick-label-fill: #333333; /* Couleur des étiquettes des axes */
+    -fx-tick-length: 5px; /* Longueur des ticks */
+}
+
+.axis-label {
+    -fx-text-fill: #003073; /* Couleur du texte des étiquettes des axes */
+    -fx-font-size: 14px; /* Taille de la police */
+    -fx-font-weight: bold; /* Gras */
+}
+
+
+.default-color2.chart-series-area-line { /* Truites */
+    -fx-stroke: #00ff00; /* Couleur de la ligne */
+    -fx-stroke-width: 2px; /* Épaisseur de la ligne */
+}
+
+.default-color2.chart-series-area-fill { /* Truites */
+    -fx-fill: rgba(0, 255, 0, 0.3); /* Couleur de remplissage avec transparence */
+}
+
+/* Style pour la légende */
+.chart-legend {
+    -fx-background-color: #ffffff; /* Couleur de fond de la légende */
+    -fx-border-color: #cccccc; /* Couleur de la bordure */
+    -fx-border-width: 1px; /* Épaisseur de la bordure */
+    -fx-padding: 5px; /* Espacement interne */
+}
+
+.chart-legend-item {
+    -fx-text-fill: #003073; /* Couleur du texte de la légende */
+    -fx-font-size: 12px; /* Taille de la police */
+}
+
+/* Style pour le titre du graphique */
+.chart-title {
+    -fx-text-fill: #003073; /* Couleur du titre */
+    -fx-font-size: 16px; /* Taille de la police */
+    -fx-font-weight: bold; /* Gras */
+}
+
 .chart-title {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
@@ -614,11 +671,42 @@
 }
 
 .default-color0.chart-series-area-line {
-    -fx-stroke: #FF6384; /* Rouge */
+    -fx-stroke: #ffe2e5; /* Rouge */
 }
 .default-color1.chart-series-area-line {
     -fx-stroke: #FFCE56; /* Jaune */
 }
 .default-color2.chart-series-area-line {
     -fx-stroke: #4BC0C0; /* Bleu-Vert */
+}
+.default-color0.chart-series-area-fill {
+    -fx-fill: rgba(255, 99, 132, 0.5); /* Rouge Rosé */
+}
+.default-color1.chart-series-area-fill {
+    -fx-fill: rgba(255, 206, 86, 0.5); /* Jaune Clair */
+}
+.default-color2.chart-series-area-fill {
+    -fx-fill: rgba(75, 192, 192, 0.5); /* Bleu-Vert Pastel */
+}
+
+.default-color0.chart-series-area-line {
+    -fx-stroke: #ffe2e5; /* Rouge */
+}
+.default-color1.chart-series-area-line {
+    -fx-stroke: #FFCE56; /* Jaune */
+}
+.default-color2.chart-series-area-line {
+    -fx-stroke: #4BC0C0; /* Bleu-Vert */
+}
+/* Style pour le titre de la carte */
+.card-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #013A71; /* Couleur du texte */
+}
+
+/* Style pour le sous-titre de la carte */
+.card-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #4a4a4a; /* Couleur du texte */
 }

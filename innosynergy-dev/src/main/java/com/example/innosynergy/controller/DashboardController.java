@@ -99,19 +99,19 @@ public class DashboardController {
     private HBox legendBox; // Assurez-vous d'avoir un HBox dans votre FXML
 
     private void createCustomLegend() {
-        legendBox.getChildren().clear();
+        legendBox.getChildren().clear(); // Nettoyer l'ancienne légende
 
         legendBox.getChildren().addAll(
-                createLegendItem("Dons mensuels", "#FF6384"),   // Rouge Rosé
-                createLegendItem("Dons ponctuels", "#FFCE56"),   // Jaune Clair
-                createLegendItem("Dons en ligne", "#4BC0C0")      // Bleu-Vert Pastel
+                createLegendItem("Perches", "#FF6384"),   // Rouge Rosé
+                createLegendItem("Brochets", "#FFCE56"),  // Jaune Clair
+                createLegendItem("Truites", "#4BC0C0")    // Bleu-Vert Pastel
         );
     }
 
     private HBox createLegendItem(String text, String color) {
         Label colorBox = new Label(" ");
         colorBox.setMinSize(12, 12);
-        colorBox.setStyle("-fx-background-color: " + color + "; -fx-border-color: black;");
+        colorBox.setStyle("-fx-background-color: " + color);
 
         Label label = new Label(text);
         label.setStyle("-fx-font-size: 14px; -fx-padding: 5px;");
@@ -123,34 +123,58 @@ public class DashboardController {
 
 
 
+    private void loadLineChartData() {
+        try {
+            // Nettoyer l'ancien graphique
+            lineChart.getData().clear();
+
+            // Créer une série
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Évolution des inscriptions");
+
+            List<XYChart.Data<String, Number>> data = dashboardDao.getLineChartData();
+            series.getData().addAll(data);
+
+            // Ajouter la série au graphique
+            lineChart.getData().add(series);
+
+            System.out.println("Données du graphique mises à jour !");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void loadAreaChartData() {
         try {
             // Nettoyer l'ancien graphique
             areaChart.getData().clear();
 
-            // Créer les séries de données pour les demandes de dons par mois
-            XYChart.Series<String, Number> seriesDemandesDons = new XYChart.Series<>();
-            seriesDemandesDons.setName("Demandes de Dons");
+            // Récupérer les données de dons par mois depuis le DAO
+            List<XYChart.Data<Number, Number>> donationsData = dashboardDao.getDonationsByMonth(idPartenaire);
 
-            // Récupérer les données réelles depuis la base de données (par exemple, dashboardDao.getDonsDataByMonth())
-            List<XYChart.Data<String, Number>> data = dashboardDao.getDonsDataByMonth(idPartenaire);  // Méthode à implémenter dans le DAO
+            // Créer une série de données pour les dons
+            XYChart.Series<String, Number> seriesDons = new XYChart.Series<>();
+            seriesDons.setName("Dons par mois");
 
-            // Ajouter les données à la série
-            seriesDemandesDons.getData().addAll(data);
+            // Convertir les données en format compatible avec l'AreaChart
+            String[] moisNoms = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"};
+            for (XYChart.Data<Number, Number> data : donationsData) {
+                int mois = data.getXValue().intValue();
+                int nombreDons = data.getYValue().intValue();
+                seriesDons.getData().add(new XYChart.Data<>(moisNoms[mois - 1], nombreDons));
+            }
 
             // Ajouter la série au graphique
-            areaChart.getData().add(seriesDemandesDons);
+            areaChart.getData().add(seriesDons);
 
-            // Ajouter des classes CSS à la série (si besoin)
-            seriesDemandesDons.getNode().getStyleClass().add("demandesDons");
+            // Ajouter une classe CSS à la série
+            seriesDons.getNode().getStyleClass().add("dons");
 
-            System.out.println("Graphique AreaChart mis à jour avec les données de demandes de dons !");
+            System.out.println("Graphique AreaChart mis à jour avec les dons par mois !");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     private void loadEventTableData(int idPartenaire) {
         try {
             // Configurer les colonnes
